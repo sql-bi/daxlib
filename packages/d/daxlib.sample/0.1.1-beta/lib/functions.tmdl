@@ -3,7 +3,7 @@ function 'DaxLib.Sample.MyFunc1' = () => 1
 
 	annotation DAXLIB_PackageId = DaxLib.Sample
 
-	annotation DAXLIB_PackageVersion = 0.1.0-beta
+	annotation DAXLIB_PackageVersion = 0.1.1-beta
 
 /// MyFunc2 description
 function 'DaxLib.Sample.MyFunc2' =
@@ -15,4 +15,4 @@ function 'DaxLib.Sample.MyFunc2' =
 
 	annotation DAXLIB_PackageId = DaxLib.Sample
 
-	annotation DAXLIB_PackageVersion = 0.1.0-beta
+	annotation DAXLIB_PackageVersion = 0.1.1-beta
