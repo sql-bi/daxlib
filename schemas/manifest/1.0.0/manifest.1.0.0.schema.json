@@ -1,0 +1,70 @@
+{
+  "$id": "https://daxlib.com/package/manifest.1.0.0.schema.json",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "description": "The manifest schema for a DAX Library package.",
+  "definitions": {
+    "id": {
+      "type": "string",
+      "pattern": "^\\w+([.-]\\w+)*$",
+      "maxLength": 128,
+      "description": "The package unique identifier."
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+(-[a-zA-Z0-9]+)?$",
+      "maxLength": 64,
+      "description": "The package version, following the semantic versioning pattern. Version numbers may include a pre-release suffix."
+    },
+    "authors": {
+        "type": "string",
+      "maxLength": 128,
+      "description": "A comma-separated list of package authors."
+    },
+    "description": {
+      "type": "string",
+      "maxLength": 300,
+      "description": "The package description for UI display."
+    },
+    "tags": {
+      "type": "string",
+      "maxLength": 128,
+      "description": "A comma-separated list of tags and keywords that describe the package and aid discoverability of packages through search and filtering."
+    },
+    "releaseNotes": {
+      "type": "string",
+      "maxLength": 1000,
+      "description": "A description of the changes made in this release of the package."
+    }
+  },
+  "type": "object",
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "id": {
+      "$ref": "#/definitions/id"
+    },
+    "version": {
+      "$ref": "#/definitions/version"
+    },
+    "authors": {
+      "$ref": "#/definitions/authors"
+    },
+    "description": {
+      "$ref": "#/definitions/description"
+    },
+    "tags": {
+      "$ref": "#/definitions/tags"
+    },
+    "releaseNotes": {
+      "$ref": "#/definitions/releaseNotes"
+    }
+  },
+  "required": [
+    "id",
+    "version",
+    "authors",
+    "description"
+  ],
+  "additionalProperties": false
+}
