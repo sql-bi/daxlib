@@ -16,7 +16,7 @@
       "description": "The package version, following the semantic versioning pattern. Version numbers may include a pre-release suffix."
     },
     "authors": {
-        "type": "string",
+      "type": "string",
       "maxLength": 128,
       "description": "A comma-separated list of package authors."
     },
@@ -34,6 +34,28 @@
       "type": "string",
       "maxLength": 1000,
       "description": "A description of the changes made in this release of the package."
+    },
+    "projectUrl": {
+      "type": "string",
+      "format": "uri",
+      "maxLength": 256,
+      "description": "A URL to the project homepage."
+    },
+    "repositoryUrl": {
+      "type": "string",
+      "format": "uri",
+      "maxLength": 256,
+      "description": "A URL to the source code repository for the package."
+    },
+    "icon": {
+      "type": "string",
+      "maxLength": 64,
+      "description": "A path to a PNG image file within the package used as the package icon."
+    },
+    "publisherIcon": {
+      "type": "string",
+      "maxLength": 64,
+      "description": "A path to a PNG image file within the package used as the publisher icon."
     }
   },
   "type": "object",
@@ -58,6 +80,18 @@
     },
     "releaseNotes": {
       "$ref": "#/definitions/releaseNotes"
+    },
+    "projectUrl": {
+      "$ref": "#/definitions/projectUrl"
+    },
+    "repositoryUrl": {
+      "$ref": "#/definitions/repositoryUrl"
+    },
+    "icon": {
+      "$ref": "#/definitions/icon"
+    },
+    "publisherIcon": {
+      "$ref": "#/definitions/publisherIcon"
     }
   },
   "required": [
