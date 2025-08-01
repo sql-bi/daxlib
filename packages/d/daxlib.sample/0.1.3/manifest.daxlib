@@ -5,5 +5,5 @@
   "authors": "SQLBI,albertospelta",
   "description": "DaxLib sample library",
   "tags": "DAX,SAMPLE",
-  "releaseNotes": "Initial beta release of the DaxLib sample library."
+  "releaseNotes": "DaxLib sample library release 0.1.3"
 }
