@@ -5,5 +5,9 @@
   "authors": "SQLBI,albertospelta",
   "description": "DaxLib sample library",
   "tags": "DAX,SAMPLE",
-  "releaseNotes": "DaxLib sample library release 0.1.3"
+  "releaseNotes": "DaxLib sample library release 0.1.3",
+  "projectUrl": "https://github.com/sql-bi/daxlib",
+  "repositoryUrl": "https://github.com/sql-bi/daxlib/tree/main/packages/d/daxlib.sample",
+  "icon": "/images/icon.png",
+  "publisherIcon": "/images/sqlbi.png"
 }
