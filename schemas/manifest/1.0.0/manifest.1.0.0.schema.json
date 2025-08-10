@@ -51,11 +51,6 @@
       "type": "string",
       "maxLength": 64,
       "description": "A path to a PNG image file within the package used as the package icon."
-    },
-    "publisherIcon": {
-      "type": "string",
-      "maxLength": 64,
-      "description": "A path to a PNG image file within the package used as the publisher icon."
     }
   },
   "type": "object",
@@ -89,9 +84,6 @@
     },
     "icon": {
       "$ref": "#/definitions/icon"
-    },
-    "publisherIcon": {
-      "$ref": "#/definitions/publisherIcon"
     }
   },
   "required": [
