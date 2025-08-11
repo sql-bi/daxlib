@@ -23,7 +23,7 @@ function 'DaxLib.Sample.MyFunc3' =
 		    // Parameter description
 		    param1: INT64,
 		    // Parameter description
-		    param2: INT64,
+		    param2: INT64
 		) =>
 		    param1 + param2
 
