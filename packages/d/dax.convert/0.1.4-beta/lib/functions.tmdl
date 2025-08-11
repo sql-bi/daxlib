@@ -146,9 +146,9 @@ function 'Dax.Convert.GallonsToLiters' =
 function 'Dax.Convert.KilogramsToPounds' =
 		(
 		    // The weight in kilograms
-		    weight: DOUBLE
+		    kilograms: DOUBLE
 		) =>
-		    weight * 2.2046226218487757
+		    kilograms * 2.2046226218487757
 
 	annotation DAXLIB_PackageId = Dax.Convert
 
@@ -254,9 +254,9 @@ function 'Dax.Convert.MilesToKilometers' =
 function 'Dax.Convert.PoundsToKilograms' =
 		(
 		    // The weight in pounds
-		    weight: DOUBLE
+		    pounds: DOUBLE
 		) =>
-		    weight / 2.2046226218487757
+		    pounds / 2.2046226218487757
 
 	annotation DAXLIB_PackageId = Dax.Convert
 
@@ -266,9 +266,9 @@ function 'Dax.Convert.PoundsToKilograms' =
 function 'Dax.Convert.PoundsToStones' =
 		(
 		    // The weight in pounds
-		    weight: DOUBLE
+		    pounds: DOUBLE
 		) =>
-		    weight / 14
+		    pounds / 14
 
 	annotation DAXLIB_PackageId = Dax.Convert
 
@@ -314,9 +314,9 @@ function 'Dax.Convert.SquareMetersToSquareFeet' =
 function 'Dax.Convert.StonesToPounds' =
 		(
 		    // The weight in stones
-		    weight: DOUBLE
+		    stones: DOUBLE
 		) =>
-		    weight * 14
+		    stones * 14
 
 	annotation DAXLIB_PackageId = Dax.Convert
 
