@@ -8,6 +8,5 @@
   "releaseNotes": "DaxLib sample library release 0.1.4",
   "projectUrl": "https://github.com/sql-bi/daxlib",
   "repositoryUrl": "https://github.com/sql-bi/daxlib/tree/main/packages/d/daxlib.sample",
-  "icon": "/images/icon.png",
-  "publisherIcon": "/images/sqlbi.png"
+  "icon": "/images/icon.png"
 }
