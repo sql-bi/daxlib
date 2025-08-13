@@ -10,7 +10,7 @@ function 'Dax.Convert.AcresToSquareMeters' =
 
 	annotation DAXLIB_PackageVersion = 0.1.5-beta
 
-/// Temparature: convert Celsius(°C) to Fahrenheit(°F)
+/// Temperature: convert Celsius(°C) to Fahrenheit(°F)
 function 'Dax.Convert.CelsiusToFahrenheit' =
 		(
 		    // The temperature in Celsius
@@ -22,7 +22,7 @@ function 'Dax.Convert.CelsiusToFahrenheit' =
 
 	annotation DAXLIB_PackageVersion = 0.1.5-beta
 
-/// Temparature: convert Celsius(°C) to Kelvin(K)
+/// Temperature: convert Celsius(°C) to Kelvin(K)
 function 'Dax.Convert.CelsiusToKelvin' =
 		(
 		    // The temperature in Celsius
@@ -154,7 +154,7 @@ function 'Dax.Convert.KilogramsToPounds' =
 
 	annotation DAXLIB_PackageVersion = 0.1.5-beta
 
-/// Temparature: convert Kelvin(K) to Celsius(°C)
+/// Temperature: convert Kelvin(K) to Celsius(°C)
 function 'Dax.Convert.KelvinToCelsius' =
 		(
 		    // The temperature in Kelvin
@@ -166,7 +166,7 @@ function 'Dax.Convert.KelvinToCelsius' =
 
 	annotation DAXLIB_PackageVersion = 0.1.5-beta
 
-/// Temparature: convert Kelvin(K) to Fahrenheit(°F)
+/// Temperature: convert Kelvin(K) to Fahrenheit(°F)
 function 'Dax.Convert.KelvinToFahrenheit' =
 		(
 		    // The temperature in Kelvin
