@@ -7,6 +7,5 @@
   "tags": "DAX,SAMPLE",
   "releaseNotes": "DaxLib sample library release 0.1.5",
   "projectUrl": "https://github.com/sql-bi/daxlib",
-  "repositoryUrl": "https://github.com/sql-bi/daxlib/tree/main/packages/d/daxlib.sample",
-  "icon": "/images/icon.png"
+  "repositoryUrl": "https://github.com/sql-bi/daxlib/tree/main/packages/d/daxlib.sample"
 }
