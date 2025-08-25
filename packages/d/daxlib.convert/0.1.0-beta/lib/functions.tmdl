@@ -6,7 +6,7 @@ function 'Dax.Convert.AcresToSquareMeters' =
 		) =>
 		    area * 4046.8564224
 
-	annotation DAXLIB_PackageId = Dax.Convert
+	annotation DAXLIB_PackageId = DaxLib.Convert
 
 	annotation DAXLIB_PackageVersion = 0.1.0-beta
 
@@ -18,7 +18,7 @@ function 'Dax.Convert.CelsiusToFahrenheit' =
 		) =>
 		    ( temperature * ( 9 / 5 ) ) + 32
 
-	annotation DAXLIB_PackageId = Dax.Convert
+	annotation DAXLIB_PackageId = DaxLib.Convert
 
 	annotation DAXLIB_PackageVersion = 0.1.0-beta
 
@@ -30,7 +30,7 @@ function 'Dax.Convert.CelsiusToKelvin' =
 		) =>
 		    temperature + 273.15
 
-	annotation DAXLIB_PackageId = Dax.Convert
+	annotation DAXLIB_PackageId = DaxLib.Convert
 
 	annotation DAXLIB_PackageVersion = 0.1.0-beta
 
@@ -42,7 +42,7 @@ function 'Dax.Convert.CubicFeetToCubicMeters' =
 		) =>
 		    volume / 35.31466672148859
 
-	annotation DAXLIB_PackageId = Dax.Convert
+	annotation DAXLIB_PackageId = DaxLib.Convert
 
 	annotation DAXLIB_PackageVersion = 0.1.0-beta
 
@@ -54,7 +54,7 @@ function 'Dax.Convert.CubicMetersPerHourToLitersPerSecond' =
 		) =>
 		    flow / 3.6
 
-	annotation DAXLIB_PackageId = Dax.Convert
+	annotation DAXLIB_PackageId = DaxLib.Convert
 
 	annotation DAXLIB_PackageVersion = 0.1.0-beta
 
@@ -66,7 +66,7 @@ function 'Dax.Convert.CubicMetersToCubicFeet' =
 		) =>
 		    volume * 35.31466672148859
 
-	annotation DAXLIB_PackageId = Dax.Convert
+	annotation DAXLIB_PackageId = DaxLib.Convert
 
 	annotation DAXLIB_PackageVersion = 0.1.0-beta
 
@@ -78,7 +78,7 @@ function 'Dax.Convert.DateToEpoch' =
 		) =>
 		    DATEDIFF ( DATE ( 1970, 1, 1 ), dateTime, SECOND )
 
-	annotation DAXLIB_PackageId = Dax.Convert
+	annotation DAXLIB_PackageId = DaxLib.Convert
 
 	annotation DAXLIB_PackageVersion = 0.1.0-beta
 
@@ -90,7 +90,7 @@ function 'Dax.Convert.EpochToDate' =
 		) =>
 		    DATE ( 1970, 1, 1 ) + ( epoch / 86400 )
 
-	annotation DAXLIB_PackageId = Dax.Convert
+	annotation DAXLIB_PackageId = DaxLib.Convert
 
 	annotation DAXLIB_PackageVersion = 0.1.0-beta
 
@@ -102,7 +102,7 @@ function 'Dax.Convert.FahrenheitToCelsius' =
 		) =>
 		    ( temperature - 32 ) / ( 9 / 5 )
 
-	annotation DAXLIB_PackageId = Dax.Convert
+	annotation DAXLIB_PackageId = DaxLib.Convert
 
 	annotation DAXLIB_PackageVersion = 0.1.0-beta
 
@@ -114,7 +114,7 @@ function 'Dax.Convert.FahrenheitToKelvin' =
 		) =>
 		    ( temperature + 459.67 ) * ( 5 / 9 )
 
-	annotation DAXLIB_PackageId = Dax.Convert
+	annotation DAXLIB_PackageId = DaxLib.Convert
 
 	annotation DAXLIB_PackageVersion = 0.1.0-beta
 
@@ -126,7 +126,7 @@ function 'Dax.Convert.FeetToMeters' =
 		) =>
 		    distance / 3.28084
 
-	annotation DAXLIB_PackageId = Dax.Convert
+	annotation DAXLIB_PackageId = DaxLib.Convert
 
 	annotation DAXLIB_PackageVersion = 0.1.0-beta
 
@@ -138,7 +138,7 @@ function 'Dax.Convert.GallonsToLiters' =
 		) =>
 		    volume * 3.785411784
 
-	annotation DAXLIB_PackageId = Dax.Convert
+	annotation DAXLIB_PackageId = DaxLib.Convert
 
 	annotation DAXLIB_PackageVersion = 0.1.0-beta
 
@@ -150,7 +150,7 @@ function 'Dax.Convert.KilogramsToPounds' =
 		) =>
 		    kilograms * 2.2046226218487757
 
-	annotation DAXLIB_PackageId = Dax.Convert
+	annotation DAXLIB_PackageId = DaxLib.Convert
 
 	annotation DAXLIB_PackageVersion = 0.1.0-beta
 
@@ -162,7 +162,7 @@ function 'Dax.Convert.KelvinToCelsius' =
 		) =>
 		    temperature - 273.15
 
-	annotation DAXLIB_PackageId = Dax.Convert
+	annotation DAXLIB_PackageId = DaxLib.Convert
 
 	annotation DAXLIB_PackageVersion = 0.1.0-beta
 
@@ -174,7 +174,7 @@ function 'Dax.Convert.KelvinToFahrenheit' =
 		) =>
 		    ( temperature * ( 9 / 5 ) ) - 459.67
 
-	annotation DAXLIB_PackageId = Dax.Convert
+	annotation DAXLIB_PackageId = DaxLib.Convert
 
 	annotation DAXLIB_PackageVersion = 0.1.0-beta
 
@@ -186,7 +186,7 @@ function 'Dax.Convert.KilometersToMiles' =
 		) =>
 		    distance / 1.609344
 
-	annotation DAXLIB_PackageId = Dax.Convert
+	annotation DAXLIB_PackageId = DaxLib.Convert
 
 	annotation DAXLIB_PackageVersion = 0.1.0-beta
 
@@ -198,7 +198,7 @@ function 'Dax.Convert.LitersPerSecondToCubicMetersPerHour' =
 		) =>
 		    flow * 3.6
 
-	annotation DAXLIB_PackageId = Dax.Convert
+	annotation DAXLIB_PackageId = DaxLib.Convert
 
 	annotation DAXLIB_PackageVersion = 0.1.0-beta
 
@@ -210,7 +210,7 @@ function 'Dax.Convert.LitersToGallons' =
 		) =>
 		    volume / 3.785411784
 
-	annotation DAXLIB_PackageId = Dax.Convert
+	annotation DAXLIB_PackageId = DaxLib.Convert
 
 	annotation DAXLIB_PackageVersion = 0.1.0-beta
 
@@ -222,7 +222,7 @@ function 'Dax.Convert.MetersToFeet' =
 		) =>
 		    distance * 3.28084
 
-	annotation DAXLIB_PackageId = Dax.Convert
+	annotation DAXLIB_PackageId = DaxLib.Convert
 
 	annotation DAXLIB_PackageVersion = 0.1.0-beta
 
@@ -234,7 +234,7 @@ function 'Dax.Convert.MilesPerHourToKilometersPerHour' =
 		) =>
 		    speed * 1.609344
 
-	annotation DAXLIB_PackageId = Dax.Convert
+	annotation DAXLIB_PackageId = DaxLib.Convert
 
 	annotation DAXLIB_PackageVersion = 0.1.0-beta
 
@@ -246,7 +246,7 @@ function 'Dax.Convert.MilesToKilometers' =
 		) =>
 		    distance * 1.609344
 
-	annotation DAXLIB_PackageId = Dax.Convert
+	annotation DAXLIB_PackageId = DaxLib.Convert
 
 	annotation DAXLIB_PackageVersion = 0.1.0-beta
 
@@ -258,7 +258,7 @@ function 'Dax.Convert.PoundsToKilograms' =
 		) =>
 		    pounds / 2.2046226218487757
 
-	annotation DAXLIB_PackageId = Dax.Convert
+	annotation DAXLIB_PackageId = DaxLib.Convert
 
 	annotation DAXLIB_PackageVersion = 0.1.0-beta
 
@@ -270,7 +270,7 @@ function 'Dax.Convert.PoundsToStones' =
 		) =>
 		    pounds / 14
 
-	annotation DAXLIB_PackageId = Dax.Convert
+	annotation DAXLIB_PackageId = DaxLib.Convert
 
 	annotation DAXLIB_PackageVersion = 0.1.0-beta
 
@@ -282,7 +282,7 @@ function 'Dax.Convert.SquareFeetToSquareMeters' =
 		) =>
 		    area / 10.763910416709722
 
-	annotation DAXLIB_PackageId = Dax.Convert
+	annotation DAXLIB_PackageId = DaxLib.Convert
 
 	annotation DAXLIB_PackageVersion = 0.1.0-beta
 
@@ -294,7 +294,7 @@ function 'Dax.Convert.SquareMetersToAcres' =
 		) =>
 		    area / 4046.8564224
 
-	annotation DAXLIB_PackageId = Dax.Convert
+	annotation DAXLIB_PackageId = DaxLib.Convert
 
 	annotation DAXLIB_PackageVersion = 0.1.0-beta
 
@@ -306,7 +306,7 @@ function 'Dax.Convert.SquareMetersToSquareFeet' =
 		) =>
 		    area * 10.763910416709722
 
-	annotation DAXLIB_PackageId = Dax.Convert
+	annotation DAXLIB_PackageId = DaxLib.Convert
 
 	annotation DAXLIB_PackageVersion = 0.1.0-beta
 
@@ -318,7 +318,7 @@ function 'Dax.Convert.StonesToPounds' =
 		) =>
 		    stones * 14
 
-	annotation DAXLIB_PackageId = Dax.Convert
+	annotation DAXLIB_PackageId = DaxLib.Convert
 
 	annotation DAXLIB_PackageVersion = 0.1.0-beta
 
@@ -353,7 +353,7 @@ function 'Dax.Convert.TimeUnitsToDurationHHMMSS' =
 		    RETURN
 		        _result // TODO: Should the value be returned as a literal? i.e """" & _result & """"
 
-	annotation DAXLIB_PackageId = Dax.Convert
+	annotation DAXLIB_PackageId = DaxLib.Convert
 
 	annotation DAXLIB_PackageVersion = 0.1.0-beta
 
