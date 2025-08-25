@@ -321,39 +321,3 @@ function 'Dax.Convert.StonesToPounds' =
 	annotation DAXLIB_PackageId = DaxLib.Convert
 
 	annotation DAXLIB_PackageVersion = 0.1.0-beta
-
-/// Time: convert time units to duration in HH:MM:SS format
-function 'Dax.Convert.TimeUnitsToDurationHHMMSS' =
-		(
-		    // The time units
-		    units : INT64,
-		    // The time units type. Valid values are "SS" (seconds) and "MM" (minutes)
-		    unitsType : STRING
-		) =>
-		    VAR _result =
-		        IF (
-		            units < 0,
-		            ERROR ( "Negative values not allowed. (Parameter `units`)" ),
-		            SWITCH (
-		                unitsType,
-		                "SS",
-		                    VAR _hh = INT ( units / 3600 )
-		                    VAR _mm = INT ( MOD ( units, 3600 ) / 60 )
-		                    VAR _ss = MOD ( units, 60 )
-		                    RETURN
-		                        FORMAT ( _hh, "00" ) & ":" & FORMAT ( _mm, "00" ) & ":" & FORMAT ( _ss, "00" ),
-		                "MM",
-		                    VAR _hh = INT ( units / 60 )
-		                    VAR _mm = MOD ( units, 60 )
-		                    RETURN
-		                        FORMAT ( _hh, "00" ) & ":" & FORMAT ( _mm, "00" ) & ":00",
-		                ERROR ( "Invalid value. (Parameter `unitsType`)" )
-		            )
-		        )
-		    RETURN
-		        _result // TODO: Should the value be returned as a literal? i.e """" & _result & """"
-
-	annotation DAXLIB_PackageId = DaxLib.Convert
-
-	annotation DAXLIB_PackageVersion = 0.1.0-beta
-
