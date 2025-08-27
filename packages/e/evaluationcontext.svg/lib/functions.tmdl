@@ -1,0 +1,94 @@
+/// Generate a basic SVG configuration string
+function 'evaluationcontext.SVG.CONFIG' = 
+		(
+			width: INT64,	// The width of the SVG canvas
+			height: INT64	// The height of the SVG canvas
+		) =>
+			VAR Width = 100
+			VAR Height = 20
+			VAR DataURIScheme = "data:image/svg+xml;utf8,"
+			VAR Element = "<svg"
+			VAR Canvas = "width='" & Width & "' height='" & Height & "'"
+			var Viewbox = "viewBox='0 0 " & Width & " " & Height & "'"
+			var XMLNamespace = "xmlns='http://www.w3.org/2000/svg'>"
+			RETURN
+				COMBINEVALUES( " ", DataURIScheme, Element, Canvas, Viewbox, XMLNamespace )
+
+	annotation DAXLIB_PackageId = EvaluationContext.SVG
+
+	annotation DAXLIB_PackageVersion = 0.1.0-beta
+
+/// Map a value from one scale to another
+function 'evaluationcontext.SVG.MAPVALUETOSCALE' = 
+		(
+			VALUE: INT64, 	// The value to map
+			FROMMIN: INT64, // The minimum value of the original scale
+			FROMMAX: INT64, // The maximum value of the original scale
+			TOMIN: INT64, 	// The minimum value of the new scale
+			TOMAX: INT64	// The maximum value of the new scale
+		) => 
+			( ( VALUE - FROMMIN ) / ( FROMMAX - FROMMIN ) ) * ( TOMAX - TOMIN ) + TOMIN
+
+	annotation DAXLIB_PackageId = EvaluationContext.SVG
+
+	annotation DAXLIB_PackageVersion = 0.1.0-beta
+
+/// Create a bar SVG for a given column
+function 'evaluationcontext.SVG.BAR' = 
+		(
+			Width: INT64,							 // The width of the SVG canvas
+			Height: INT64,							 // The height of the SVG canvas
+			ColumnRef: EXPR,						 // The column to visualize
+		) => 
+
+			// Config
+			VAR Config = DaxLib.SVG.CONFIG( Width, Height )
+
+			// Style
+			VAR PositiveColor = "#01B8AA",
+			VAR NegativeColor = "#FD625E",
+			VAR ZeroAxisColor = "#A6A6A6"
+			VAR Style =
+				"<style>
+					.bar-positive { fill: " & PositiveColor & "; }
+					.bar-negative { fill: " & NegativeColor & "; }
+					.zero-axis { stroke: " & ZeroAxisColor & "; stroke-width: 1; }
+				</style>"
+
+			// X-axis scale
+			VAR XMin = CALCULATE( MIN( ColumnRef ) , ALLSELECTED() ) 
+			VAR XMax = CALCULATE( MAX( ColumnRef ) , ALLSELECTED() ) 
+
+			// Map the zero point and the current value to the SVG's coordinate system
+			VAR ZeroPoint =     DaxLib.SVG.MAPVALUETOSCALE( 0, XMin, Xmax, 0, width)
+			VAR CurrentValue =  SUM( ColumnRef )
+			VAR ValuePoint =    DaxLib.SVG.MAPVALUETOSCALE( CurrentValue, XMin, Xmax, 0, width )
+
+			// SVG Elements
+
+				// Rect
+				VAR RectClass = 	IF( CurrentValue >= 0, "class='bar-positive'", "class='bar-negative'" ) 
+				VAR RectWidth = 	ABS( ValuePoint - ZeroPoint )
+				VAR RectX = 		IF( ValuePoint > ZeroPoint, ZeroPoint, ValuePoint )
+				VAR Rect = 			"<rect " & RectClass & " x='" & RectX & "' y='" & Height / 4 & "' width='" & RectWidth & "' height='" & Height / 2 & "' />"
+
+				// Zero Axis
+				VAR ZeroAxis = 		"<line class='zero-axis' x1='" & ZeroPoint & "' y1='0' x2='" & ZeroPoint & "' y2='" & height & "' />"
+
+				// Combine SVG Elements
+				VAR SvgElements = "
+					<rect class='bg' x='0' y='0' width='" & Width & "' height='" & Height & "' />
+					" & ZeroAxis & "
+					" & Rect & "
+				"
+
+			RETURN
+			Config &
+			Style &
+			SvgElements &
+			"</svg>"
+		)
+
+	annotation DAXLIB_PackageId = EvaluationContext.SVG
+
+	annotation DAXLIB_PackageVersion = 0.1.0-beta
