@@ -1,0 +1,617 @@
+createOrReplace
+
+	function 'SVG.Calc.AxisMax' = ```
+
+			/// Calculate the maximum for a value plotted on an SVG
+			(
+			    // The actual you will measure
+			    // Expects a measure reference
+			    actual : EXPR,
+
+			    // The target you will compare to
+			    // Expects a measure reference
+			    target : EXPR,
+
+			    // The scope of the data for which the SVG will be used
+			    // Expects a table expression
+			    data_scope : EXPR
+			)
+			=>
+			    VAR _Scope = data_scope
+			    VAR _MaxActualsInScope =
+			        CALCULATE(
+			            MAXX( _Scope, actual ),
+			            _Scope
+			        )
+
+			    VAR _MaxTargetInScope =
+			        CALCULATE(
+			            MAXX( _Scope, target ),
+			            _Scope
+			        )
+
+			    VAR _Result =
+			        MAX( _MaxActualsInScope, _MaxTargetInScope ) * 1.1
+
+			    RETURN
+			        _Result
+			```
+		lineageTag: fbaa5b18-3225-4a0c-8df3-71c3736c1aef
+
+		annotation DAXLIB_PackageId = DaxLib.SVG
+
+		annotation DAXLIB_PackageVersion = 0.1.0-beta
+
+	function 'SVG.Calc.AxisRange' = ```
+
+			/// Determines the axis range by subtracting the minimum from the maximum
+			(
+			    // The highest expected value
+			    // Recommended: Use SVG.Calc.AxisMax
+			    max_value : SCALAR NUMERIC VAL,
+
+			    // The lowest expected value
+			    // Typically a fixed value
+			    min_value : SCALAR NUMERIC VAL
+			)
+			=>
+			    max_value - min_value
+			```
+		lineageTag: 1c2b6db8-47fa-4b9c-91e6-5ee34040f232
+
+		annotation DAXLIB_PackageId = DaxLib.SVG
+
+		annotation DAXLIB_PackageVersion = 0.1.0-beta
+
+	function 'SVG.Calc.Normalize' = ```
+
+			/// Normalize a value that you want to use in an SVG visualization
+			(
+			    // The value being plotted
+			    input_value,
+
+			    // The maximum value of the axis
+			    axis_max,
+
+			    // The range of the axis
+			    axis_range
+			)
+			    => DIVIDE ( input_value, axis_max ) * axis_range
+			```
+		lineageTag: dc6fb109-470a-49bb-ab98-26fa5647b0da
+
+		annotation DAXLIB_PackageId = DaxLib.SVG
+
+		annotation DAXLIB_PackageVersion = 0.1.0-beta
+
+	function 'SVG.Chart.BulletChart.ActionDot' = ```
+
+			/// Example chart created using the DaxLib.SVG functions
+			///
+			/// Generate SVG performance bar with target line and status indicator
+			/// Returns SVG string for use in Table/Matrix visuals (set Image size: Height 25px, Width 100px)
+			(
+			    // Actual measure to evaluate
+			    actual : EXPR,
+
+			    // Target measure to evaluate
+			    target : EXPR,
+
+			    // Table scope for calculating axis max
+			    // - Example: ALL('Customers'[Key Account Name])
+			    // - Note: Currently does not support column reference(s) and grand total
+			    data_scope : EXPR,
+
+			    // Performance thresholds
+			    threshold_very_bad : SCALAR NUMERIC VAL,
+			    threshold_bad : SCALAR NUMERIC VAL,
+			    threshold_good : SCALAR NUMERIC VAL,
+			    threshold_very_good : SCALAR NUMERIC VAL,
+
+			    // Status colors
+			    color_bad_low : SCALAR STRING VAL,
+			    color_bad_high : SCALAR STRING VAL,
+			    color_good_low : SCALAR STRING VAL,
+			    color_good_high : SCALAR STRING VAL
+			)
+
+			=>
+			    -- Chart dimensions
+			    VAR _BarMax = 100
+			    VAR _BarMin = 20
+
+			    -- Fixed color config (not parameterized)
+			    VAR _ColorBackground = "#F5F5F5"
+			    VAR _ColorBaseline = "#EFEFEF"
+			    VAR _ColorTarget = "black"
+
+			    -- Get current values
+			    VAR _Actual = actual
+			    VAR _Target = target
+
+			    -- Calculate performance
+			    VAR _Performance =
+			        DIVIDE ( _Actual - _Target, _Target )
+
+			    -- Determine performance color (for both dot and bar)
+			    VAR _PerformanceColor =
+			        SWITCH (
+			            TRUE(),
+			            _Performance < threshold_very_bad, color_bad_low,
+			            _Performance < threshold_bad, color_bad_high,
+			            _Performance > threshold_very_good, color_good_high,
+			            _Performance > threshold_good, color_good_low,
+			            "#CFCFCF"  -- Default grey when no threshold met
+			        )
+
+			    -- Action dot uses same color logic, but transparent if neutral
+			    VAR _ActionDotFill =
+			        IF (
+			            _Performance >= threshold_bad && _Performance <= threshold_good,
+			            "#FFFFFF00",  -- Transparent for neutral range
+			            _PerformanceColor
+			        )
+
+			    VAR _AxisMax =
+			        SVG.Calc.AxisMax( actual, target, data_scope )
+
+			    VAR _AxisRange =
+			        SVG.Calc.AxisRange( _BarMax, _BarMin )
+
+			    VAR _ActualNormalized =
+			        SVG.Calc.Normalize( actual, _AxisMax, _AxisRange )
+
+			    VAR _TargetNormalized =
+			        SVG.Calc.Normalize( target, _AxisMax, _AxisRange ) + _BarMin - 1
+
+
+			    -- SVG components
+			    VAR _SvgContent =
+
+			        -- Action Dot
+			        SVG.Component.Circles(
+			            10,
+			            10,
+			            5,
+			            _ActionDotFill
+			        )
+			        &
+
+			        -- Bar Baseline
+			        SVG.Component.Rects(
+			            _BarMin,
+			            4,
+			            1,
+			            "60%",
+			            _ColorBaseline,
+			            "",
+			            "",
+			            "",
+			            ""
+			        )
+			        &
+
+			        -- Bar Background
+			        SVG.Component.Rects(
+			            _BarMin,
+			            2,
+			            _BarMax,
+			            "80%",
+			            _ColorBackground,
+			            "",
+			            "",
+			            "",
+			            ""
+			        )
+			        &
+
+			        -- Actual Bar
+			        SVG.Component.Rects(
+			            _BarMin,
+			            5,
+			            _ActualNormalized,
+			            "50%",
+			            "#CFCFCF",
+			            "",
+			            "",
+			            "",
+			            ""
+			        )
+
+			        &
+
+			        -- Target Line
+			        SVG.Component.Rects(
+			            _TargetNormalized,
+			            2,
+			            2,
+			            "80%",
+			            _ColorTarget,
+			            "",
+			            "",
+			            "",
+			            ""
+			        )
+
+			    -- Final SVG
+			    VAR _Svg =
+			        SVG.Component.PowerBI(
+			            _SvgContent,
+			            _Actual,
+			            "",
+			            "",
+			            "",
+			            "#FFFFFF00"
+			        )
+
+			RETURN
+			    _Svg
+			```
+		lineageTag: f9f873eb-a3fe-437a-947f-c96893efacaa
+
+		annotation DAXLIB_PackageId = DaxLib.SVG
+
+		annotation DAXLIB_PackageVersion = 0.1.0-beta
+
+	function 'SVG.Component.Circles' = ```
+
+			/// Generates SVG circle element
+			///
+			/// Warning: Any measures that use this function must have the "DataCategory" property = "ImageUrl"
+			/// Enter "" to skip any optional parameter
+			(
+			    // X-axis Position (top-left corner is 0)
+			    cx : SCALAR VAL,
+
+			    // Y-axis Position (top-left corner is 0)
+			    cy : SCALAR VAL,
+
+			    // Radius (in pixels)
+			    r : SCALAR VAL,
+
+			    // Fill colour
+			    fill_colour : SCALAR VAL
+			)
+			=>
+			    "<circle cx='" & cx &
+			    "' cy='" & cy &
+			    "' r='" & r &
+			    "' fill='" & fill_colour &
+			    "'/>"
+			```
+		lineageTag: a66fe22b-fa0d-455c-987f-7369465c2a78
+
+		annotation DAXLIB_PackageId = DaxLib.SVG
+
+		annotation DAXLIB_PackageVersion = 0.1.0-beta
+
+	function 'SVG.Component.Groups' = ```
+
+			/// Generates SVG group element
+			///
+			/// Warning: Any measures that use this function must have the "DataCategory" property = "ImageUrl"
+			/// Enter "" to skip any optional parameter
+			(
+			    // Content to group
+			    // Recommendation: Include all content in a single _SvgGroup variable defined upstream
+			    contents : SCALAR VAL,
+
+			    // Transform (e.g., "translate(50,50) rotate(45)", optional)
+			    transform : SCALAR VAL,
+
+			    // Opacity for entire group (0-1, optional)
+			    opacity : SCALAR VAL
+			)
+			=>
+			    "<g" &
+			    " transform='" & transform & "'" &
+			    " opacity='" & opacity & "'" &
+			    ">" & contents & "</g>"
+			```
+		lineageTag: 987015fc-4f77-4e65-a657-e558918b8ceb
+
+		annotation DAXLIB_PackageId = DaxLib.SVG
+
+		annotation DAXLIB_PackageVersion = 0.1.0-beta
+
+	function 'SVG.Component.Lines' = ```
+
+			/// Generates SVG line element
+			///
+			/// Warning: Any measures that use this function must have the "DataCategory" property = "ImageUrl"
+			/// Enter "" to skip any optional parameter
+			(
+			    // Starting X position (left edge is 0)
+			    x1 : SCALAR VAL,
+
+			    // Starting Y position (top edge is 0)
+			    y1 : SCALAR VAL,
+
+			    // Ending X position (left edge is 0)
+			    x2 : SCALAR VAL,
+
+			    // Ending Y position (top edge is 0)
+			    y2 : SCALAR VAL,
+
+			    // Stroke colour (line colour)
+			    stroke_colour : SCALAR VAL,
+
+			    // Stroke width (line width)
+			    stroke_width : SCALAR VAL,
+
+			    // Stroke dasharray (e.g., "5,5" for dashed, optional)
+			    stroke_dasharray : SCALAR VAL,
+
+			    // Stroke linecap ("butt", "round", "square", optional)
+			    stroke_linecap : SCALAR VAL,
+
+			    // Opacity (0-1, optional)
+			    opacity : SCALAR VAL
+			)
+			=>
+			    "<line x1='" & x1 &
+			    "' y1='" & y1 &
+			    "' x2='" & x2 &
+			    "' y2='" & y2 &
+			    "' stroke='" & stroke_colour &
+			    "' stroke-width='" & stroke_width &
+			    "' stroke-dasharray='" & stroke_dasharray &
+			    "' stroke-linecap='" & stroke_linecap &
+			    "' opacity='" & opacity &
+			    "'/>"
+			```
+		lineageTag: 909fa513-4cad-4b16-8d2f-d16446a86eb1
+
+		annotation DAXLIB_PackageId = DaxLib.SVG
+
+		annotation DAXLIB_PackageVersion = 0.1.0-beta
+
+	function 'SVG.Component.Paths' = ```
+
+			/// Generates SVG path element
+			///
+			/// Warning: Any measures that use this function must have the "DataCategory" property = "ImageUrl"
+			/// Enter "" to skip any optional parameter
+			(
+			    // Path data (e.g., "M10 10 L90 90")
+			    d : SCALAR VAL,
+
+			    // Fill colour ("none" for no fill)
+			    fill_colour : SCALAR VAL,
+
+			    // Stroke colour
+			    stroke_colour : SCALAR VAL,
+
+			    // Stroke width
+			    stroke_width : SCALAR VAL,
+
+			    // Stroke linejoin ("miter", "round", "bevel", optional)
+			    stroke_linejoin : SCALAR VAL,
+
+			    // Fill rule ("nonzero", "evenodd", optional)
+			    fill_rule : SCALAR VAL,
+
+			    // Opacity (0-1, optional)
+			    opacity : SCALAR VAL
+			)
+			=>
+			    "<path d='" & d &
+			    "' fill='" & fill_colour &
+			    "' stroke='" & stroke_colour &
+			    "' stroke-width='" & stroke_width &
+			    "' stroke-linejoin='" & stroke_linejoin &
+			    "' fill-rule='" & fill_rule &
+			    "' opacity='" & opacity &
+			    "'/>"
+			```
+		lineageTag: b44c474a-8582-42f7-8c24-abba21afb593
+
+		annotation DAXLIB_PackageId = DaxLib.SVG
+
+		annotation DAXLIB_PackageVersion = 0.1.0-beta
+
+	function 'SVG.Component.Polygons' = ```
+
+			/// Generates SVG polygon element
+			///
+			/// Warning: Any measures that use this function must have the "DataCategory" property = "ImageUrl"
+			/// Enter "" to skip any optional parameter
+			(
+			    // Points as space-separated x,y pairs (e.g., "10,10 50,10 30,40")
+			    points : SCALAR VAL,
+
+			    // Fill colour
+			    fill_colour : SCALAR VAL,
+
+			    // Stroke colour (optional)
+			    stroke_colour : SCALAR VAL,
+
+			    // Stroke width (optional)
+			    stroke_width : SCALAR VAL,
+
+			    // Opacity (0-1, optional)
+			    opacity : SCALAR VAL
+			)
+			=>
+			    "<polygon points='" & points &
+			    "' fill='" & fill_colour &
+			    "' stroke='" & stroke_colour &
+			    "' stroke-width='" & stroke_width &
+			    "' opacity='" & opacity &
+			    "'/>"
+			```
+		lineageTag: d52c435b-81b6-407f-bf8c-5dec4b03452d
+
+		annotation DAXLIB_PackageId = DaxLib.SVG
+
+		annotation DAXLIB_PackageVersion = 0.1.0-beta
+
+	function 'SVG.Component.PowerBI' = ```
+
+			/// Wraps content in SVG container for Power BI visualization
+			///
+			/// Warning: Any measures that use this function must have the "DataCategory" property = "ImageUrl"
+			/// Enter "" to skip any optional parameter
+			(
+			    // SVG content (elements to include)
+			    // Recommended: Include all elements as a single _Svg variable, defined upstream.
+			    contents : SCALAR VAL,
+
+			    // Optional sort value for ordering in tables
+			    sort_value : EXPR,
+
+			    // Optional viewBox (e.g., "0 0 100 100")
+			    viewbox : SCALAR VAL,
+
+			    // Optional width (pixels or percentage)
+			    width : SCALAR VAL,
+
+			    // Optional height (pixels or percentage)
+			    height : SCALAR VAL,
+
+			    // Optional background color
+			    // Recommended: Enter "#FFFFFF00" for none
+			    background : SCALAR VAL
+			)
+			=>
+			    VAR _Prefix =
+			        "data:image/svg+xml;utf8, <svg xmlns='http://www.w3.org/2000/svg'" &
+			        " viewBox='" & viewbox & "'" &
+			        " width='" & width & "'" &
+			        " height='" & height & "'" &
+			        ">"
+
+			    VAR _SortDesc =
+			        "<desc>" & FORMAT(sort_value, "000000000000") & "</desc>"
+
+			    VAR _BackgroundColour =
+			        IF ( ISBLANK ( background ) || background = "", "#FFFFFF00", background )
+
+			    VAR _Background =
+			        "<rect x='0' y='0' width='100%' height='100%' fill='" & _BackgroundColour & "'/>"
+
+			    VAR _Suffix = "</svg>"
+
+			    RETURN
+			        _Prefix &
+			        _SortDesc &
+			        _Background &
+			        contents &
+			        _Suffix
+			```
+		lineageTag: bf2a7e0d-c663-4a12-bcca-3a70f94d4587
+
+		annotation DAXLIB_PackageId = DaxLib.SVG
+
+		annotation DAXLIB_PackageVersion = 0.1.0-beta
+
+	function 'SVG.Component.Rects' = ```
+
+			/// Generates SVG rectangle element
+			///
+			/// Warning: Any measures that use this function must have the "DataCategory" property = "ImageUrl"
+			/// Enter "" to skip any optional parameter
+			(
+			    // X-axis position (top-left corner is 0)
+			    x : SCALAR VAL,
+
+			    // Y-axis position (top-left corner is 0)
+			    y : SCALAR VAL,
+
+			    // Width (pixels or percentage like "50%")
+			    width : SCALAR VAL,
+
+			    // Height (pixels or percentage like "50%")
+			    height : SCALAR VAL,
+
+			    // Fill colour (hex or named colour)
+			    fill_colour : SCALAR VAL,
+
+			    // Stroke colour
+			    // (Optional; enter "" to skip)
+			    stroke_colour : SCALAR VAL,
+
+			    // Stroke width
+			    // (Optional; enter BLANK() to skip)
+			    stroke_width : SCALAR VAL,
+
+			    // Corner radius for rounded rectangles
+			    // (Optional; enter BLANK() to skip)
+			    rx : SCALAR VAL,
+
+			    // Opacity (0-1)
+			    // (Optional; enter BLANK() to skip)
+			    opacity : SCALAR VAL
+			)
+			=>
+			    "<rect x='" & x &
+			    "' y='" & y &
+			    "' width='" & width &
+			    "' height='" & height &
+			    "' fill='" & fill_colour &
+			    "' stroke='" & stroke_colour &
+			    "' stroke-width='" & stroke_width &
+			    "' rx='" & rx &
+			    "' opacity='" & opacity &
+			    "'/>"
+			```
+		lineageTag: 1772903a-88ac-4a74-b4ba-6191b1fd5680
+
+		annotation DAXLIB_PackageId = DaxLib.SVG
+
+		annotation DAXLIB_PackageVersion = 0.1.0-beta
+
+	function 'SVG.Component.Texts' = ```
+
+			/// Generates SVG text element
+			///
+			/// Warning: Any measures that use this function must have the "DataCategory" property = "ImageUrl"
+			/// Enter "" to skip any optional parameter
+			(
+			    // X-axis position
+			    x : SCALAR VAL,
+
+			    // Y-axis position (baseline)
+			    y : SCALAR VAL,
+
+			    // Text content
+			    text_content : SCALAR VAL,
+
+			    // Font size (pixels)
+			    text_font_size : SCALAR VAL,
+
+			    // Font family (optional)
+			    font_family : SCALAR VAL,
+
+			    // Fill colour
+			    text_fill_colour : SCALAR VAL,
+
+			    // Text anchor ("start", "middle", "end", optional)
+			    text_anchor : SCALAR VAL,
+
+			    // Font weight ("normal", "bold", optional)
+			    font_weight : SCALAR VAL,
+
+			    // Rotation (degrees, optional)
+			    rotation : SCALAR VAL,
+
+			    // Opacity (0-1, optional)
+			    opacity : SCALAR VAL
+			)
+			=>
+			    "<text x='" & x &
+			    "' y='" & y &
+			    "' font-size='" & text_font_size &
+			    "' fill='" & text_fill_colour &
+			    "' font-family='" & font_family &
+			    "' text-anchor='" & text_anchor &
+			    "' font-weight='" & font_weight &
+			    "' transform='rotate(" & rotation & " " & x & " " & y & ")" &
+			    "' opacity='" & opacity &
+			    "'>" & text_content & "</text>"
+			```
+		lineageTag: c1959f8a-1799-4345-bb0c-b2d4ab783cc7
+
+		annotation DAXLIB_PackageId = DaxLib.SVG
+
+		annotation DAXLIB_PackageVersion = 0.1.0-beta
