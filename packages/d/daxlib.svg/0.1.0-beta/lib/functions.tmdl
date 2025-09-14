@@ -72,6 +72,10 @@ function 'DaxLib.SVG.Calc.AngleFromPercent' = ```
 		start_angle + (perc / 100 * sweep_angle)
 		```
 
+	annotation DAXLIB_PackageId = DaxLib.SVG
+
+	annotation DAXLIB_PackageVersion = 0.1.0-beta
+
 function 'DaxLib.SVG.Calc.ArcPath' = ```
 
 	// Generates path data for arc segments used in donut and gauge charts
@@ -127,6 +131,10 @@ function 'DaxLib.SVG.Calc.ArcPath' = ```
 				_X2 & " " & _Y2 & " Z"
 			)
 		```
+
+	annotation DAXLIB_PackageId = DaxLib.SVG
+
+	annotation DAXLIB_PackageVersion = 0.1.0-beta
 
 function 'DaxLib.SVG.Calc.AxisMax' = ```
 
@@ -276,6 +284,10 @@ function 'DaxLib.SVG.Calc.ColourScale' = ```
 		)
 		```
 
+	annotation DAXLIB_PackageId = DaxLib.SVG
+
+	annotation DAXLIB_PackageVersion = 0.1.0-beta
+
 function 'DaxLib.SVG.Calc.Normalize' = ```
 
 	// Normalize a value that you want to use in an SVG visualization
@@ -311,6 +323,10 @@ function 'DaxLib.SVG.Calc.ToPercent' = ```
 	) =>
 		DIVIDE(decimal_value - min_value, max_value - min_value) * 100
 		```
+
+	annotation DAXLIB_PackageId = DaxLib.SVG
+
+	annotation DAXLIB_PackageVersion = 0.1.0-beta
 
 function 'DaxLib.SVG.Component.Circles' = ```
 
@@ -376,6 +392,10 @@ function 'DaxLib.SVG.Component.ClipPaths' = ```
 		"</clipPath>"
 		```
 
+	annotation DAXLIB_PackageId = DaxLib.SVG
+
+	annotation DAXLIB_PackageVersion = 0.1.0-beta
+
 function 'DaxLib.SVG.Component.Ellipses' = ```
 
 	// Generates SVG ellipse element for oval shapes
@@ -419,6 +439,10 @@ function 'DaxLib.SVG.Component.Ellipses' = ```
 		"'/>"
 		```
 
+	annotation DAXLIB_PackageId = DaxLib.SVG
+
+	annotation DAXLIB_PackageVersion = 0.1.0-beta
+
 function 'DaxLib.SVG.Component.LinearGradients' = ```
 
 	// Creates a linear gradient definition for use in fills
@@ -461,6 +485,10 @@ function 'DaxLib.SVG.Component.LinearGradients' = ```
 		"<stop offset='" & offset2 & "%' stop-color='" & colour2 & "'/>" &
 		"</linearGradient></defs>"
 		```
+
+	annotation DAXLIB_PackageId = DaxLib.SVG
+
+	annotation DAXLIB_PackageVersion = 0.1.0-beta
 
 function 'DaxLib.SVG.Component.Groups' = ```
 
