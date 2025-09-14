@@ -674,6 +674,10 @@ function 'DaxLib.SVG.Component.Polylines' = ```
 		"/>"
 		```
 
+	annotation DAXLIB_PackageId = DaxLib.SVG
+
+	annotation DAXLIB_PackageVersion = 0.1.0-beta
+
 function 'DaxLib.SVG.Component.Rects' = ```
 
 	// Generates SVG rectangle element
