@@ -1,0 +1,9 @@
+{
+  "$schema": "https://raw.githubusercontent.com/sql-bi/daxlib/refs/heads/main/schemas/manifest/1.0.0/manifest.1.0.0.schema.json",
+  "id": "DaxLib.SVG",
+  "version": "0.1.0-beta",
+  "authors": "Kurt Buhler",
+  "description": "A set of User-Defined Functions for various SVG components, calculations, and charts. The functions allow for easier composition of SVG visualizations.",
+  "tags": "DAX,UDF,FUNCTION,LIB,SVG",
+  "icon": "/icon.png"
+}
