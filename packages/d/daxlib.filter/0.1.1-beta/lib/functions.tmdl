@@ -41,7 +41,7 @@ function 'DaxLib.Filter.FirstValue' = ```
     ) => 
     CALCULATE (
         valueExpr,
-        DaxLib.Filter.LastDateWithTransactions ( dateColumn, dateTransaction )
+        DaxLib.Filter.FirstDateWithTransactions ( dateColumn, dateTransaction )
     )
     ```
     annotation DAXLIB_PackageId = DaxLib.Filter
@@ -124,9 +124,9 @@ function 'DaxLib.Filter.RangeLookup' = ```
         SELECTCOLUMNS (
             FILTER (
                 lookupTable,
-                colMin <= search && colMax > search
+                minColumn <= searchValue && maxColumn > searchValue
             ),
-            "@Result", colTarget
+            "@Result", targetColumn
         )
         ```
     annotation DAXLIB_PackageId = DaxLib.Filter
