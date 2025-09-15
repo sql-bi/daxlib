@@ -54,7 +54,7 @@ function 'DaxLib.SVG.Component.PowerBI' = ```
 
 	annotation DAXLIB_PackageId = DaxLib.SVG
 
-	annotation DAXLIB_PackageVersion = 0.1.0-beta
+	annotation DAXLIB_PackageVersion = 0.1.1-beta
 
 function 'DaxLib.SVG.Calc.AngleFromPercent' = ```
 
@@ -74,7 +74,7 @@ function 'DaxLib.SVG.Calc.AngleFromPercent' = ```
 
 	annotation DAXLIB_PackageId = DaxLib.SVG
 
-	annotation DAXLIB_PackageVersion = 0.1.0-beta
+	annotation DAXLIB_PackageVersion = 0.1.1-beta
 
 function 'DaxLib.SVG.Calc.ArcPath' = ```
 
@@ -134,7 +134,7 @@ function 'DaxLib.SVG.Calc.ArcPath' = ```
 
 	annotation DAXLIB_PackageId = DaxLib.SVG
 
-	annotation DAXLIB_PackageVersion = 0.1.0-beta
+	annotation DAXLIB_PackageVersion = 0.1.1-beta
 
 function 'DaxLib.SVG.Calc.AxisMax' = ```
 
@@ -191,7 +191,7 @@ function 'DaxLib.SVG.Calc.AxisMax' = ```
 
 	annotation DAXLIB_PackageId = DaxLib.SVG
 
-	annotation DAXLIB_PackageVersion = 0.1.0-beta
+	annotation DAXLIB_PackageVersion = 0.1.1-beta
 
 function 'DaxLib.SVG.Calc.AxisMin' = ```
 
@@ -232,7 +232,7 @@ function 'DaxLib.SVG.Calc.AxisMin' = ```
 
 	annotation DAXLIB_PackageId = DaxLib.SVG
 
-	annotation DAXLIB_PackageVersion = 0.1.0-beta
+	annotation DAXLIB_PackageVersion = 0.1.1-beta
 
 function 'DaxLib.SVG.Calc.AxisRange' = ```
 
@@ -252,7 +252,7 @@ function 'DaxLib.SVG.Calc.AxisRange' = ```
 
 	annotation DAXLIB_PackageId = DaxLib.SVG
 
-	annotation DAXLIB_PackageVersion = 0.1.0-beta
+	annotation DAXLIB_PackageVersion = 0.1.1-beta
 
 function 'DaxLib.SVG.Calc.ColourScale' = ```
 
@@ -286,7 +286,7 @@ function 'DaxLib.SVG.Calc.ColourScale' = ```
 
 	annotation DAXLIB_PackageId = DaxLib.SVG
 
-	annotation DAXLIB_PackageVersion = 0.1.0-beta
+	annotation DAXLIB_PackageVersion = 0.1.1-beta
 
 function 'DaxLib.SVG.Calc.Normalize' = ```
 
@@ -306,7 +306,7 @@ function 'DaxLib.SVG.Calc.Normalize' = ```
 
 	annotation DAXLIB_PackageId = DaxLib.SVG
 
-	annotation DAXLIB_PackageVersion = 0.1.0-beta
+	annotation DAXLIB_PackageVersion = 0.1.1-beta
 
 function 'DaxLib.SVG.Calc.ToPercent' = ```
 
@@ -326,7 +326,7 @@ function 'DaxLib.SVG.Calc.ToPercent' = ```
 
 	annotation DAXLIB_PackageId = DaxLib.SVG
 
-	annotation DAXLIB_PackageVersion = 0.1.0-beta
+	annotation DAXLIB_PackageVersion = 0.1.1-beta
 
 function 'DaxLib.SVG.Component.Circles' = ```
 
@@ -358,7 +358,7 @@ function 'DaxLib.SVG.Component.Circles' = ```
 
 	annotation DAXLIB_PackageId = DaxLib.SVG
 
-	annotation DAXLIB_PackageVersion = 0.1.0-beta
+	annotation DAXLIB_PackageVersion = 0.1.1-beta
 
 function 'DaxLib.SVG.Component.ClipPaths' = ```
 
@@ -394,7 +394,7 @@ function 'DaxLib.SVG.Component.ClipPaths' = ```
 
 	annotation DAXLIB_PackageId = DaxLib.SVG
 
-	annotation DAXLIB_PackageVersion = 0.1.0-beta
+	annotation DAXLIB_PackageVersion = 0.1.1-beta
 
 function 'DaxLib.SVG.Component.Ellipses' = ```
 
@@ -441,7 +441,7 @@ function 'DaxLib.SVG.Component.Ellipses' = ```
 
 	annotation DAXLIB_PackageId = DaxLib.SVG
 
-	annotation DAXLIB_PackageVersion = 0.1.0-beta
+	annotation DAXLIB_PackageVersion = 0.1.1-beta
 
 function 'DaxLib.SVG.Component.LinearGradients' = ```
 
@@ -488,7 +488,7 @@ function 'DaxLib.SVG.Component.LinearGradients' = ```
 
 	annotation DAXLIB_PackageId = DaxLib.SVG
 
-	annotation DAXLIB_PackageVersion = 0.1.0-beta
+	annotation DAXLIB_PackageVersion = 0.1.1-beta
 
 function 'DaxLib.SVG.Component.Groups' = ```
 
@@ -517,7 +517,7 @@ function 'DaxLib.SVG.Component.Groups' = ```
 
 	annotation DAXLIB_PackageId = DaxLib.SVG
 
-	annotation DAXLIB_PackageVersion = 0.1.0-beta
+	annotation DAXLIB_PackageVersion = 0.1.1-beta
 
 function 'DaxLib.SVG.Component.Lines' = ```
 
@@ -569,7 +569,7 @@ function 'DaxLib.SVG.Component.Lines' = ```
 
 	annotation DAXLIB_PackageId = DaxLib.SVG
 
-	annotation DAXLIB_PackageVersion = 0.1.0-beta
+	annotation DAXLIB_PackageVersion = 0.1.1-beta
 
 function 'DaxLib.SVG.Component.Paths' = ```
 
@@ -613,7 +613,7 @@ function 'DaxLib.SVG.Component.Paths' = ```
 
 	annotation DAXLIB_PackageId = DaxLib.SVG
 
-	annotation DAXLIB_PackageVersion = 0.1.0-beta
+	annotation DAXLIB_PackageVersion = 0.1.1-beta
 
 function 'DaxLib.SVG.Component.Polygons' = ```
 
@@ -649,7 +649,7 @@ function 'DaxLib.SVG.Component.Polygons' = ```
 
 	annotation DAXLIB_PackageId = DaxLib.SVG
 
-	annotation DAXLIB_PackageVersion = 0.1.0-beta
+	annotation DAXLIB_PackageVersion = 0.1.1-beta
 
 function 'DaxLib.SVG.Component.Polylines' = ```
 
@@ -704,7 +704,7 @@ function 'DaxLib.SVG.Component.Polylines' = ```
 
 	annotation DAXLIB_PackageId = DaxLib.SVG
 
-	annotation DAXLIB_PackageVersion = 0.1.0-beta
+	annotation DAXLIB_PackageVersion = 0.1.1-beta
 
 function 'DaxLib.SVG.Component.Rects' = ```
 
@@ -760,7 +760,7 @@ function 'DaxLib.SVG.Component.Rects' = ```
 
 	annotation DAXLIB_PackageId = DaxLib.SVG
 
-	annotation DAXLIB_PackageVersion = 0.1.0-beta
+	annotation DAXLIB_PackageVersion = 0.1.1-beta
 
 function 'DaxLib.SVG.Component.Texts' = ```
 
@@ -815,7 +815,7 @@ function 'DaxLib.SVG.Component.Texts' = ```
 
 	annotation DAXLIB_PackageId = DaxLib.SVG
 
-	annotation DAXLIB_PackageVersion = 0.1.0-beta
+	annotation DAXLIB_PackageVersion = 0.1.1-beta
 
 function 'DaxLib.SVG.Example.BulletChart.ActionDot' = ```
 
@@ -987,4 +987,4 @@ function 'DaxLib.SVG.Example.BulletChart.ActionDot' = ```
 
 	annotation DAXLIB_PackageId = DaxLib.SVG
 
-	annotation DAXLIB_PackageVersion = 0.1.0-beta
+	annotation DAXLIB_PackageVersion = 0.1.1-beta
