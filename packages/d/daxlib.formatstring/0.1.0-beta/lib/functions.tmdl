@@ -88,7 +88,7 @@ function 'DaxLib.FormatString.RelativeToTarget.Percents' =
 
 	annotation DAXLIB_PackageId = DaxLib.FormatString
 
-	annotation DAXLIB_PackageVersion = 1.0.0-beta
+	annotation DAXLIB_PackageVersion = 0.1.0-beta
 
 function 'DaxLib.FormatString.RelativeToTarget.Numeric' = 
 
@@ -179,7 +179,7 @@ function 'DaxLib.FormatString.RelativeToTarget.Numeric' =
 
 	annotation DAXLIB_PackageId = DaxLib.FormatString
 
-	annotation DAXLIB_PackageVersion = 1.0.0-beta
+	annotation DAXLIB_PackageVersion = 0.1.0-beta
 
 function 'DaxLib.FormatString.HHMMSS.StartTimeEndTime' = 
 
@@ -215,7 +215,7 @@ function 'DaxLib.FormatString.HHMMSS.StartTimeEndTime' =
 
 	annotation DAXLIB_PackageId = DaxLib.FormatString
 
-	annotation DAXLIB_PackageVersion = 1.0.0-beta
+	annotation DAXLIB_PackageVersion = 0.1.0-beta
 
 function 'DaxLib.FormatString.HHMMSS.Seconds' = 
 
@@ -245,7 +245,7 @@ function 'DaxLib.FormatString.HHMMSS.Seconds' =
 
 	annotation DAXLIB_PackageId = DaxLib.FormatString
 
-	annotation DAXLIB_PackageVersion = 1.0.0-beta
+	annotation DAXLIB_PackageVersion = 0.1.0-beta
 
 function 'DaxLib.FormatString.DynamicUnits' = 
 
@@ -305,7 +305,7 @@ function 'DaxLib.FormatString.DynamicUnits' =
 
 	annotation DAXLIB_PackageId = DaxLib.FormatString
 
-	annotation DAXLIB_PackageVersion = 1.0.0-beta
+	annotation DAXLIB_PackageVersion = 0.1.0-beta
 
 function 'DaxLib.FormatString.DynamicCurrency' = 
 
@@ -345,7 +345,7 @@ function 'DaxLib.FormatString.DynamicCurrency' =
 
 	annotation DAXLIB_PackageId = DaxLib.FormatString
 
-	annotation DAXLIB_PackageVersion = 1.0.0-beta
+	annotation DAXLIB_PackageVersion = 0.1.0-beta
 
 function 'DaxLib.FormatString.Component.Symbols' = 
 
@@ -421,7 +421,7 @@ function 'DaxLib.FormatString.Component.Symbols' =
 
 	annotation DAXLIB_PackageId = DaxLib.FormatString
 
-	annotation DAXLIB_PackageVersion = 1.0.0-beta
+	annotation DAXLIB_PackageVersion = 0.1.0-beta
 
 function 'DaxLib.FormatString.Component.MakeStringSafe' = 
 
@@ -435,7 +435,7 @@ function 'DaxLib.FormatString.Component.MakeStringSafe' =
 
 	annotation DAXLIB_PackageId = DaxLib.FormatString
 
-	annotation DAXLIB_PackageVersion = 1.0.0-beta
+	annotation DAXLIB_PackageVersion = 0.1.0-beta
 
 function 'DaxLib.FormatString.Component.GetCurrencySymbol' = 
 
@@ -466,7 +466,7 @@ function 'DaxLib.FormatString.Component.GetCurrencySymbol' =
 
 	annotation DAXLIB_PackageId = DaxLib.FormatString
 
-	annotation DAXLIB_PackageVersion = 1.0.0-beta
+	annotation DAXLIB_PackageVersion = 0.1.0-beta
 
 function 'DaxLib.FormatString.Component.GetCurrencyPosition' = 
 
@@ -497,7 +497,7 @@ function 'DaxLib.FormatString.Component.GetCurrencyPosition' =
 
 	annotation DAXLIB_PackageId = DaxLib.FormatString
 
-	annotation DAXLIB_PackageVersion = 1.0.0-beta
+	annotation DAXLIB_PackageVersion = 0.1.0-beta
 
 function 'DaxLib.FormatString.Component.GetCurrencyFormat.PNZ' = 
 
@@ -528,7 +528,7 @@ function 'DaxLib.FormatString.Component.GetCurrencyFormat.PNZ' =
 
 	annotation DAXLIB_PackageId = DaxLib.FormatString
 
-	annotation DAXLIB_PackageVersion = 1.0.0-beta
+	annotation DAXLIB_PackageVersion = 0.1.0-beta
 
 function 'DaxLib.FormatString.Component.GetCurrencyFormat' = 
 
@@ -559,7 +559,7 @@ function 'DaxLib.FormatString.Component.GetCurrencyFormat' =
 
 	annotation DAXLIB_PackageId = DaxLib.FormatString
 
-	annotation DAXLIB_PackageVersion = 1.0.0-beta
+	annotation DAXLIB_PackageVersion = 0.1.0-beta
 
 function 'DaxLib.FormatString.Component.DynamicUnits' = 
 
@@ -599,7 +599,7 @@ function 'DaxLib.FormatString.Component.DynamicUnits' =
 
 	annotation DAXLIB_PackageId = DaxLib.FormatString
 
-	annotation DAXLIB_PackageVersion = 1.0.0-beta
+	annotation DAXLIB_PackageVersion = 0.1.0-beta
 
 function 'DaxLib.FormatString.Component.DecimalPlaces' = 
 
@@ -625,7 +625,7 @@ function 'DaxLib.FormatString.Component.DecimalPlaces' =
 
 	annotation DAXLIB_PackageId = DaxLib.FormatString
 
-	annotation DAXLIB_PackageVersion = 1.0.0-beta
+	annotation DAXLIB_PackageVersion = 0.1.0-beta
 
 function 'DaxLib.FormatString.Component.CurrencyTable' = 
 
@@ -747,4 +747,4 @@ function 'DaxLib.FormatString.Component.CurrencyTable' =
 
 	annotation DAXLIB_PackageId = DaxLib.FormatString
 
-	annotation DAXLIB_PackageVersion = 1.0.0-beta
+	annotation DAXLIB_PackageVersion = 0.1.0-beta
