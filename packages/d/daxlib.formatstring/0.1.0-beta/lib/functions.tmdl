@@ -1,4 +1,4 @@
-function 'DaxLib.FormatString.RelativeToTarget.Percents' = ```
+function 'DaxLib.FormatString.RelativeToTarget.Percents' = 
 
 		// Dynamic format string generator for comparison values (in percent)
 		// Returns format string with directional indicators based on parameters
@@ -40,19 +40,19 @@ function 'DaxLib.FormatString.RelativeToTarget.Percents' = ```
 		)
 		=>
 		    VAR _BaseFormat =
-		        FormatString.Component.DecimalPlaces( "#,##0", decimal_places ) & "%"
+		        DaxLib.FormatString.Component.DecimalPlaces( "#,##0", decimal_places ) & "%"
 
 		    VAR _Prefix =
-		        FormatString.Component.MakeStringSafe ( custom_prefix )
+		        DaxLib.FormatString.Component.MakeStringSafe ( custom_prefix )
 
 		    VAR _Suffix =
-		        FormatString.Component.MakeStringSafe ( custom_suffix )
+		        DaxLib.FormatString.Component.MakeStringSafe ( custom_suffix )
 
 		    VAR _PositiveSymbol =
-		        FormatString.Component.Symbols ( symbol, "POSITIVE" )
+		        DaxLib.FormatString.Component.Symbols ( symbol, "POSITIVE" )
 
 		    VAR _NegativeSymbol =
-		        FormatString.Component.Symbols ( symbol, "NEGATIVE" )
+		        DaxLib.FormatString.Component.Symbols ( symbol, "NEGATIVE" )
 
 		    VAR _PositiveFormat =
 		        _Prefix
@@ -85,13 +85,12 @@ function 'DaxLib.FormatString.RelativeToTarget.Percents' = ```
 
 		    RETURN
 		        _PositiveFormat & ";" & _NegativeFormat & ";" & _ZeroFormat
-		```
 
 	annotation DAXLIB_PackageId = DaxLib.FormatString
 
-	annotation DAXLIB_PackageVersion = 0.1.0-beta
+	annotation DAXLIB_PackageVersion = 1.0.0-beta
 
-function 'DaxLib.FormatString.RelativeToTarget.Numeric' = ```
+function 'DaxLib.FormatString.RelativeToTarget.Numeric' = 
 
 		// Dynamic format string generator for comparison values (in value)
 		// Returns format string with directional indicators based on parameters
@@ -132,19 +131,19 @@ function 'DaxLib.FormatString.RelativeToTarget.Numeric' = ```
 		    custom_suffix: EXPR
 		) =>
 		    VAR _BaseFormat =
-		        FormatString.Component.DecimalPlaces( "#,##0", decimal_places ) & "%"
+		        DaxLib.FormatString.Component.DecimalPlaces( "#,##0", decimal_places ) & "%"
 
 		    VAR _Prefix =
-		        FormatString.Component.MakeStringSafe ( custom_prefix )
+		        DaxLib.FormatString.Component.MakeStringSafe ( custom_prefix )
 
 		    VAR _Suffix =
-		        FormatString.Component.MakeStringSafe ( custom_suffix )
+		        DaxLib.FormatString.Component.MakeStringSafe ( custom_suffix )
 
 		    VAR _PositiveSymbol =
-		        FormatString.Component.Symbols ( symbol, "POSITIVE" )
+		        DaxLib.FormatString.Component.Symbols ( symbol, "POSITIVE" )
 
 		    VAR _NegativeSymbol =
-		        FormatString.Component.Symbols ( symbol, "NEGATIVE" )
+		        DaxLib.FormatString.Component.Symbols ( symbol, "NEGATIVE" )
 
 		    VAR _PositiveFormat =
 		        _Prefix
@@ -177,13 +176,12 @@ function 'DaxLib.FormatString.RelativeToTarget.Numeric' = ```
 		        _PositiveFormat & ";" & _NegativeFormat
 		            & ";"
 		            & _ZeroFormat
-		```
 
 	annotation DAXLIB_PackageId = DaxLib.FormatString
 
-	annotation DAXLIB_PackageVersion = 0.1.0-beta
+	annotation DAXLIB_PackageVersion = 1.0.0-beta
 
-function 'DaxLib.FormatString.HHMMSS.StartTimeEndTime' = ```
+function 'DaxLib.FormatString.HHMMSS.StartTimeEndTime' = 
 
 		// Convert duration between start and end times to HH:MM:SS format string
 		(
@@ -214,13 +212,12 @@ function 'DaxLib.FormatString.HHMMSS.StartTimeEndTime' = ```
 
 		    RETURN
 		        _Result
-		```
 
 	annotation DAXLIB_PackageId = DaxLib.FormatString
 
-	annotation DAXLIB_PackageVersion = 0.1.0-beta
+	annotation DAXLIB_PackageVersion = 1.0.0-beta
 
-function 'DaxLib.FormatString.HHMMSS.Seconds' = ```
+function 'DaxLib.FormatString.HHMMSS.Seconds' = 
 
 		// Convert duration in seconds to HH:MM:SS format string
 		(
@@ -245,13 +242,12 @@ function 'DaxLib.FormatString.HHMMSS.Seconds' = ```
 
 		    RETURN
 		        _Result
-		```
 
 	annotation DAXLIB_PackageId = DaxLib.FormatString
 
-	annotation DAXLIB_PackageVersion = 0.1.0-beta
+	annotation DAXLIB_PackageVersion = 1.0.0-beta
 
-function 'DaxLib.FormatString.DynamicUnits' = ```
+function 'DaxLib.FormatString.DynamicUnits' = 
 
 		// Dynamic format string with automatic K/M/bn/tn suffix, rounding, and decimal places based on value magnitude
 		// Supports dynamic currency conversion
@@ -285,7 +281,7 @@ function 'DaxLib.FormatString.DynamicUnits' = ```
 		)
 		=>
 		    VAR _NumberFormat =
-		        FormatString.Component.DynamicUnits( "#,##0", format_value )
+		        DaxLib.FormatString.Component.DynamicUnits( "#,##0", format_value )
 
 		    VAR _CurrencySymbol =
 		        currency_symbol
@@ -295,24 +291,23 @@ function 'DaxLib.FormatString.DynamicUnits' = ```
 
 		    VAR _Prefix =
 		        IF ( _CurrencyPosition = "PREFIX", _CurrencySymbol & " ", "" ) &
-		        FormatString.Component.MakeStringSafe( custom_prefix )
+		        DaxLib.FormatString.Component.MakeStringSafe( custom_prefix )
 
 		    VAR _Suffix =
 		        IF ( _CurrencyPosition = "SUFFIX", " " & _CurrencySymbol, "" ) &
-		        FormatString.Component.MakeStringSafe( custom_suffix )
+		        DaxLib.FormatString.Component.MakeStringSafe( custom_suffix )
 
 		    VAR _FormatString =
 		        _Prefix & _NumberFormat & _Suffix
 
 		    RETURN
 		        _FormatString
-		```
 
 	annotation DAXLIB_PackageId = DaxLib.FormatString
 
-	annotation DAXLIB_PackageVersion = 0.1.0-beta
+	annotation DAXLIB_PackageVersion = 1.0.0-beta
 
-function 'DaxLib.FormatString.DynamicCurrency' = ```
+function 'DaxLib.FormatString.DynamicCurrency' = 
 
 		// Get currency format string based on currency code
 		// Returns appropriate number format with currency symbol placement
@@ -328,13 +323,13 @@ function 'DaxLib.FormatString.DynamicCurrency' = ```
 		)
 		=>
 		    VAR _BaseFormat =
-		        FormatString.Component.DecimalPlaces( "#,##0", decimal_places )
+		        DaxLib.FormatString.Component.DecimalPlaces( "#,##0", decimal_places )
 
 		    VAR _CurrencyPosition =
-		        FormatString.Component.GetCurrencyPosition ( currency_code )
+		        DaxLib.FormatString.Component.GetCurrencyPosition ( currency_code )
 
 		    VAR _CurrencySymbol =
-		        FormatString.Component.GetCurrencySymbol ( currency_code )
+		        DaxLib.FormatString.Component.GetCurrencySymbol ( currency_code )
 
 		    VAR _Prefix =
 		        IF ( _CurrencyPosition = "PREFIX", _CurrencySymbol & " ", "" )
@@ -347,13 +342,12 @@ function 'DaxLib.FormatString.DynamicCurrency' = ```
 
 		    RETURN
 		        _Format
-		```
 
 	annotation DAXLIB_PackageId = DaxLib.FormatString
 
-	annotation DAXLIB_PackageVersion = 0.1.0-beta
+	annotation DAXLIB_PackageVersion = 1.0.0-beta
 
-function 'DaxLib.FormatString.Component.Symbols' = ```
+function 'DaxLib.FormatString.Component.Symbols' = 
 
 		// Get comparison symbol based on style and value sign
 		// Returns appropriate symbol for positive, negative, or zero values
@@ -424,11 +418,10 @@ function 'DaxLib.FormatString.Component.Symbols' = ```
 
 		    RETURN
 		        _Symbol
-		```
 
 	annotation DAXLIB_PackageId = DaxLib.FormatString
 
-	annotation DAXLIB_PackageVersion = 0.1.0-beta
+	annotation DAXLIB_PackageVersion = 1.0.0-beta
 
 function 'DaxLib.FormatString.Component.MakeStringSafe' = 
 
@@ -442,9 +435,9 @@ function 'DaxLib.FormatString.Component.MakeStringSafe' =
 
 	annotation DAXLIB_PackageId = DaxLib.FormatString
 
-	annotation DAXLIB_PackageVersion = 0.1.0-beta
+	annotation DAXLIB_PackageVersion = 1.0.0-beta
 
-function 'DaxLib.FormatString.Component.GetCurrencySymbol' = ```
+function 'DaxLib.FormatString.Component.GetCurrencySymbol' = 
 
 		// Get currency symbol based on currency code
 		// Returns currency symbol as a string (e.g., "$" or "€")
@@ -461,7 +454,7 @@ function 'DaxLib.FormatString.Component.GetCurrencySymbol' = ```
 		        FILTER (
 		            -- Calc. table with common currencies and formats
 		            -- Optionally replace with your own, in-memory exchange rate table
-		            FormatString.Component.CurrencyTable(),
+		            DaxLib.FormatString.Component.CurrencyTable(),
 		            ''[Currency Code] = _Code
 		        )
 
@@ -470,13 +463,12 @@ function 'DaxLib.FormatString.Component.GetCurrencySymbol' = ```
 
 		    RETURN
 		        _Symbol
-		```
 
 	annotation DAXLIB_PackageId = DaxLib.FormatString
 
-	annotation DAXLIB_PackageVersion = 0.1.0-beta
+	annotation DAXLIB_PackageVersion = 1.0.0-beta
 
-function 'DaxLib.FormatString.Component.GetCurrencyPosition' = ```
+function 'DaxLib.FormatString.Component.GetCurrencyPosition' = 
 
 		// Get currency position based on currency code
 		// Returns either "PREFIX" or "SUFFIX"
@@ -493,7 +485,7 @@ function 'DaxLib.FormatString.Component.GetCurrencyPosition' = ```
 		        FILTER (
 		            -- Calc. table with common currencies and formats
 		            -- Optionally replace with your own, in-memory exchange rate table
-		            FormatString.Component.CurrencyTable(),
+		            DaxLib.FormatString.Component.CurrencyTable(),
 		            ''[Currency Code] = _Code
 		        )
 
@@ -502,13 +494,12 @@ function 'DaxLib.FormatString.Component.GetCurrencyPosition' = ```
 
 		    RETURN
 		        _Position
-		```
 
 	annotation DAXLIB_PackageId = DaxLib.FormatString
 
-	annotation DAXLIB_PackageVersion = 0.1.0-beta
+	annotation DAXLIB_PackageVersion = 1.0.0-beta
 
-function 'DaxLib.FormatString.Component.GetCurrencyFormat.PNZ' = ```
+function 'DaxLib.FormatString.Component.GetCurrencyFormat.PNZ' = 
 
 		// Get currency format based on currency code
 		// Returns positive; negative; zero format string (i.e. $#,##0.0; ($-#,##0.0); $0)
@@ -525,7 +516,7 @@ function 'DaxLib.FormatString.Component.GetCurrencyFormat.PNZ' = ```
 		        FILTER (
 		            -- Calc. table with common currencies and formats
 		            -- Optionally replace with your own, in-memory exchange rate table
-		            FormatString.Component.CurrencyTable(),
+		            DaxLib.FormatString.Component.CurrencyTable(),
 		            ''[Currency Code] = _Code
 		        )
 
@@ -534,13 +525,12 @@ function 'DaxLib.FormatString.Component.GetCurrencyFormat.PNZ' = ```
 
 		    RETURN
 		        _Symbol
-		```
 
 	annotation DAXLIB_PackageId = DaxLib.FormatString
 
-	annotation DAXLIB_PackageVersion = 0.1.0-beta
+	annotation DAXLIB_PackageVersion = 1.0.0-beta
 
-function 'DaxLib.FormatString.Component.GetCurrencyFormat' = ```
+function 'DaxLib.FormatString.Component.GetCurrencyFormat' = 
 
 		// Get currency format based on currency code
 		// Returns simple currency format string (i.e. $#,##0.0)
@@ -557,7 +547,7 @@ function 'DaxLib.FormatString.Component.GetCurrencyFormat' = ```
 		        FILTER (
 		            -- Calc. table with common currencies and formats
 		            -- Optionally replace with your own, in-memory exchange rate table
-		            FormatString.Component.CurrencyTable(),
+		            DaxLib.FormatString.Component.CurrencyTable(),
 		            ''[Currency Code] = _Code
 		        )
 
@@ -566,13 +556,12 @@ function 'DaxLib.FormatString.Component.GetCurrencyFormat' = ```
 
 		    RETURN
 		        _Symbol
-		```
 
 	annotation DAXLIB_PackageId = DaxLib.FormatString
 
-	annotation DAXLIB_PackageVersion = 0.1.0-beta
+	annotation DAXLIB_PackageVersion = 1.0.0-beta
 
-function 'DaxLib.FormatString.Component.DynamicUnits' = ```
+function 'DaxLib.FormatString.Component.DynamicUnits' = 
 
 		// Helper function to dynamically round and format values
 		(
@@ -607,13 +596,12 @@ function 'DaxLib.FormatString.Component.DynamicUnits' = ```
 		        )
 		    RETURN
 		        _Format
-		```
 
 	annotation DAXLIB_PackageId = DaxLib.FormatString
 
-	annotation DAXLIB_PackageVersion = 0.1.0-beta
+	annotation DAXLIB_PackageVersion = 1.0.0-beta
 
-function 'DaxLib.FormatString.Component.DecimalPlaces' = ```
+function 'DaxLib.FormatString.Component.DecimalPlaces' = 
 
 		// Returns a 0 string repeated a number of times equal to the number of decimal places
 		(
@@ -634,13 +622,12 @@ function 'DaxLib.FormatString.Component.DecimalPlaces' = ```
 		            & REPT ( "0", MIN ( decimal_places, 9 ) ),
 		        ""
 		    )
-		```
 
 	annotation DAXLIB_PackageId = DaxLib.FormatString
 
-	annotation DAXLIB_PackageVersion = 0.1.0-beta
+	annotation DAXLIB_PackageVersion = 1.0.0-beta
 
-function 'DaxLib.FormatString.Component.CurrencyTable' = ```
+function 'DaxLib.FormatString.Component.CurrencyTable' = 
 
 		// Get currency reference table with codes, symbols, position, and format strings
 		// Returns table with currency metadata for use in other calculations
@@ -757,8 +744,7 @@ function 'DaxLib.FormatString.Component.CurrencyTable' = ```
 
 		    RETURN
 		        _CurrencyTable
-		```
 
 	annotation DAXLIB_PackageId = DaxLib.FormatString
 
-	annotation DAXLIB_PackageVersion = 0.1.0-beta
+	annotation DAXLIB_PackageVersion = 1.0.0-beta
