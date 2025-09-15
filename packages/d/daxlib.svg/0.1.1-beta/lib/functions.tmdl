@@ -888,25 +888,25 @@ function 'DaxLib.SVG.Example.BulletChart.ActionDot' = ```
 
 		VAR _AxisMax =
 			MAX (
-				SVG.Calc.AxisMax( actual, column_one, 1.1 ),
-				SVG.Calc.AxisMax( target, column_one, 1.1 )
+				DaxLib.SVG.Calc.AxisMax( actual, column_one, 1.1 ),
+				DaxLib.SVG.Calc.AxisMax( target, column_one, 1.1 )
 			)
 
 		VAR _AxisRange =
-			SVG.Calc.AxisRange( _BarMax, _BarMin )
+			DaxLib.SVG.Calc.AxisRange( _BarMax, _BarMin )
 
 		VAR _ActualNormalized =
-			SVG.Calc.Normalize( actual, _AxisMax, _AxisRange )
+			DaxLib.SVG.Calc.Normalize( actual, _AxisMax, _AxisRange )
 
 		VAR _TargetNormalized =
-			SVG.Calc.Normalize( target, _AxisMax, _AxisRange ) + _BarMin - 1
+			DaxLib.SVG.Calc.Normalize( target, _AxisMax, _AxisRange ) + _BarMin - 1
 
 
 		-- SVG components
 		VAR _SvgContent =
 
 			-- Action Dot
-			SVG.Component.Circles(
+			DaxLib.SVG.Component.Circles(
 				10,
 				10,
 				5,
@@ -915,7 +915,7 @@ function 'DaxLib.SVG.Example.BulletChart.ActionDot' = ```
 			&
 
 			-- Bar Background
-			SVG.Component.Rects(
+			DaxLib.SVG.Component.Rects(
 				_BarMin,
 				2,
 				_BarMax,
@@ -929,7 +929,7 @@ function 'DaxLib.SVG.Example.BulletChart.ActionDot' = ```
 			&
 
 			-- Actual Bar
-			SVG.Component.Rects(
+			DaxLib.SVG.Component.Rects(
 				_BarMin,
 				5,
 				_ActualNormalized,
@@ -944,7 +944,7 @@ function 'DaxLib.SVG.Example.BulletChart.ActionDot' = ```
 			&
 
 			-- Target Line
-			SVG.Component.Rects(
+			DaxLib.SVG.Component.Rects(
 				_TargetNormalized,
 				2,
 				2,
@@ -958,7 +958,7 @@ function 'DaxLib.SVG.Example.BulletChart.ActionDot' = ```
 			&
 
 			-- Bar Baseline
-			SVG.Component.Rects(
+			DaxLib.SVG.Component.Rects(
 				_BarMin,
 				4,
 				1,
@@ -972,7 +972,7 @@ function 'DaxLib.SVG.Example.BulletChart.ActionDot' = ```
 
 		-- Final SVG
 		VAR _Svg =
-			SVG.Component.PowerBI(
+			DaxLib.SVG.Component.PowerBI(
 				_SvgContent,
 				_Actual,
 				"",
