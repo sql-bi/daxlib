@@ -323,21 +323,21 @@ function 'DaxLib.Convert.StonesToPounds' =
 	annotation DAXLIB_PackageVersion = 0.1.1-beta
 
 /// Int to Hex conversion
-/// Number	INT64	The integer to convert
-/// PadTo	INT64	Optional: Minimum number of characters in result
-function 'DaxLib.Convert.INTTOHEX' = 
+/// number	INT64	The integer to convert
+/// padTo	INT64	Optional: Minimum number of characters in result
+function 'DaxLib.Convert.IntToHex' = 
 		(
-			Number: INT64,
-			PadTo: INT64
+			number: INT64,
+			padTo: INT64
 		) => 
 			
-			VAR MinPadding = IF( Number = 0, 1, CEILING( LOG( Number + 1, 16 ), 1 ) )
-			VAR ActualPadding = MAX( MinPadding, IF( ISBLANK( PadTo ), MinPadding, PadTo ) )
+			VAR MinPadding = IF( number = 0, 1, CEILING( LOG( number + 1, 16 ), 1 ) )
+			VAR ActualPadding = MAX( MinPadding, IF( ISBLANK( padTo ), MinPadding, padTo ) )
 			VAR BitTable = GENERATESERIES( 1, ActualPadding )
 			VAR Hex = 
 				CONCATENATEX(
 					BitTable,
-					VAR c = MOD( TRUNC( Number / POWER( 16, [Value] - 1 ) ), 16 )
+					VAR c = MOD( TRUNC( number / POWER( 16, [Value] - 1 ) ), 16 )
 					RETURN
 						SWITCH( c, 10, "A", 11, "B", 12, "C", 13, "D", 14, "E", 15, "F", c ),
 					"",
@@ -352,13 +352,13 @@ function 'DaxLib.Convert.INTTOHEX' =
 	annotation DAXLIB_PackageVersion = 0.1.1-beta
 
 /// Hex to Int conversion
-/// Hex		STRING	The hex value to convert i.e "1A"
-function 'DaxLib.Convert.HEXTOINT' =
+/// hex		STRING	The hex value to convert i.e "1A"
+function 'DaxLib.Convert.HexToInt' =
 		(
-			Hex: STRING
+			hex: STRING
 		) =>
 
-			VAR CleanHex = IF( LEFT( Hex, 1 ) = "#", MID( Hex, 2, LEN( Hex ) - 1), Hex )
+			VAR CleanHex = IF( LEFT( hex, 1 ) = "#", MID( hex, 2, LEN( hex ) - 1), hex )
 			VAR Result = 
 				SUMX(
 					GENERATESERIES( 1, LEN( CleanHex ) ),
@@ -366,7 +366,7 @@ function 'DaxLib.Convert.HEXTOINT' =
 					VAR c = MID( CleanHex, Pos, 1 )
 					VAR DigitValue = SWITCH( UPPER( c ), "A", 10, "B", 11, "C", 12, "D", 13, "E", 14, "F", 15, VALUE( c ) )
 					RETURN
-						DigitValue * POWER( 16, LEN( Hex ) - Pos ) 
+						DigitValue * POWER( 16, LEN( hex ) - Pos ) 
 				)
 
 			RETURN Result
