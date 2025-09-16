@@ -36,6 +36,9 @@ function 'Local.ComputeInAbcClass' = ```
                 )
             RETURN Result
         ```
+    annotation DAXLIB_PackageId = DaxPatterns.AbcClassification
+
+    annotation DAXLIB_PackageVersion = 0.1.1-beta
 
 /// Return the items filtered by ABC classes
 /// Implement Dynamic ABC Classification pattern from DAX Patterns
@@ -107,4 +110,7 @@ function 'Local.ItemsInClass' = ```
                 )
             RETURN Result
         ```
+    annotation DAXLIB_PackageId = DaxPatterns.AbcClassification
+
+    annotation DAXLIB_PackageVersion = 0.1.1-beta
 
