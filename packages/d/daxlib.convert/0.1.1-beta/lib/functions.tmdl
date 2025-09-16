@@ -321,3 +321,56 @@ function 'DaxLib.Convert.StonesToPounds' =
 	annotation DAXLIB_PackageId = DaxLib.Convert
 
 	annotation DAXLIB_PackageVersion = 0.1.1-beta
+
+/// Int to Hex conversion
+/// number	INT64	The integer to convert
+/// padTo	INT64	Optional: Minimum number of characters in result
+function 'DaxLib.Convert.IntToHex' = 
+		(
+			number: INT64,
+			padTo: INT64
+		) => 
+			
+			VAR MinPadding = IF( number = 0, 1, CEILING( LOG( number + 1, 16 ), 1 ) )
+			VAR ActualPadding = MAX( MinPadding, IF( ISBLANK( padTo ), MinPadding, padTo ) )
+			VAR BitTable = GENERATESERIES( 1, ActualPadding )
+			VAR Hex = 
+				CONCATENATEX(
+					BitTable,
+					VAR c = MOD( TRUNC( number / POWER( 16, [Value] - 1 ) ), 16 )
+					RETURN
+						SWITCH( c, 10, "A", 11, "B", 12, "C", 13, "D", 14, "E", 15, "F", c ),
+					"",
+					[Value],
+					DESC
+				)
+				
+			RETURN Hex
+
+	annotation DAXLIB_PackageId = DaxLib.Convert
+
+	annotation DAXLIB_PackageVersion = 0.1.1-beta
+
+/// Hex to Int conversion
+/// hex		STRING	The hex value to convert i.e "1A"
+function 'DaxLib.Convert.HexToInt' =
+		(
+			hex: STRING
+		) =>
+
+			VAR CleanHex = IF( LEFT( hex, 1 ) = "#", MID( hex, 2, LEN( hex ) - 1), hex )
+			VAR Result = 
+				SUMX(
+					GENERATESERIES( 1, LEN( CleanHex ) ),
+					VAR Pos = [Value]
+					VAR c = MID( CleanHex, Pos, 1 )
+					VAR DigitValue = SWITCH( UPPER( c ), "A", 10, "B", 11, "C", 12, "D", 13, "E", 14, "F", 15, VALUE( c ) )
+					RETURN
+						DigitValue * POWER( 16, LEN( hex ) - Pos ) 
+				)
+
+			RETURN Result
+
+	annotation DAXLIB_PackageId = DaxLib.Convert
+
+	annotation DAXLIB_PackageVersion = 0.1.1-beta
