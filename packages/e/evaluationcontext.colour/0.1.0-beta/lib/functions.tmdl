@@ -1,7 +1,7 @@
 /// Int to Hex conversion
 /// number	INT64	The integer to convert
 /// padTo	INT64	Optional: Minimum number of characters in result
-function 'EvaluationContext.Colour.IntToHex' = 
+function 'EvaluationContext.Colour.Int.ToHex' = 
 		(
 			number: INT64,
 			padTo: INT64
@@ -29,7 +29,7 @@ function 'EvaluationContext.Colour.IntToHex' =
 
 /// Hex to Int conversion
 /// hex		STRING	The hex value to convert i.e "1A"
-function 'EvaluationContext.Colour.IntToHex' =
+function 'EvaluationContext.Colour.Hex.ToInt' =
 		(
 			hex: STRING
 		) =>
@@ -65,10 +65,10 @@ function 'EvaluationContext.Colour.RGB.ToHex' =
 		) =>
 
 			"#" &
-			EvaluationContext.Colour.IntToHex( red, 2 ) &
-			EvaluationContext.Colour.IntToHex( green, 2 ) &
-			EvaluationContext.Colour.IntToHex( blue, 2 ) &
-			IF( NOT ISBLANK( alpha ), EvaluationContext.Colour.IntToHex( alpha * 255, 2 ) )
+			EvaluationContext.Colour.Int.ToHex( red, 2 ) &
+			EvaluationContext.Colour.Int.ToHex( green, 2 ) &
+			EvaluationContext.Colour.Int.ToHex( blue, 2 ) &
+			IF( NOT ISBLANK( alpha ), EvaluationContext.Colour.Int.ToHex( alpha * 255, 2 ) )
 
 	annotation DAXLIB_PackageId = EvaluationContext.colour
 
@@ -112,10 +112,10 @@ function 'EvaluationContext.Colour.RSL.ToHex' =
 			
 			VAR result = 
 				"#" & 
-				EvaluationContext.Colour.IntToHex(FinalR, 2) &
-				EvaluationContext.Colour.IntToHex(FinalG, 2) &
-				EvaluationContext.Colour.IntToHex(FinalB, 2) &
-				IF( NOT ISBLANK( alpha ), EvaluationContext.Colour.IntToHex( alpha * 255, 2 ) )
+				EvaluationContext.Colour.Int.ToHex(FinalR, 2) &
+				EvaluationContext.Colour.Int.ToHex(FinalG, 2) &
+				EvaluationContext.Colour.Int.ToHex(FinalB, 2) &
+				IF( NOT ISBLANK( alpha ), EvaluationContext.Colour.Int.ToHex( alpha * 255, 2 ) )
 
 			RETURN result
 
@@ -131,9 +131,9 @@ function 'EvaluationContext.Colour.HEX.Hue' =
 		) =>
 
 			VAR CleanHex = IF( LEFT( hexColor, 1) = "#", MID(hexColor, 2, 6), MID( hexColor, 1, 6 ) )
-			VAR R = EvaluationContext.Colour.IntToHex( MID( CleanHex, 1, 2 ) )
-			VAR G = EvaluationContext.Colour.IntToHex( MID( CleanHex, 3, 2 ) )
-			VAR B = EvaluationContext.Colour.IntToHex( MID( CleanHex, 5, 2 ) )
+			VAR R = EvaluationContext.Colour.Hex.ToInt( MID( CleanHex, 1, 2 ) )
+			VAR G = EvaluationContext.Colour.Hex.ToInt( MID( CleanHex, 3, 2 ) )
+			VAR B = EvaluationContext.Colour.Hex.ToInt( MID( CleanHex, 5, 2 ) )
 			
 			VAR Mx = MAX( MAX( R, G ), B)
 			VAR Mn = MIN( MIN( R, G ), B)
@@ -164,9 +164,9 @@ function 'EvaluationContext.Colour.HEX.Saturation' =
 		) =>
 
 			VAR CleanHex = IF( LEFT( hexColor , 1) = "#", MID( hexColor, 2, 6), MID( hexColor, 1, 6 ) )
-			VAR R = EvaluationContext.Colour.IntToHex( MID( CleanHex, 1, 2 ) )
-			VAR G = EvaluationContext.Colour.IntToHex( MID( CleanHex, 3, 2 ) )
-			VAR B = EvaluationContext.Colour.IntToHex( MID( CleanHex, 5, 2 ) )
+			VAR R = EvaluationContext.Colour.Hex.ToInt( MID( CleanHex, 1, 2 ) )
+			VAR G = EvaluationContext.Colour.Hex.ToInt( MID( CleanHex, 3, 2 ) )
+			VAR B = EvaluationContext.Colour.Hex.ToInt( MID( CleanHex, 5, 2 ) )
 			
 			VAR Mx = MAX( MAX( R, G ), B)
 			VAR Mn = MIN( MIN( R, G ), B)
@@ -195,9 +195,9 @@ function 'EvaluationContext.Colour.HEX.Luminance' =
 			) =>
 				
 				VAR CleanHex = IF( LEFT( hexColor, 1) = "#", MID( hexColor, 2, 6), MID( hexColor, 1, 6 ) )
-				VAR R = EvaluationContext.Colour.IntToHex( MID( CleanHex, 1, 2 ) )
-				VAR G = EvaluationContext.Colour.IntToHex( MID( CleanHex, 3, 2 ) )
-				VAR B = EvaluationContext.Colour.IntToHex( MID( CleanHex, 5, 2 ) )
+				VAR R = EvaluationContext.Colour.Hex.ToInt( MID( CleanHex, 1, 2 ) )
+				VAR G = EvaluationContext.Colour.Hex.ToInt( MID( CleanHex, 3, 2 ) )
+				VAR B = EvaluationContext.Colour.Hex.ToInt( MID( CleanHex, 5, 2 ) )
 				
 				VAR Mx = MAX( MAX( R, G ), B)
 				VAR Mn = MIN( MIN( R, G ), B)
@@ -221,7 +221,7 @@ function 'EvaluationContext.Colour.HEX.Alpha' =
 				
 				VAR CleanHex = IF( LEFT( hexColor, 1) = "#", MID( hexColor, 2, 8), MID( hexColor, 1, 8 ) )
 				VAR AlphaHex = IF( LEN( CleanHex ) = 8, MID( CleanHex, 7, 2 ), "FF" )
-				VAR Alpha = EvaluationContext.Colour.IntToHex( AlphaHex )
+				VAR Alpha = EvaluationContext.Colour.Hex.ToInt( AlphaHex )
 				VAR result = ROUND( Alpha / 255, 4 )
 				
 				RETURN result
@@ -311,7 +311,7 @@ function 'EvaluationContext.Colour.HEX.AdjustAlpha' =
 			VAR CleanHex = IF( LEFT( hexColor, 1) = "#", MID( hexColor, 2, 6), MID( hexColor, 1, 6 ) )
 			VAR A = EvaluationContext.Colour.HEX.Alpha( hexColor )
 			
-			VAR NewA = EvaluationContext.Colour.IntToHex( MIN( MAX( A + alphaChange, 0 ), 1 ) * 255, 2 )
+			VAR NewA = EvaluationContext.Colour.Int.ToHex( MIN( MAX( A + alphaChange, 0 ), 1 ) * 255, 2 )
 
 			VAR result = "#" & CleanHex & NewA
 
