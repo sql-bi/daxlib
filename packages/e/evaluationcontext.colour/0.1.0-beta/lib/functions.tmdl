@@ -256,7 +256,7 @@ function 'EvaluationContext.Colour.HEX.AdjustHue' =
 /// Adjust Saturation of a hex color
 /// hexColor	STRING	The hex color to evaluate i.e "#01B8AA"
 /// saturationChange	DOUBLE	The saturation adjustment (-1 to 1)
-function 'evaluationcontext.colour.EvaluationContext.Colour.HEX.AdjustSaturation' = 
+function 'EvaluationContext.Colour.HEX.AdjustSaturation' = 
 		( 
 			hexColor: STRING,
 			saturationChange: DOUBLE
@@ -337,7 +337,7 @@ function 'EvaluationContext.Colour.HEX.AdjustColour' =
 		) => 
 
 			VAR Step1 = IF( HueChange = 0, hexColor, EvaluationContext.Colour.HEX.AdjustHue( hexColor, hueChange ) )
-			VAR Step2 = IF( saturationChange = 0, Step1, evaluationcontext.colour.EvaluationContext.Colour.HEX.AdjustSaturation( Step1, saturationChange ) )
+			VAR Step2 = IF( saturationChange = 0, Step1, EvaluationContext.Colour.HEX.AdjustSaturation( Step1, saturationChange ) )
 			VAR Step3 = IF( luminanceChange = 0, Step2, EvaluationContext.Colour.HEX.AdjustLuminance( Step2, luminanceChange ) )
 			VAR Step4 = IF( alphaChange = 0, Step3, EvaluationContext.Colour.HEX.AdjustAlpha( Step3, alphaChange ) )
 			
