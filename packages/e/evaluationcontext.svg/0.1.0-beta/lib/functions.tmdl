@@ -395,7 +395,7 @@ function 'EvaluationContext.SVG.Def.Rect' =
 			width: INT64,
 			height: INT64,
 			rx: INT64,
-			ry: INT64
+			ry: INT64,
 			style: STRING,
 			class: STRING,
 			Transform: STRING
