@@ -1,0 +1,880 @@
+/// Generate a SVG
+/// width		INT64	The width of the SVG canvas
+/// height		INT64	The height of the SVG canvas
+/// contents	STRING	The SVG elements to include in the canvas
+function 'EvaluationContext.SVG.SVG' = 
+		(
+			width: INT64,
+			height: INT64,
+			contents: STRING
+		) =>
+
+			VAR DataURIScheme = "data:image/svg+xml;utf8,"
+			VAR Prefix = "<svg "
+			VAR Canvas = "width='" & width & "' height='" & height & "' "
+			VAR Viewbox = "viewBox='0 0 " & width & " " & height & "' "
+			VAR XMLNamespace = "xmlns='http://www.w3.org/2000/svg'>"
+			VAR Suffix = "</svg>"
+			VAR result =
+				DataURIScheme &
+				Prefix & 
+				Canvas &
+				Viewbox &
+				XMLNamespace &
+				contents &
+				Suffix
+
+			RETURN result
+
+	annotation DAXLIB_PackageId = EvaluationContext.SVG
+
+	annotation DAXLIB_PackageVersion = 0.1.0-beta
+
+/// Map a value from one scale to another
+/// val			NUMERIC		The value to map
+/// fromMin		NUMERIC		The minimum value of the original scale
+/// fromMax		NUMERIC		The maximum value of the original scale
+/// toMin		NUMERIC		The minimum value of the new scale
+/// toMax		NUMERIC		The maximum value of the new scale
+function 'EvaluationContext.SVG.MapValueToScale' = 
+		(
+			val: NUMERIC,
+			fromMin: NUMERIC,
+			fromMax: NUMERIC,
+			toMin: NUMERIC,
+			toMax: NUMERIC
+		) =>
+			
+			( ( val - fromMin ) / ( fromMax - fromMin ) ) * ( toMax - toMin ) + toMin
+			
+	annotation DAXLIB_PackageId = EvaluationContext.SVG
+
+	annotation DAXLIB_PackageVersion = 0.1.0-beta
+
+/// Helper function to generate optional common SVG element attributes
+/// style		STRING	The style to apply to the element (e.g., "fill:#01B8AA;stroke:red;stroke-width:2")
+/// class		STRING	The CSS class to apply to the element
+/// transform	STRING	The transform to apply to the element (e.g., "rotate(45)")
+function 'EvaluationContext.SVG.OptionalCommentElements' = 
+		(
+			style: STRING,
+			class: STRING,
+			transform: STRING
+		) =>
+
+			VAR _Style = 		IF( NOT ISBLANK( style ),		" style='" & style & "' " )
+			VAR _Class = 		IF( NOT ISBLANK( class ), 		" class='" & class & "' " )
+			VAR _Transform = 	IF( NOT ISBLANK( transform ), 	" transform='" & transform & "' " )
+			VAR result =
+				_Style &
+				_Class &
+				transform
+
+			RETURN result
+
+	annotation DAXLIB_PackageId = EvaluationContext.SVG
+
+	annotation DAXLIB_PackageVersion = 0.1.0-beta
+
+/// Generate style string
+/// fill			STRING	Fill Colour or gradient reference
+/// stroke			STRING	Stroke Colour
+/// strokeWidth		INT64	Stroke width
+/// Opacity			DOUBLE	Element opacity
+/// fontFamily		STRING	Font family for text
+/// fontSize		INT64	Font size for text
+function 'EvaluationContext.SVG.Style' = 
+		(
+			fill: STRING,
+			stroke: STRING,
+			strokeWidth: INT64,
+			opacity: DOUBLE,
+			fontFamily: STRING,
+			FontSize: INT64
+		) =>
+
+			VAR _Fill = 		IF( NOT ISBLANK( fill ),		" fill:" & fill & ";" )
+			VAR _Stroke = 		IF( NOT ISBLANK( stroke ),		" stroke:" & stroke & ";" )
+			VAR _StrokeWidth = 	IF( NOT ISBLANK( strokeWidth ),	" stroke-width:" & strokeWidth & ";" )
+			VAR _Opacity = 		IF( NOT ISBLANK( opacity ),		" opacity:" & opacity & ";" )
+			VAR _FontFamily = 	IF( NOT ISBLANK( fontFamily ),	" font-family:" & fontFamily & ";" )
+			VAR _FontSize =		IF( NOT ISBLANK( fontSize ),	" font-size:" & fontSize & ";" )
+
+			VAR result = COMBINEVALUES( "", _Fill, _Stroke, _StrokeWidth, _Opacity, _FontFamily, _FontSize )
+
+			RETURN result
+			
+	annotation DAXLIB_PackageId = EvaluationContext.SVG
+
+	annotation DAXLIB_PackageVersion = 0.1.0-beta
+
+/// Create a <def> element from a number of defs
+/// defs	STRING	Concatenated lists of elements to include in a def block
+function 'EvaluationContext.SVG.Defs' = 
+		(
+			defs: STRING    // concatenated lists of elements to include in a def block
+		) =>
+
+			VAR NewLine = UNICHAR(10)
+
+			VAR result =
+				"<defs>" & NewLine & 
+				defs & NewLine & 
+				"</defs>"
+
+			RETURN result
+
+	annotation DAXLIB_PackageId = EvaluationContext.SVG
+
+	annotation DAXLIB_PackageVersion = 0.1.0-beta
+
+/// Create a gradient stop element
+/// offset		DOUBLE	Stop position (0 to 1)
+/// colour		STRING	Colour value (hex or named Colour)
+/// opacity		DOUBLE	Optional: opacity value (0 to 1)
+function 'EvaluationContext.SVG.Def.GradientStop' = 
+		(
+			offset: DOUBLE,
+			colour: STRING,
+			opacity: DOUBLE
+		) =>
+
+			/* Example usage:
+				// Single stop with full opacity
+				EvaluationContext.SVG.Def.GradientStop(
+					0.5,       // 50% offset
+					"#ff0000", // Red color
+					1.0        // Full opacity
+				)
+
+				// Stop with partial opacity
+				EvaluationContext.SVG.Def.GradientStop(
+					0.75,      // 75% offset
+					"#00ff00", // Green color
+					0.5        // 50% opacity
+				)
+			*/
+
+			VAR NewLine = UNICHAR(10)
+			VAR Tab = UNICHAR(9)
+			
+			VAR result =
+				Tab & 
+				"<stop offset='" & offset & 
+				"' stop-Colour='" & colour & "'" &
+				IF(NOT ISBLANK(Opacity), " stop-opacity='" & opacity & "'", "") &
+				"/>" & 
+				NewLine
+
+			RETURN result
+				
+
+	annotation DAXLIB_PackageId = EvaluationContext.SVG
+
+	annotation DAXLIB_PackageVersion = 0.1.0-beta
+
+/// Create a linear gradient definition
+/// defId		STRING	The unique identifier for the gradient
+/// x1			DOUBLE	Start X position (0 to 1)
+/// y1			DOUBLE	Start Y position (0 to 1)
+/// x2			DOUBLE	End X position (0 to 1)
+/// y2			DOUBLE	End Y position (0 to 1)
+/// stops		STRING	Concatenated gradient stop elements
+function 'EvaluationContext.SVG.Def.LinearGradient' = 
+		(
+			defId: STRING,
+			x1: DOUBLE,
+			y1: DOUBLE,
+			x2: DOUBLE,
+			y2: DOUBLE,
+			stops: STRING
+		) =>
+			
+			/* Example usage:
+				// Horizontal gradient from left to right
+				EvaluationContext.SVG.Def.LinearGradient(
+					"horizontalGradient",
+					0,    // Start from left edge
+					0.5,  // Middle vertically
+					1,    // End at right edge
+					0.5,  // Middle vertically
+					EvaluationContext.SVG.Def.GradientStop(0, "#ff0000", 1) &
+					EvaluationContext.SVG.Def.GradientStop(1, "#0000ff", 1)
+				)
+
+				// Diagonal gradient with three colors
+				EvaluationContext.SVG.Def.LinearGradient(
+					"diagonalGradient",
+					0,    // Start from top-left
+					0,
+					1,    // End at bottom-right
+					1,
+					EvaluationContext.SVG.Def.GradientStop(0, "#ff0000", 1) &
+					EvaluationContext.SVG.Def.GradientStop(0.5, "#00ff00", 0.5) &
+					EvaluationContext.SVG.Def.GradientStop(1, "#0000ff", 1)
+				)
+			*/
+		
+			VAR NewLine = UNICHAR(10)
+			VAR Tab = UNICHAR(9)
+
+			VAR result =
+				"<linearGradient" & 
+				" id='" & defId & "'" &
+				" x1='" & x1 & "'" &
+				" y1='" & y1 & "'" &
+				" x2='" & x2 & "'" &
+				" y2='" & y2 & "'>" &
+				NewLine & 
+				stops &
+				NewLine &
+				"</linearGradient>"
+
+			RETURN result
+	
+	annotation DAXLIB_PackageId = EvaluationContext.SVG
+
+	annotation DAXLIB_PackageVersion = 0.1.0-beta
+
+/// Create a radial gradient definition
+/// defId		STRING	The unique identifier for the gradient
+/// cx			DOUBLE	Center X position (0 to 1)
+/// cy			DOUBLE	Center Y position (0 to 1)
+/// r			DOUBLE	Radius (0 to 1)
+/// fx			DOUBLE	Optional: Focus X position (0 to 1)
+/// fy			DOUBLE	Optional: Focus Y position (0 to 1)
+/// fr			DOUBLE	Optional: Focus radius (0 to 1)
+/// stops		STRING	Concatenated gradient stop elements
+function 'EvaluationContext.SVG.Def.RadialGradient' = 
+		(
+			defId: STRING,
+			cx: DOUBLE,
+			cy: DOUBLE,
+			r: DOUBLE,
+			fx: DOUBLE,
+			fy: DOUBLE,
+			fr: DOUBLE,
+			stops: STRING 
+		) =>
+			
+			/* Example usage:
+				// Centered gradient with no focus
+				EvaluationContext.SVG.Def.RadialGradient(
+					"centeredGradient",
+					0.5,  // Center at middle horizontally
+					0.5,  // Center at middle vertically
+					0.5,  // Radius of 50%
+					BLANK(), BLANK(), BLANK(),  // No focus point
+					EvaluationContext.SVG.Def.GradientStop(0, "#ff0000", 1) &
+					EvaluationContext.SVG.Def.GradientStop(1, "#0000ff", 1)
+				)
+
+				// Gradient with offset focus point
+				EvaluationContext.SVG.Def.RadialGradient(
+					"focusedGradient",
+					0.5, 0.5, 0.5,    // Center at middle with 50% radius
+					0.3, 0.3, 0.1,    // Focus offset with smaller radius
+					EvaluationContext.SVG.Def.GradientStop(0, "#ff0000", 1) &
+					EvaluationContext.SVG.Def.GradientStop(0.5, "#00ff00", 0.5) &
+					EvaluationContext.SVG.Def.GradientStop(1, "#0000ff", 1)
+				)
+			*/
+
+			VAR NewLine = UNICHAR(10)
+			VAR Tab = UNICHAR(9)
+
+			VAR _FX = IF(NOT ISBLANK( fx ), " fx='" & fx & "'" )
+			VAR _FY = IF(NOT ISBLANK( fy ), " fy='" & fy & "'" )
+			VAR _FR = IF(NOT ISBLANK( FR ), " fr='" & fr & "'" )
+
+			VAR result =	
+				Tab & "<radialGradient" & 
+				" id='" & defId & "'" &
+				" cx='" & cx & "'" &
+				" cy='" & cy & "'" &
+				" r='" & r & "'" &
+				_FX & _FY & _FR &
+				">" &
+				NewLine & 
+				stops &
+				"</radialGradient>" & NewLine
+
+			RETURN result
+	
+	annotation DAXLIB_PackageId = EvaluationContext.SVG
+
+	annotation DAXLIB_PackageVersion = 0.1.0-beta
+
+/// Create a pattern fill definition
+/// defId		STRING	The unique identifier for the pattern
+/// width		INT64	The width of the pattern
+/// height		INT64	The height of the pattern
+/// contents	STRING	The SVG elements that make up the pattern
+function 'EvaluationContext.SVG.Def.PatternFill' = 
+		(
+			defId: STRING,
+			width: INT64,
+			height: INT64,
+			Contents: STRING
+		) =>
+			
+			/* Example usage:
+				EvaluationContext.SVG.Def.PatternFill(
+				"checkered",
+				20, 20,
+				EvaluationContext.SVG.Rect(0, 0, 10, 10, "fill:red") &
+				EvaluationContext.SVG.Rect(10, 10, 10, 10, "fill:blue")
+				)
+			*/
+
+			VAR NewLine = UNICHAR(10)
+			VAR Tab = UNICHAR(9)
+			
+			VAR result =
+				Tab & "<pattern" & 
+				" id='" & defId & "'" &
+				" width='" & width & "'" &
+				" height='" & height & "'" &
+				" patternUnits='userSpaceOnUse'>" &
+				NewLine & contents & NewLine &
+				"</pattern>" & NewLine
+
+			RETURN result
+	
+	annotation DAXLIB_PackageId = EvaluationContext.SVG
+
+	annotation DAXLIB_PackageVersion = 0.1.0-beta
+
+/// Create a reusable circle definition
+/// defId		STRING	The unique identifier for the circle
+/// cx			INT64	X center coordinate
+/// cy			INT64	Y center coordinate
+/// r			INT64	Radius
+/// style		STRING	The style to apply to the circle (e.g., "fill:#01B8AA;stroke:red;stroke-width:2")
+/// class		STRING	Optional: CSS class to apply
+/// transform	STRING	Optional: transformation to apply
+function 'EvaluationContext.SVG.Def.Circle' = 
+		(
+			defId: STRING,
+			cx: INT64,
+			cy: INT64,  
+			r: INT64,
+			style: STRING,
+			class: STRING,
+			transform: STRING
+		) =>
+
+			VAR _OCE = EvaluationContext.SVG.OptionalCommentElements( transform, style, class )
+
+			VAR result =
+				"<circle id='" & defId & "'" &
+				" cx='" & cx & "'" &
+				" cy='" & cy & "'" &
+				" r='" & r & "'" &
+				_OCE &
+				"/>"
+
+			RETURN result
+
+	annotation DAXLIB_PackageId = EvaluationContext.SVG
+
+	annotation DAXLIB_PackageVersion = 0.1.0-beta
+
+/// Create a reusable rectangle definition
+/// defId		STRING	The unique identifier for the rectangle
+/// width		INT64	The width of the rectangle
+/// height		INT64	The height of the rectangle
+/// rx			INT64	Optional: x radius for rounded corners
+/// ry			INT64	Optional: y radius for rounded corners
+/// style		STRING	The style to apply to the rectangle (e.g., "fill:#01B8AA;stroke:red;stroke-width:2")
+/// class		STRING	Optional: CSS class to apply
+/// transform	STRING	Optional: transformation to apply
+function 'EvaluationContext.SVG.Def.Rect' = 
+		(
+			defId: STRING,
+			width: INT64,
+			height: INT64,
+			rx: INT64,
+			ry: INT64
+			style: STRING,
+			class: STRING,
+			Transform: STRING
+		) =>
+
+			VAR _OCE = EvaluationContext.SVG.OptionalCommentElements( style, class, transform )
+			
+			VAR result =
+				"<rect id='" & defId & "'" &
+				" width='" & width & "'" &
+				" height='" & height & "'" &
+				IF(NOT ISBLANK(RX), " rx='" & RX & "'" ) & 
+				IF(NOT ISBLANK(RY), " ry='" & RY & "'" ) &
+				_OCE &
+				"/>"
+
+			RETURN result	
+
+	annotation DAXLIB_PackageId = EvaluationContext.SVG
+
+	annotation DAXLIB_PackageVersion = 0.1.0-beta
+
+/// Create a reusable line definition
+/// defId		STRING	The unique identifier for the line
+/// x1			INT64	The x position of the start point
+/// y1			INT64	The y position of the start point
+/// x2			INT64	The x position of the end point
+/// y2			INT64	The y position of the end point
+/// style		STRING	The style to apply to the line (e.g., "stroke:black;stroke-width:2")
+/// class		STRING	Optional: CSS class to apply
+/// transform	STRING	Optional: transformation to apply
+function 'EvaluationContext.SVG.Def.Line' = 
+		(
+			defId: STRING,
+			x1: INT64,
+			y1: INT64,
+			x2: INT64,
+			y2: INT64,
+			style: STRING,
+			class: STRING,
+			transform: STRING
+		) =>
+
+			VAR _OCE = EvaluationContext.SVG.OptionalCommentElements( style, class, transform )
+			
+			VAR result =
+				"<line id='" & defId & "'" &
+				" x1='" & x1 & "'" &
+				" y1='" & y1 & "'" &
+				" x2='" & x2 & "'" &
+				" y2='" & y2 & "'" &
+				_OCE &
+				"/>"
+
+			RETURN result
+				
+
+	annotation DAXLIB_PackageId = EvaluationContext.SVG
+
+	annotation DAXLIB_PackageVersion = 0.1.0-beta
+
+/// Create a reusable path definition
+/// defId		STRING	The unique identifier for the path
+/// d			STRING	The path data string (e.g., "M10 10 L90 90")
+/// style		STRING	The style to apply to the path (e.g., "stroke:black;fill:none")
+/// class		STRING	Optional: CSS class to apply
+/// transform	STRING	Optional: transformation to apply
+function 'EvaluationContext.SVG.Def.Paths' =
+		(
+			defId: STRING,
+			D: STRING,
+			Style: STRING,
+			Class: STRING,
+			Transform: STRING
+		) =>
+
+			VAR _OCE = EvaluationContext.SVG.OptionalCommentElements( style, class, transform )
+
+			VAR result = 
+				"<path id='" & defId & "'" &
+				" d='" & d & "'" &
+				_OCE &
+				"/>"
+			
+			RETURN result
+				
+	annotation DAXLIB_PackageId = EvaluationContext.SVG
+
+	annotation DAXLIB_PackageVersion = 0.1.0-beta
+
+/// Reference a previously defined SVG element with optional positioning and styling
+/// This function is used to reuse elements that have been defined using DEF* functions
+/// (e.g., DEFCIRCLE, DEFRECT, DEFPATH, etc.). Instead of duplicating element definitions,
+/// use the appropriate DEF* function once and then reference it multiple times with USE.
+/// defId		STRING	The identifier of the defined element to use
+/// x			INT64	X position where the element should be placed
+/// y			INT64	Y position where the element should be placed
+/// style		STRING	The style to apply to the path (e.g., "stroke:black;fill:none")
+/// class		STRING	Optional: CSS class to apply
+/// transform	STRING	Optional: transformation to apply
+function 'EvaluationContext.SVG.UseDef' = 
+		(
+			defId: STRING,
+			X: INT64,
+			Y: INT64,
+			style: STRING,
+			class: STRING,
+			transform: STRING
+		) =>
+
+			VAR _OCE = EvaluationContext.SVG.OptionalCommentElements( style, class, transform )
+			
+			VAR result =
+				"<use" &
+				" href='#" & defId & "'" &
+				IF( NOT ISBLANK( x ), " x='" & x & "'" ) &
+				IF( NOT ISBLANK( y ), " y='" & y & "'" ) &
+				_OCE & 
+				"/>"
+
+			RETURN result
+
+	annotation DAXLIB_PackageId = EvaluationContext.SVG
+
+	annotation DAXLIB_PackageVersion = 0.1.0-beta
+
+/// Create a circle SVG element
+/// cx			INT64	The x position of the center
+/// cy			INT64	The y position of the center
+/// r			INT64	The radius
+/// style		STRING	The style to apply (e.g., "fill:blue;stroke:black")
+/// class		STRING	Optional: CSS class to apply
+/// transform	STRING	Optional: transformation to apply
+function 'EvaluationContext.SVG.Circle' =
+		(
+			cx: INT64,
+			CY: INT64,
+			r: INT64,
+			style: STRING,
+			class: STRING,
+			transform: STRING
+		) =>
+
+			VAR _OCE = EvaluationContext.SVG.OptionalCommentElements( style, class, transform )
+
+			VAR result =
+				"<circle" &
+				" cx='" & cx & "'" &
+				" cy='" & cy & "'" &
+				" r='" & r & "'" &
+				_OCE & 
+				"/>"
+
+			RETURN result
+	
+	annotation DAXLIB_PackageId = EvaluationContext.SVG
+
+	annotation DAXLIB_PackageVersion = 0.1.0-beta
+
+/// Create a rectangle SVG element
+/// x			INT64	The x position
+/// y			INT64	The y position
+/// width		INT64	The width
+/// height		INT64	The height
+/// rx			INT64	Optional: x radius for rounded corners
+/// ry			INT64	Optional: y radius for rounded corners
+/// style		STRING	The style to apply (e.g., "fill:blue;stroke:black")
+/// class		STRING	Optional: CSS class to apply
+/// transform	STRING	Optional: transformation to apply
+function 'EvaluationContext.SVG.Rect' =
+		(
+			x: INT64,
+			y: INT64,
+			width: INT64,
+			height: INT64,
+			rx: INT64,
+			ry: INT64,
+			style: STRING,
+			class: STRING,
+			transform: STRING
+		) =>
+
+			VAR _OCE = EvaluationContext.SVG.OptionalCommentElements( style, class, transform )
+			
+			VAR result =
+				"<rect" &
+				" x='" & x & "'" &
+				" y='" & y & "'" &
+				" width='" & width & "'" &
+				" height='" & height & "'" &
+				IF( NOT ISBLANK( rx ), " rx='" & rx & "'" ) &
+				IF( NOT ISBLANK( ry ), " ry='" & ry & "'" ) &
+				_OCE & 
+				"/>"
+			
+			RETURN result
+
+	annotation DAXLIB_PackageId = EvaluationContext.SVG
+
+	annotation DAXLIB_PackageVersion = 0.1.0-beta
+
+/// Create a line SVG element
+/// x1			INT64	The x position of the start point
+/// y1			INT64	The y position of the start point
+/// x2			INT64	The x position of the end point
+/// y2			INT64	The y position of the end point
+/// style		STRING	The style to apply (e.g. "stroke:black;stroke-width:2")
+/// class		STRING	Optional: CSS class to apply
+/// transform	STRING	Optional: additional transforms
+function 'EvaluationContext.SVG.Line' =
+		(
+			x1: INT64,
+			y1: INT64,
+			x2: INT64,
+			y2: INT64,
+			style: STRING,
+			class: STRING,
+			transform: STRING
+		) =>  
+			
+			VAR _OCE = EvaluationContext.SVG.OptionalCommentElements( style, class, transform )
+
+			VAR result =
+				"<line" &
+				" x1='" & x1 & "'" &
+				" y1='" & y1 & "'" &
+				" x2='" & x2 & "'" &
+				" y2='" & y2 & "'" &
+				_OCE & 
+				"/>"
+			
+			RETURN result
+
+	annotation DAXLIB_PackageId = EvaluationContext.SVG
+
+	annotation DAXLIB_PackageVersion = 0.1.0-beta
+
+/// Create a path SVG element
+/// d			STRING	The path data string (e.g., "M10 10 L90 90")
+/// style		STRING	The style to apply (e.g., "stroke:black;fill:none")
+/// class		STRING	Optional: CSS class to apply
+/// transform	STRING	Optional: transformation to apply
+function 'EvaluationContext.SVG.Paths' =
+		(
+			d: STRING,
+			style: STRING,
+			class: STRING,
+			transform: STRING
+		) =>
+
+			VAR _OCE = EvaluationContext.SVG.OptionalCommentElements( style, class, transform )
+
+			VAR result =
+				"<path d='" & d & "'" &
+				_OCE & 
+				"/>"
+
+			RETURN result
+
+	annotation DAXLIB_PackageId = EvaluationContext.SVG
+
+	annotation DAXLIB_PackageVersion = 0.1.0-beta
+
+/// Create a text SVG element
+/// x			INT64	The x position of the text
+/// y			INT64	The y position of the text
+/// txt			STRING	The text content
+/// dx			INT64	Optional: x offset from position
+/// dy			INT64	Optional: y offset from position
+/// textAnchor	STRING	Optional: text-anchor (start|middle|end)
+/// baseline	STRING	Optional: dominant-baseline (auto|middle|hanging)
+/// style		STRING	Optional: style to apply (e.g. "font-family:Arial;font-size:16px)
+/// class		STRING	Optional: CSS class to apply
+/// transform	STRING	Optional: additional transforms (e.g. "scale(1.2) translate(10,10)")
+function 'EvaluationContext.SVG.Txt' =
+		(
+			x: INT64,
+			y: INT64,
+			txt: STRING,
+			dx: INT64,
+			dy: INT64,
+			textAnchor: STRING,
+			baseline: STRING,
+			style: STRING,
+			class: STRING,
+			transform: STRING
+		) =>
+
+			VAR NewLine = UNICHAR(10)
+			VAR Tab = UNICHAR(9)
+
+			VAR _DX = IF(NOT ISBLANK( dx ), " dx='" & dx & "'" )
+			VAR _DY = IF(NOT ISBLANK(DY), " dy='" & dy & "'" )
+			VAR _TextAnchor = IF(NOT ISBLANK( textAnchor ), " text-anchor='" & textAnchor & "'" )
+			VAR _Baseline = IF(NOT ISBLANK( baseline ), " dominant-baseline='" & baseline & "'" )
+			
+			VAR _OCE = EvaluationContext.SVG.OptionalCommentElements( style, class, transform )
+
+			VAR result =
+				Tab & "<text" &
+				" x='" & x & "'" &
+				" y='" & y & "'" &
+				_DX & _DY &
+				_TextAnchor &
+				_Baseline &
+				_OCE &
+				">" & txt & "</text>" & NewLine
+
+			RETURN result
+
+	annotation DAXLIB_PackageId = EvaluationContext.SVG
+
+	annotation DAXLIB_PackageVersion = 0.1.0-beta
+
+/// Create a bar SVG for a given column
+/// Warning: Dependancy on EvaluationContext.colour.HEXADJUSTSATURATION
+/// width			INT64	The width of the SVG canvas
+/// height			INT64	The height of the SVG canvas
+/// columnRef		AnyRef	The column to visualize
+/// positiveColor	STRING	The Hex color of the positive bar i.e "#01B8AA"
+/// negativeColor	STRING	The Hex color of the negative bar i.e "#FD625E"
+/// zeroAxisColor	STRING	The Hex color of the zero axis i.e "#A6A6A6"
+function 'EvaluationContext.SVG.Bar' = 
+		(
+			width: INT64,
+			height: INT64,
+			columnRef: AnyRef,
+			positiveColor: STRING,
+			negativeColor: STRING,
+			zeroAxisColor: STRING
+		) =>
+
+			// X-axis scale
+			VAR XMin = CALCULATE( MIN( columnRef ), ALLSELECTED() ) 
+			VAR XMax = CALCULATE( MAX( columnRef ), ALLSELECTED() ) 
+
+			// Map the zero point and the current value to the SVG's coordinate system
+			VAR ZeroPoint = EvaluationContext.SVG.MapVALUTOSCALE( 0, XMin, XMax, 0, width )
+			VAR CurrentValue = SUM( columnRef )
+			VAR ValuePoint = EvaluationContext.SVG.MapValueToScale( CurrentValue, XMin, XMax, 0, width )
+
+			// Style
+			VAR _PositiveColor = IF( NOT ISBLANK( positiveColor ), positiveColor, "#01B8AA" )
+			VAR _NegativeColor = IF( NOT ISBLANK( negativeColor ), negativeColor, "#FD625E" )
+			VAR _ZeroAxisColor = IF( NOT ISBLANK( zeroAxisColor ), zeroAxisColor, "#A6A6A6" )
+			VAR ZeroAxisStyle =
+				EvaluationContext.SVG.Style(
+					blank(),			// Fill
+					_ZeroAxisColor,	 	// stroke
+					1, 					// StrokeWidth
+					BLANK(), 			// Opacity
+					BLANK(), 			// FontFamily
+					BLANK() 			// FontSize
+				)
+			VAR RectColour = IF( CurrentValue >= 0, _PositiveColor, _NegativeColor )
+			VAR RectStyle =
+				EvaluationContext.SVG.Style(
+					RectColour,			// Fill
+					EvaluationContext.colour.HEXADJUSTSATURATION( RectColour, -0.5 ), // stroke
+					BLANK(), 			// StrokeWidth
+					BLANK(), 			// Opacity
+					BLANK(), 			// FontFamily
+					BLANK() 			// FontSize	
+				)
+
+			// Rect
+			VAR RectWidth =  ABS( ValuePoint - ZeroPoint )
+			VAR RectX =		 IF( ValuePoint > ZeroPoint, ZeroPoint, ValuePoint )
+			VAR Rect = 
+				EvaluationContext.SVG.Rect(
+					RectX,             // X
+					height / 4,        // Y
+					RectWidth,         // Width
+					height / 2,        // Height
+					0,                 // RX
+					0,                 // RY
+					RectStyle,         // Style
+					BLANK(),           // Class
+					BLANK()            // Transform
+				)
+
+			// Zero Axis Line
+			VAR ZeroAxis = 
+				EvaluationContext.SVG.Line(
+					ZeroPoint,         	// X1
+					0,                	// Y1
+					ZeroPoint,          // X2
+					height,				// Y2
+					ZeroAxisStyle,    	// Style
+					BLANK(),            // Class
+					BLANK()             // Transform
+				)
+
+			VAR result = 
+				EvaluationContext.SVG.SVG(
+					width,
+					height,
+					ZeroAxis &
+					Rect
+				)
+
+			RETURN result
+
+	annotation DAXLIB_PackageId = EvaluationContext.SVG
+
+	annotation DAXLIB_PackageVersion = 0.1.0-beta
+
+/// Create a pill SVG element
+/// Warning: Dependancy on EvaluationContext.colour.HEXADJUSTLUMINANCE
+/// width 	INT64  	The width of the SVG canvas
+/// Height 	INT64  	The height of the SVG canvas
+/// txt 	STRING  The text to display
+/// colour 	STRING  The Hex color of the fill i.e "#01B8AA80"
+function 'EvaluationContext.SVG.Pill' = 
+		(
+			width: INT64,
+			height: INT64,
+			txt: STRING,
+			colour: STRING 
+		) =>
+
+			// Style
+			VAR PillStyle =
+				EvaluationContext.SVG.Style(
+					colour,				// Fill
+					EvaluationContext.colour.HEXADJUSTLUMINANCE( colour, -0.4 ), // stroke
+					1, 					// StrokeWidth
+					BLANK(), 			// Opacity
+					BLANK(), 			// FontFamily
+					BLANK() 			// FontSize	
+				)
+			VAR TextStyle =
+				EvaluationContext.SVG.Style(
+					EvaluationContext.colour.HEXADJUSTLUMINANCE( colour, -0.4 ), // Fill
+					BLANK(), 			// stroke
+					1, 					// StrokeWidth
+					BLANK(), 			// Opacity
+					"Segoe UI", 		// FontFamily
+					12 					// FontSize	
+				)
+
+			// SVG Elements
+			VAR Pill = 
+				EvaluationContext.SVG.Rect(
+					1,                 	// X
+					1,                 	// Y
+					width * 0.98,      	// Width
+					height * 0.90,     	// Height
+					10,               	// RX
+					10,               	// RY
+					PillStyle,         	// Style
+					BLANK(),           	// Class
+					BLANK()           	// Transform
+				)
+
+			VAR TextElement = 
+				EvaluationContext.SVG.Txt(
+					width * 0.50,      	// X
+					height * 0.58,     	// Y
+					txt,              	// Text content
+					0,                	// DX
+					0,                	// DY
+					"middle",         	// TextAnchor
+					"middle",          	// Baseline
+					TextStyle,         	// Style
+					BLANK(),			// Class
+					BLANK()				// Transform
+				)
+
+			VAR result = 
+				EvaluationContext.SVG.SVG( 
+					width, 
+					height, 
+					Pill & 
+					TextElement 
+				)
+
+			RETURN result
+
+	annotation DAXLIB_PackageId = EvaluationContext.SVG
+
+	annotation DAXLIB_PackageVersion = 0.1.0-beta
