@@ -6,5 +6,6 @@
   "description": "A comprehensive set of User-Defined Functions designed to enable easy manipulation of hex colours",
   "tags": "DAX,UDF,colour",
   "projectUrl": "https://github.com/sql-bi/daxlib",
-  "repositoryUrl": "https://github.com/sql-bi/daxlib/tree/main/packages/e/evaluationcontext.colour"
+  "repositoryUrl": "https://github.com/sql-bi/daxlib/tree/main/packages/e/evaluationcontext.colour",
+  "icon": "/icon.png"
 }
