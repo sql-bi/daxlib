@@ -9,7 +9,7 @@
 /// The transactionTable is the table that defines the presence of
 /// transactions, typically the table that has the column(s) 
 /// aggregated in valueExpr
-function 'Local.ComputeInAbcClass' = ```
+function 'DaxPatterns.AbcClassification.ComputeInAbcClass' = ```
         ( 
             valueExpr : ANYREF EXPR, 
             transactionsTable : ANYREF EXPR, 
@@ -20,7 +20,7 @@ function 'Local.ComputeInAbcClass' = ```
             abcUpperBoundaryColumn : ANYREF EXPR
         ) =>
             VAR ProductsInClass = 
-                Local.ItemsInClass( 
+                DaxPatterns.AbcClassification.ItemsInClass( 
                     TransactionsTable, 
                     ItemTable, 
                     ItemKeyColumn, 
@@ -51,7 +51,7 @@ function 'Local.ComputeInAbcClass' = ```
 /// The transactionTable is the table that defines the presence of
 /// transactions, typically the table that has the column(s) 
 /// aggregated in valueExpr
-function 'Local.ItemsInClass' = ```
+function 'DaxPatterns.AbcClassification.ItemsInClass' = ```
         ( 
             valueExpr : ANYREF EXPR,
             transactionsTable : ANYREF EXPR, 
