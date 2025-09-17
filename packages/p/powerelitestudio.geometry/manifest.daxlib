@@ -1,0 +1,11 @@
+{
+  "$schema": "https://raw.githubusercontent.com/sql-bi/daxlib/main/schemas/manifest/1.0.0/manifest.schema.json",
+  "id": "powerelitestudio.geometry",
+  "name": "PowerEliteStudio.Geometry",
+  "version": "0.1.1",
+  "title": "Geometry utilities for DAX",
+  "description": "Areas, perimeters, surface areas, volumes and analytic geometry helpers in DAX.",
+  "authors": [{ "name": "Power Elite Studio (Miguel)" }],
+  "license": "MIT",
+  "files": { "tmdl": "lib/functions.tmdl" }
+}
