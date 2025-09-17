@@ -23,7 +23,7 @@ function 'EvaluationContext.Colour.Int.ToHex' =
 				
 			RETURN Hex
 
-	annotation DAXLIB_PackageId = EvaluationContext.colour
+	annotation DAXLIB_PackageId = EvaluationContext.Colour
 
 	annotation DAXLIB_PackageVersion = 0.1.1-beta
 
@@ -47,7 +47,7 @@ function 'EvaluationContext.Colour.Hex.ToInt' =
 
 			RETURN Result
 
-	annotation DAXLIB_PackageId = EvaluationContext.colour
+	annotation DAXLIB_PackageId = EvaluationContext.Colour
 
 	annotation DAXLIB_PackageVersion = 0.1.1-beta
 
@@ -70,7 +70,7 @@ function 'EvaluationContext.Colour.RGB.ToHex' =
 			EvaluationContext.Colour.Int.ToHex( blue, 2 ) &
 			IF( NOT ISBLANK( alpha ), EvaluationContext.Colour.Int.ToHex( alpha * 255, 2 ) )
 
-	annotation DAXLIB_PackageId = EvaluationContext.colour
+	annotation DAXLIB_PackageId = EvaluationContext.Colour
 
 	annotation DAXLIB_PackageVersion = 0.1.1-beta
 
@@ -119,7 +119,7 @@ function 'EvaluationContext.Colour.HSL.ToHex' =
 
 			RETURN result
 
-	annotation DAXLIB_PackageId = EvaluationContext.colour
+	annotation DAXLIB_PackageId = EvaluationContext.Colour
 
 	annotation DAXLIB_PackageVersion = 0.1.1-beta
 
@@ -152,7 +152,7 @@ function 'EvaluationContext.Colour.HEX.Hue' =
 
 			RETURN result
 			
-	annotation DAXLIB_PackageId = EvaluationContext.colour
+	annotation DAXLIB_PackageId = EvaluationContext.Colour
 
 	annotation DAXLIB_PackageVersion = 0.1.1-beta
 
@@ -183,7 +183,7 @@ function 'EvaluationContext.Colour.HEX.Saturation' =
 
 			RETURN S
 
-	annotation DAXLIB_PackageId = EvaluationContext.colour
+	annotation DAXLIB_PackageId = EvaluationContext.Colour
 
 	annotation DAXLIB_PackageVersion = 0.1.1-beta
 
@@ -208,7 +208,7 @@ function 'EvaluationContext.Colour.HEX.Luminance' =
 				
 				RETURN result
 
-		annotation DAXLIB_PackageId = EvaluationContext.colour
+		annotation DAXLIB_PackageId = EvaluationContext.Colour
 
 		annotation DAXLIB_PackageVersion = 0.1.1-beta
 
@@ -226,7 +226,7 @@ function 'EvaluationContext.Colour.HEX.Alpha' =
 				
 				RETURN result
 
-		annotation DAXLIB_PackageId = EvaluationContext.colour
+		annotation DAXLIB_PackageId = EvaluationContext.Colour
 
 		annotation DAXLIB_PackageVersion = 0.1.1-beta
 
@@ -249,7 +249,7 @@ function 'EvaluationContext.Colour.HEX.AdjustHue' =
 				RETURN 
 					EvaluationContext.Colour.HSL.ToHex( NewH, S, L, A )
 
-	annotation DAXLIB_PackageId = EvaluationContext.colour
+	annotation DAXLIB_PackageId = EvaluationContext.Colour
 
 	annotation DAXLIB_PackageVersion = 0.1.1-beta
 
@@ -272,7 +272,7 @@ function 'EvaluationContext.Colour.HEX.AdjustSaturation' =
 			RETURN 
 				EvaluationContext.Colour.HSL.ToHex( H, NewS, L, A )
 			
-	annotation DAXLIB_PackageId = EvaluationContext.colour
+	annotation DAXLIB_PackageId = EvaluationContext.Colour
 
 	annotation DAXLIB_PackageVersion = 0.1.1-beta
 
@@ -295,7 +295,7 @@ function 'EvaluationContext.Colour.HEX.AdjustLuminance' =
 				RETURN
 					EvaluationContext.Colour.HSL.ToHex( H, S, NewL, A )
 	
-	annotation DAXLIB_PackageId = EvaluationContext.colour
+	annotation DAXLIB_PackageId = EvaluationContext.Colour
 
 	annotation DAXLIB_PackageVersion = 0.1.1-beta
 
@@ -317,7 +317,7 @@ function 'EvaluationContext.Colour.HEX.AdjustAlpha' =
 
 			RETURN result
 
-	annotation DAXLIB_PackageId = EvaluationContext.colour
+	annotation DAXLIB_PackageId = EvaluationContext.Colour
 
 	annotation DAXLIB_PackageVersion = 0.1.1-beta
 
@@ -343,7 +343,7 @@ function 'EvaluationContext.Colour.HEX.AdjustColour' =
 			
 			RETURN Step4
 
-	annotation DAXLIB_PackageId = EvaluationContext.colour
+	annotation DAXLIB_PackageId = EvaluationContext.Colour
 
 	annotation DAXLIB_PackageVersion = 0.1.1-beta
 
@@ -502,7 +502,7 @@ function 'EvaluationContext.Colour.HEX.Theme' =
 
 			RETURN SelectedColor
 
-	annotation DAXLIB_PackageId = EvaluationContext.colour
+	annotation DAXLIB_PackageId = EvaluationContext.Colour
 
 	annotation DAXLIB_PackageVersion = 0.1.1-beta
 
@@ -529,7 +529,7 @@ function 'EvaluationContext.Colour.HEX.LinearTheme' =
 			
 			RETURN Hex
 
-	annotation DAXLIB_PackageId = EvaluationContext.colour
+	annotation DAXLIB_PackageId = EvaluationContext.Colour
 
 	annotation DAXLIB_PackageVersion = 0.1.1-beta
 
@@ -545,6 +545,6 @@ function 'EvaluationContext.Colour.HEX.TextColour' =
 			
 			RETURN result
 			
-	annotation DAXLIB_PackageId = EvaluationContext.colour
+	annotation DAXLIB_PackageId = EvaluationContext.Colour
 
 	annotation DAXLIB_PackageVersion = 0.1.1-beta
