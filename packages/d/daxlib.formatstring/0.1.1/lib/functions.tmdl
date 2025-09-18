@@ -1,0 +1,983 @@
+function 'DaxLib.FormatString.RelativeToTarget.Percents' = ```
+
+		// Dynamic format string generator for comparison values (in percent)
+		// Returns format string with directional indicators based on parameters
+		(
+		    // Position of comparison symbol
+		    // Expects "PREFIX" or "SUFFIX"
+		    position: STRING,
+
+		    // Number of decimal places
+		    // Expects an INT64 value from 0-9
+		    decimal_places: INT64,
+
+		    // Symbol style - number (1-9) or text:
+		    // 1 or "ARROWS": ↑/↓
+		    // 2 or "TRIANGLES": ▲/▼
+		    // 3 or "PLUSMINUS": +/-
+		    // 4 or "CHEVRONS": ˄/˅
+		    // 5 or "GREENRED": 🟢/🔴
+		    // 6 or "BLUEORANGE": 🔵/🟠
+		    // 7 or "BLOCKARROWS": ⬆/⬇
+		    // 8 or "CHECKCROSS": ✓/✗
+		    // 9 or "NONE": no symbol
+		    symbol: ANYVAL,
+
+		    // Custom prefix text (optional)
+		    // Enter "" to skip parameter
+		    // Enter SELECTEDVALUE( 'Exchange Rate'[Currency Symbol] ) for dynamic currency conversion
+		    //
+		    // Note: Value is string-safe; no need for """"
+		    custom_prefix: EXPR,
+
+		    // Custom suffix text (optional)
+		    // Enter "" to skip parameter
+		    // Enter SELECTEDVALUE( 'Exchange Rate'[Currency Symbol] ) for dynamic currency conversion
+		    // Enter " (" & FORMAT ( [PercentMeasure], "0.0%" ) & ")" to add a second value for context
+		    //
+		    // Note: Value is string-safe; no need for """"
+		    custom_suffix: EXPR
+		)
+		=>
+		    VAR _BaseFormat =
+		        DaxLib.FormatString.Component.DecimalPlaces( "#,##0", decimal_places )
+
+		    VAR _Prefix =
+		        DaxLib.FormatString.Component.MakeStringSafe ( custom_prefix )
+
+		    VAR _Suffix =
+		        DaxLib.FormatString.Component.MakeStringSafe ( custom_suffix )
+
+		    VAR _PositiveSymbol =
+		        DaxLib.FormatString.Component.Symbols ( symbol, "POSITIVE" )
+
+		    VAR _NegativeSymbol =
+		        DaxLib.FormatString.Component.Symbols ( symbol, "NEGATIVE" )
+
+		    VAR _PositiveFormat =
+		        _Prefix
+		            & SWITCH (
+		                position,
+		                "PREFIX", _PositiveSymbol & " " & _BaseFormat,
+		                "SUFFIX", _BaseFormat & " " & _PositiveSymbol,
+		                _BaseFormat & " " & _PositiveSymbol
+		            )
+		            &
+		        _Suffix
+
+		    VAR _NegativeFormat =
+		        _Prefix
+		            & SWITCH (
+		                position,
+		                "PREFIX", _NegativeSymbol & " " & _BaseFormat,
+		                "SUFFIX", _BaseFormat & " " & _NegativeSymbol,
+		                _BaseFormat & " " & _NegativeSymbol
+		            )
+		            &
+		        _Suffix
+
+		    VAR _ZeroFormat =
+		        _Prefix
+		            &
+		            _BaseFormat
+		            &
+		        _Suffix
+
+		    RETURN
+		        _PositiveFormat & ";" & _NegativeFormat & ";" & _ZeroFormat
+		```
+
+	annotation DAXLIB_PackageId = DaxLib.FormatString
+
+	annotation DAXLIB_PackageVersion = 0.1.1
+
+function 'DaxLib.FormatString.HHMMSS.Seconds' = ```
+
+		// Convert duration in seconds to HH:MM:SS format string
+		(
+		    // Duration in seconds
+		    seconds: NUMERIC
+		) =>
+		    VAR _TotalSeconds = seconds
+
+		    VAR _Hours =
+		        INT( _TotalSeconds / 3600 )
+
+		    VAR _Minutes =
+		        INT( MOD( _TotalSeconds, 3600 ) / 60 )
+
+		    VAR _Seconds =
+		        INT( MOD( _TotalSeconds, 60 ) )
+
+		    VAR _Result =
+		        FORMAT( _Hours, "00" ) & ":" &
+		        FORMAT( _Minutes, "00" ) & ":" &
+		        FORMAT( _Seconds, "00" )
+
+		    RETURN
+		        _Result
+		```
+
+	annotation DAXLIB_PackageId = DaxLib.FormatString
+
+	annotation DAXLIB_PackageVersion = 0.1.1
+
+function 'DaxLib.FormatString.HHMMSS.StartTimeEndTime' = ```
+
+		// Convert duration between start and end times to HH:MM:SS format string
+		(
+		    // Start datetime
+		    // Include measure, expression, or scalar value
+		    startTime: EXPR,
+
+		    // End datetime
+		    // Include measure, expression, or scalar value
+		    endTime: EXPR
+		) =>
+		    VAR _DurationInSeconds =
+		        INT( ( endTime - startTime ) * 86400 )
+
+		    VAR _Hours =
+		        INT( _DurationInSeconds / 3600 )
+
+		    VAR _Minutes =
+		        INT( MOD( _DurationInSeconds, 3600 ) / 60 )
+
+		    VAR _Seconds =
+		        INT( MOD( _DurationInSeconds, 60 ) )
+
+		    VAR _Result =
+		        FORMAT( _Hours, "00" ) & ":" &
+		        FORMAT( _Minutes, "00" ) & ":" &
+		        FORMAT( _Seconds, "00" )
+
+		    RETURN
+		        _Result
+		```
+
+	annotation DAXLIB_PackageId = DaxLib.FormatString
+
+	annotation DAXLIB_PackageVersion = 0.1.1
+
+function 'DaxLib.FormatString.DynamicUnits' = ```
+
+		// Dynamic format string with automatic K/M/bn/tn suffix, rounding, and decimal places based on value magnitude
+		// Supports dynamic currency conversion
+		(
+		    // The value to format
+		    // Expects a numeric value or measure reference
+		    // Recommended: SELECTEDMEASURE()
+		    format_value: EXPR,
+
+		    // The currency symbol you want to use
+		    // Expects a symbol like "$"
+		    // Enter "" for none
+		    // Use DaxLib.FormatString.Component.GetCurrencySymbol for dynamic currency conversion
+		    currency_symbol: STRING,
+
+		    // Whether the currency should be a prefix or suffix
+		    // Expects "PREFIX" or "SUFFIX"
+		    // Enter "" for none
+		    // Use DaxLib.FormatString.Component.GetCurrencyPosition for dynamic currency conversion
+		    currency_position: STRING,
+
+		    // Custom prefix (optional)
+		    // Enter "" for none
+		    // Note: Value is string-safe; no need for """"
+		    custom_prefix : EXPR,
+
+		    // Custom suffix (optional)
+		    // Enter "" for none
+		    // Note: Value is string-safe; no need for """"
+		    custom_suffix : EXPR
+		)
+		=>
+		    VAR _NumberFormat =
+		        DaxLib.FormatString.Component.DynamicUnits( "#,##0", format_value )
+
+		    VAR _CurrencySymbol =
+		        currency_symbol
+
+		    VAR _CurrencyPosition =
+		        currency_position
+
+		    VAR _Prefix =
+		        IF ( _CurrencyPosition = "PREFIX", _CurrencySymbol & " ", "" ) &
+		        DaxLib.FormatString.Component.MakeStringSafe( custom_prefix )
+
+		    VAR _Suffix =
+		        IF ( _CurrencyPosition = "SUFFIX", " " & _CurrencySymbol, "" ) &
+		        DaxLib.FormatString.Component.MakeStringSafe( custom_suffix )
+
+		    VAR _FormatString =
+		        _Prefix & _NumberFormat & _Suffix
+
+		    RETURN
+		        _FormatString
+		```
+
+	annotation DAXLIB_PackageId = DaxLib.FormatString
+
+	annotation DAXLIB_PackageVersion = 0.1.1
+
+function 'DaxLib.FormatString.Component.Symbols' = ```
+
+		// Get comparison symbol based on style and value sign
+		// Returns appropriate symbol for positive, negative, or zero values
+		(
+		    // Symbol style - number (1-9) or text:
+		    // 1 or "ARROWS": ↑/↓
+		    // 2 or "TRIANGLES": ▲/▼
+		    // 3 or "PLUSMINUS": +/-
+		    // 4 or "CHEVRONS": ˄/˅
+		    // 5 or "GREENRED": 🟢/🔴
+		    // 6 or "BLUEORANGE": 🔵/🟠
+		    // 7 or "BLOCKARROWS": ⬆/⬇
+		    // 8 or "CHECKCROSS": ✓/✗
+		    // 9 or "NONE": no symbol
+		    symbol_style: ANYVAL,
+
+		    // Value type: "POSITIVE", "NEGATIVE", or "ZERO"
+		    value_type: STRING
+		)
+		=>
+		    VAR _SymbolCode =
+		        IF ( ISNUMBER ( symbol_style ),
+		            symbol_style,
+		            SWITCH ( UPPER ( symbol_style ),
+		                "ARROWS", 1,
+		                "TRIANGLES", 2,
+		                "PLUSMINUS", 3,
+		                "CHEVRONS", 4,
+		                "GREENRED", 5,
+		                "BLUEORANGE", 6,
+		                "BLOCKARROWS", 7,
+		                "CHECKCROSS", 8,
+		                "NONE", 9,
+		                9
+		            )
+		        )
+
+		    VAR _Symbol =
+		        SWITCH ( value_type,
+		            "POSITIVE",
+		                SWITCH ( _SymbolCode,
+		                    1, "↑",
+		                    2, "▲",
+		                    3, "+",
+		                    4, "˄",
+		                    5, "🟢",
+		                    6, "🔵",
+		                    7, "⬆",
+		                    8, "✓",
+		                    9, "",
+		                    ""
+		                ),
+		            "NEGATIVE",
+		                SWITCH ( _SymbolCode,
+		                    1, "↓",
+		                    2, "▼",
+		                    3, "-",
+		                    4, "˅",
+		                    5, "🔴",
+		                    6, "🟠",
+		                    7, "⬇",
+		                    8, "✗",
+		                    9, "",
+		                    ""
+		                ),
+		            ""
+		        )
+
+		    RETURN
+		        _Symbol
+		```
+
+	annotation DAXLIB_PackageId = DaxLib.FormatString
+
+	annotation DAXLIB_PackageVersion = 0.1.1
+
+function 'DaxLib.FormatString.Component.DecimalPlaces' = ```
+
+		// Returns a 0 string repeated a number of times equal to the number of decimal places
+		(
+		    // Base format string
+		    // Expects a valid format string base, i.e. "#,##0"
+		    base_format: STRING,
+
+		    // Number of decimal places
+		    // Expects an integer value from 0-9
+		    decimal_places: INT64
+		)
+		=>
+		    base_format
+		    &
+		    IF (
+		        decimal_places > 0,
+		        "."
+		            & REPT ( "0", MIN ( decimal_places, 9 ) ),
+		        ""
+		    )
+		```
+
+	annotation DAXLIB_PackageId = DaxLib.FormatString
+
+	annotation DAXLIB_PackageVersion = 0.1.1
+
+function 'DaxLib.FormatString.Component.MakeStringSafe' = 
+
+		// Wraps strings in double-quotes to avoid issues with format string interpretation
+		(
+		    // The value you want to put in the format string
+		    unsafe_string : STRING
+		)
+		=>
+		    """" & unsafe_string & """"
+
+	annotation DAXLIB_PackageId = DaxLib.FormatString
+
+	annotation DAXLIB_PackageVersion = 0.1.1
+
+function 'DaxLib.FormatString.DynamicCurrency' = ```
+
+		// Get currency format string based on currency code
+		// Returns appropriate number format with currency symbol placement
+		(
+		    // Currency code (ISO 4217 three-letter code)
+		    // Examples: CAD, EUR, GBP, JPY, etc.
+		    // Expects a column reference used for selecting a currency in the report, like 'Exchange Rate'[Currency Code]
+		    currency_code: ANYREF,
+
+		    // Base format string
+		    // Recommended: "#,##0"
+		    decimal_places: INT64
+		)
+		=>
+		    VAR _BaseFormat =
+		        DaxLib.FormatString.Component.DecimalPlaces( "#,##0", decimal_places )
+
+		    VAR _CurrencyPosition =
+		        DaxLib.FormatString.Component.GetCurrencyPosition ( currency_code )
+
+		    VAR _CurrencySymbol =
+		        DaxLib.FormatString.Component.GetCurrencySymbol ( currency_code )
+
+		    VAR _Prefix =
+		        IF ( _CurrencyPosition = "PREFIX", _CurrencySymbol & " ", "" )
+
+		    VAR _Suffix =
+		        IF ( _CurrencyPosition = "SUFFIX", " " & _CurrencySymbol, "" )
+
+		    VAR _Format =
+		        _Prefix & _BaseFormat & _Suffix
+
+		    RETURN
+		        _Format
+		```
+
+	annotation DAXLIB_PackageId = DaxLib.FormatString
+
+	annotation DAXLIB_PackageVersion = 0.1.1
+
+function 'DaxLib.FormatString.Component.GetCurrencySymbol' = ```
+
+		// Get currency symbol based on currency code
+		// Returns currency symbol as a string (e.g., "$" or "€")
+		(
+		    // Currency code (ISO 4217 three-letter code)
+		    // Examples: CAD, EUR, GBP, JPY, etc.
+		    currency_code: ANYREF
+		)
+		=>
+		    VAR _Code =
+		        SELECTEDVALUE ( currency_code )
+
+		    VAR _Currency =
+		        FILTER (
+		            -- Calc. table with common currencies and formats
+		            -- Optionally replace with your own, in-memory exchange rate table
+		            DaxLib.FormatString.Component.CurrencyTable(),
+		            ''[Currency Code] = _Code
+		        )
+
+		    VAR _Symbol =
+		        SELECTCOLUMNS ( _Currency, ''[Currency Symbol] )
+
+		    RETURN
+		        _Symbol
+		```
+
+	annotation DAXLIB_PackageId = DaxLib.FormatString
+
+	annotation DAXLIB_PackageVersion = 0.1.1
+
+function 'DaxLib.FormatString.Component.GetCurrencyPosition' = ```
+
+		// Get currency position based on currency code
+		// Returns either "PREFIX" or "SUFFIX"
+		(
+		    // Currency code (ISO 4217 three-letter code)
+		    // Examples: CAD, EUR, GBP, JPY, etc.
+		    currency_code: ANYREF
+		)
+		=>
+		    VAR _Code =
+		        SELECTEDVALUE ( currency_code )
+
+		    VAR _Currency =
+		        FILTER (
+		            -- Calc. table with common currencies and formats
+		            -- Optionally replace with your own, in-memory exchange rate table
+		            DaxLib.FormatString.Component.CurrencyTable(),
+		            ''[Currency Code] = _Code
+		        )
+
+		    VAR _Position =
+		        SELECTCOLUMNS ( _Currency, ''[Currency Position] )
+
+		    RETURN
+		        _Position
+		```
+
+	annotation DAXLIB_PackageId = DaxLib.FormatString
+
+	annotation DAXLIB_PackageVersion = 0.1.1
+
+function 'DaxLib.FormatString.Component.DynamicUnits' = ```
+
+		// Helper function to dynamically round and format values
+		(
+		    // Base format string
+		    // Expects a valid format string base, i.e. "#,##0"
+		    base_format: STRING,
+
+		    // The value to format
+		    // EXPR because it must be able to handle SELECTEDMEASURE() and arbitrary expressions
+		    format_value: EXPR
+		)
+		=>
+		    VAR _CurrentValue =
+		        format_value
+
+		    VAR _Format =
+		        base_format &
+		        SWITCH (
+		            TRUE (),
+		            _CurrentValue <= 1E3, ".",
+		            _CurrentValue <= 1E4, ",.00 K",
+		            _CurrentValue <= 1E5, ",.0 K",
+		            _CurrentValue <= 1E6, ",. K",
+		            _CurrentValue <= 1E7, ",,.00 M",
+		            _CurrentValue <= 1E8, ",,.0 M",
+		            _CurrentValue <= 1E9, ",,. M",
+		            _CurrentValue <= 1E10, ",,.00 bn",
+		            _CurrentValue <= 1E11, ",,.0 bn",
+		            _CurrentValue <= 1E12, ",,. bn",
+		            _CurrentValue <= 1E13, ",,.00 tn",
+		            _CurrentValue <= 1E14, ",,.0 tn",
+		            _CurrentValue <= 1E15, ",,. tn"
+		        )
+		    RETURN
+		        _Format
+		```
+
+	annotation DAXLIB_PackageId = DaxLib.FormatString
+
+	annotation DAXLIB_PackageVersion = 0.1.1
+
+function 'DaxLib.FormatString.RelativeToTarget.Numeric' = ```
+
+		// Dynamic format string generator for comparison values (in value)
+		// Returns format string with directional indicators based on parameters
+		(
+		    // Position of comparison symbol
+		    // Expects "PREFIX" or "SUFFIX"
+		    position: STRING,
+
+		    // Number of decimal places
+		    // Expects an INT64 value from 0-9
+		    decimal_places: INT64,
+
+		    // Symbol style - number (1-9) or text:
+		    // 1 or "ARROWS": ↑/↓
+		    // 2 or "TRIANGLES": ▲/▼
+		    // 3 or "PLUSMINUS": +/-
+		    // 4 or "CHEVRONS": ˄/˅
+		    // 5 or "GREENRED": 🟢/🔴
+		    // 6 or "BLUEORANGE": 🔵/🟠
+		    // 7 or "BLOCKARROWS": ⬆/⬇
+		    // 8 or "CHECKCROSS": ✓/✗
+		    // 9 or "NONE": no symbol
+		    symbol: ANYVAL,
+
+		    // Custom prefix text (optional)
+		    // Enter "" to skip parameter
+		    // Enter SELECTEDVALUE( 'Exchange Rate'[Currency Symbol] ) for dynamic currency conversion
+		    //
+		    // Note: Value is string-safe; no need for """"
+		    custom_prefix: EXPR,
+
+		    // Custom suffix text (optional)
+		    // Enter "" to skip parameter
+		    // Enter SELECTEDVALUE( 'Exchange Rate'[Currency Symbol] ) for dynamic currency conversion
+		    // Enter " (" & FORMAT ( [PercentMeasure], "0.0%" ) & ")" to add a second value for context
+		    //
+		    // Note: Value is string-safe; no need for """"
+		    custom_suffix: EXPR
+		) =>
+		    VAR _BaseFormat =
+		        DaxLib.FormatString.Component.DecimalPlaces( "#,##0", decimal_places )
+
+		    VAR _Prefix =
+		        DaxLib.FormatString.Component.MakeStringSafe ( custom_prefix )
+
+		    VAR _Suffix =
+		        DaxLib.FormatString.Component.MakeStringSafe ( custom_suffix )
+
+		    VAR _PositiveSymbol =
+		        DaxLib.FormatString.Component.Symbols ( symbol, "POSITIVE" )
+
+		    VAR _NegativeSymbol =
+		        DaxLib.FormatString.Component.Symbols ( symbol, "NEGATIVE" )
+
+		    VAR _PositiveFormat =
+		        _Prefix
+		            & SWITCH (
+		                position,
+		                "PREFIX",
+		                    _PositiveSymbol & " " & _BaseFormat,
+		                "SUFFIX",
+		                    _BaseFormat & " " & _PositiveSymbol,
+		                _BaseFormat & " " & _PositiveSymbol
+		            )
+		            & _Suffix
+
+		    VAR _NegativeFormat =
+		        _Prefix
+		            & SWITCH (
+		                position,
+		                "PREFIX",
+		                    _NegativeSymbol & " " & _BaseFormat,
+		                "SUFFIX",
+		                    _BaseFormat & " " & _NegativeSymbol,
+		                _BaseFormat & " " & _NegativeSymbol
+		            )
+		            & _Suffix
+
+		    VAR _ZeroFormat =
+		        _Prefix & _BaseFormat & _Suffix
+
+		    RETURN
+		        _PositiveFormat & ";" & _NegativeFormat
+		            & ";"
+		            & _ZeroFormat
+		```
+
+	annotation DAXLIB_PackageId = DaxLib.FormatString
+
+	annotation DAXLIB_PackageVersion = 0.1.1
+
+function 'DaxLib.FormatString.Component.CurrencyTable' = ```
+
+		// Get currency reference table with codes, symbols, position, and format strings
+		// Returns table with currency metadata for use in other calculations
+		()
+		=>
+		    VAR _CurrencyTable =
+		        DATATABLE (
+		            "Currency Code", STRING,
+		            "Currency Symbol", STRING,
+		            "Currency Position", STRING,
+		            "Format String", STRING,
+		            "Format String PNZ", STRING,
+		            {
+		                -- Major currencies
+		                { "CAD", "C$", "PREFIX", "C$#,##0", "C$#,##0;-C$#,##0;C$0" },
+		                { "EUR", "€", "SUFFIX", "#,##0 €", "#,##0 €;-#,##0 €;0 €" },
+		                { "GBP", "£", "PREFIX", "£#,##0", "£#,##0;-£#,##0;£0" },
+		                { "JPY", "¥", "PREFIX", "¥#,##0", "¥#,##0;-¥#,##0;¥0" },
+		                { "CHF", "CHF", "PREFIX", "CHF #,##0", "CHF #,##0;-CHF #,##0;CHF 0" },
+
+		                -- Dollar variants
+		                { "USD", "$", "PREFIX", "$#,##0", "$#,##0;-$#,##0;$0" },
+		                { "AUD", "A$", "PREFIX", "A$#,##0", "A$#,##0;-A$#,##0;A$0" },
+		                { "NZD", "NZ$", "PREFIX", "NZ$#,##0", "NZ$#,##0;-NZ$#,##0;NZ$0" },
+		                { "HKD", "HK$", "PREFIX", "HK$#,##0", "HK$#,##0;-HK$#,##0;HK$0" },
+		                { "SGD", "S$", "PREFIX", "S$#,##0", "S$#,##0;-S$#,##0;S$0" },
+		                { "TWD", "NT$", "PREFIX", "NT$#,##0", "NT$#,##0;-NT$#,##0;NT$0" },
+
+		                -- Asian currencies
+		                { "CNY", "¥", "PREFIX", "¥#,##0", "¥#,##0;-¥#,##0;¥0" },
+		                { "INR", "₹", "PREFIX", "₹#,##0", "₹#,##0;-₹#,##0;₹0" },
+		                { "KRW", "₩", "PREFIX", "₩#,##0", "₩#,##0;-₩#,##0;₩0" },
+		                { "THB", "฿", "PREFIX", "฿#,##0", "฿#,##0;-฿#,##0;฿0" },
+		                { "PHP", "₱", "PREFIX", "₱#,##0", "₱#,##0;-₱#,##0;₱0" },
+		                { "IDR", "Rp", "PREFIX", "Rp#,##0", "Rp#,##0;-Rp#,##0;Rp0" },
+		                { "MYR", "RM", "PREFIX", "RM#,##0", "RM#,##0;-RM#,##0;RM0" },
+		                { "VND", "₫", "PREFIX", "₫#,##0", "₫#,##0;-₫#,##0;₫0" },
+		                { "PKR", "Rs", "PREFIX", "Rs#,##0", "Rs#,##0;-Rs#,##0;Rs0" },
+		                { "BDT", "৳", "PREFIX", "৳#,##0", "৳#,##0;-৳#,##0;৳0" },
+		                { "LKR", "Rs", "PREFIX", "Rs#,##0", "Rs#,##0;-Rs#,##0;Rs0" },
+		                { "RUB", "₽", "PREFIX", "₽#,##0", "₽#,##0;-₽#,##0;₽0" },
+		                { "UAH", "₴", "PREFIX", "₴#,##0", "₴#,##0;-₴#,##0;₴0" },
+		                { "KZT", "₸", "PREFIX", "₸#,##0", "₸#,##0;-₸#,##0;₸0" },
+		                { "BYN", "Br", "PREFIX", "Br#,##0", "Br#,##0;-Br#,##0;Br0" },
+		                { "UZS", "soʻm", "SUFFIX", "#,##0 soʻm", "#,##0 soʻm;-#,##0 soʻm;0 soʻm" },
+		                { "AZN", "₼", "PREFIX", "₼#,##0", "₼#,##0;-₼#,##0;₼0" },
+		                { "GEL", "₾", "PREFIX", "₾#,##0", "₾#,##0;-₾#,##0;₾0" },
+		                { "AMD", "֏", "PREFIX", "֏#,##0", "֏#,##0;-֏#,##0;֏0" },
+
+		                -- European currencies
+		                { "SEK", "kr", "SUFFIX", "#,##0 kr", "#,##0 kr;-#,##0 kr;0 kr" },
+		                { "NOK", "kr", "SUFFIX", "#,##0 kr", "#,##0 kr;-#,##0 kr;0 kr" },
+		                { "DKK", "kr", "SUFFIX", "#,##0 kr", "#,##0 kr;-#,##0 kr;0 kr" },
+		                { "PLN", "zł", "SUFFIX", "#,##0 zł", "#,##0 zł;-#,##0 zł;0 zł" },
+		                { "HUF", "Ft", "SUFFIX", "#,##0 Ft", "#,##0 Ft;-#,##0 Ft;0 Ft" },
+		                { "CZK", "Kč", "SUFFIX", "#,##0 Kč", "#,##0 Kč;-#,##0 Kč;0 Kč" },
+		                { "RON", "lei", "SUFFIX", "#,##0 lei", "#,##0 lei;-#,##0 lei;0 lei" },
+		                { "BGN", "лв", "SUFFIX", "#,##0 лв", "#,##0 лв;-#,##0 лв;0 лв" },
+		                { "HRK", "kn", "SUFFIX", "#,##0 kn", "#,##0 kn;-#,##0 kn;0 kn" },
+		                { "ISK", "kr", "SUFFIX", "#,##0 kr", "#,##0 kr;-#,##0 kr;0 kr" },
+
+		                -- Latin American
+		                { "MXN", "$", "PREFIX", "$#,##0", "$#,##0;-$#,##0;$0" },
+		                { "BRL", "R$", "PREFIX", "R$#,##0", "R$#,##0;-R$#,##0;R$0" },
+		                { "CLP", "$", "PREFIX", "$#,##0", "$#,##0;-$#,##0;$0" },
+		                { "COP", "$", "PREFIX", "$#,##0", "$#,##0;-$#,##0;$0" },
+		                { "ARS", "$", "PREFIX", "$#,##0", "$#,##0;-$#,##0;$0" },
+		                { "PEN", "S/", "PREFIX", "S/#,##0", "S/#,##0;-S/#,##0;S/0" },
+		                { "UYU", "$U", "PREFIX", "$U#,##0", "$U#,##0;-$U#,##0;$U0" },
+		                { "BOB", "Bs", "PREFIX", "Bs#,##0", "Bs#,##0;-Bs#,##0;Bs0" },
+		                { "PYG", "₲", "PREFIX", "₲#,##0", "₲#,##0;-₲#,##0;₲0" },
+		                { "VES", "Bs", "PREFIX", "Bs#,##0", "Bs#,##0;-Bs#,##0;Bs0" },
+		                { "GTQ", "Q", "PREFIX", "Q#,##0", "Q#,##0;-Q#,##0;Q0" },
+		                { "CRC", "₡", "PREFIX", "₡#,##0", "₡#,##0;-₡#,##0;₡0" },
+		                { "DOP", "RD$", "PREFIX", "RD$#,##0", "RD$#,##0;-RD$#,##0;RD$0" },
+		                { "CUP", "$", "PREFIX", "$#,##0", "$#,##0;-$#,##0;$0" },
+
+		                -- Middle Eastern & African
+		                { "TRY", "₺", "PREFIX", "₺#,##0", "₺#,##0;-₺#,##0;₺0" },
+		                { "ILS", "₪", "PREFIX", "₪#,##0", "₪#,##0;-₪#,##0;₪0" },
+		                { "AED", "AED", "PREFIX", "AED #,##0", "AED #,##0;-AED #,##0;AED 0" },
+		                { "SAR", "SAR", "PREFIX", "SAR #,##0", "SAR #,##0;-SAR #,##0;SAR 0" },
+		                { "QAR", "QR", "PREFIX", "QR #,##0", "QR #,##0;-QR #,##0;QR 0" },
+		                { "KWD", "KD", "PREFIX", "KD #,##0", "KD #,##0;-KD #,##0;KD 0" },
+		                { "BHD", "BD", "PREFIX", "BD #,##0", "BD #,##0;-BD #,##0;BD 0" },
+		                { "OMR", "OMR", "PREFIX", "OMR #,##0", "OMR #,##0;-OMR #,##0;OMR 0" },
+		                { "JOD", "JD", "PREFIX", "JD #,##0", "JD #,##0;-JD #,##0;JD 0" },
+		                { "EGP", "E£", "PREFIX", "E£#,##0", "E£#,##0;-E£#,##0;E£0" },
+		                { "MAD", "MAD", "PREFIX", "MAD #,##0", "MAD #,##0;-MAD #,##0;MAD 0" },
+		                { "ZAR", "R", "PREFIX", "R #,##0", "R #,##0;-R #,##0;R 0" },
+		                { "NGN", "₦", "PREFIX", "₦#,##0", "₦#,##0;-₦#,##0;₦0" },
+		                { "KES", "KSh", "PREFIX", "KSh#,##0", "KSh#,##0;-KSh#,##0;KSh0" },
+		                { "GHS", "GH₵", "PREFIX", "GH₵#,##0", "GH₵#,##0;-GH₵#,##0;GH₵0" },
+		                { "TND", "DT", "PREFIX", "DT #,##0", "DT #,##0;-DT #,##0;DT 0" },
+		                { "ETB", "Br", "PREFIX", "Br#,##0", "Br#,##0;-Br#,##0;Br0" },
+
+		                -- SpaceParts fictional currencies
+		                { "ARC", "₳", "PREFIX", "₳ #,##0", "₳ #,##0;-₳ #,##0;₳ 0" },
+		                { "BELT", "฿", "PREFIX", "฿ #,##0", "฿ #,##0;-฿ #,##0;฿ 0" },
+		                { "BLO", "Ł", "SUFFIX", "#,##0 Ł", "#,##0 Ł;-#,##0 Ł;0 Ł" },
+		                { "BLT", "₺", "PREFIX", "₺ #,##0", "₺ #,##0;-₺ #,##0;₺ 0" },
+		                { "CAL", "¢", "SUFFIX", "#,##0 ¢", "#,##0 ¢;-#,##0 ¢;0 ¢" },
+		                { "CREDITS", "₡", "PREFIX", "₡ #,##0", "₡ #,##0;-₡ #,##0;₡ 0" },
+		                { "ELD", "Ξ", "SUFFIX", "#,##0 Ξ", "#,##0 Ξ;-#,##0 Ξ;0 Ξ" },
+		                { "HAL", "Ħ", "PREFIX", "Ħ #,##0", "Ħ #,##0;-Ħ #,##0;Ħ 0" },
+		                { "ILOS", "ł", "SUFFIX", "#,##0 ł", "#,##0 ł;-#,##0 ł;0 ł" },
+		                { "LAK", "₭", "PREFIX", "₭ #,##0", "₭ #,##0;-₭ #,##0;₭ 0" },
+		                { "MCR", "₥", "PREFIX", "₥ #,##0", "₥ #,##0;-₥ #,##0;₥ 0" },
+		                { "OTN", "Ø", "PREFIX", "Ø #,##0", "Ø #,##0;-Ø #,##0;Ø 0" },
+		                { "UPN", "Ʉ", "SUFFIX", "#,##0 Ʉ", "#,##0 Ʉ;-#,##0 Ʉ;0 Ʉ" }
+		            }
+		        )
+
+		    RETURN
+		        _CurrencyTable
+		```
+
+	annotation DAXLIB_PackageId = DaxLib.FormatString
+
+	annotation DAXLIB_PackageVersion = 0.1.1
+
+function 'DaxLib.FormatString.Component.GetCurrencyFormat' = ```
+
+		// Get currency format based on currency code
+		// Returns simple currency format string (i.e. $#,##0.0)
+		(
+		    // Currency code (ISO 4217 three-letter code)
+		    // Examples: CAD, EUR, GBP, JPY, etc.
+		    currency_code: ANYREF
+		)
+		=>
+		    VAR _Code =
+		        SELECTEDVALUE ( currency_code )
+
+		    VAR _Currency =
+		        FILTER (
+		            -- Calc. table with common currencies and formats
+		            -- Optionally replace with your own, in-memory exchange rate table
+		            DaxLib.FormatString.Component.CurrencyTable(),
+		            ''[Currency Code] = _Code
+		        )
+
+		    VAR _Symbol =
+		        SELECTCOLUMNS ( _Currency, ''[Format String] )
+
+		    RETURN
+		        _Symbol
+		```
+
+	annotation DAXLIB_PackageId = DaxLib.FormatString
+
+	annotation DAXLIB_PackageVersion = 0.1.1
+
+function 'DaxLib.FormatString.Component.GetCurrencyFormat.PNZ' = ```
+
+		// Get currency format based on currency code
+		// Returns positive; negative; zero format string (i.e. $#,##0.0; ($-#,##0.0); $0)
+		(
+		    // Currency code (ISO 4217 three-letter code)
+		    // Examples: CAD, EUR, GBP, JPY, etc.
+		    currency_code: ANYREF
+		)
+		=>
+		    VAR _Code =
+		        SELECTEDVALUE ( currency_code )
+
+		    VAR _Currency =
+		        FILTER (
+		            -- Calc. table with common currencies and formats
+		            -- Optionally replace with your own, in-memory exchange rate table
+		            DaxLib.FormatString.Component.CurrencyTable(),
+		            ''[Currency Code] = _Code
+		        )
+
+		    VAR _Symbol =
+		        SELECTCOLUMNS ( _Currency, ''[Format String PNZ] )
+
+		    RETURN
+		        _Symbol
+		```
+
+	annotation DAXLIB_PackageId = DaxLib.FormatString
+
+	annotation DAXLIB_PackageVersion = 0.1.1
+
+function 'DaxLib.FormatString.Basic.Dates' = ```
+
+		// Simple function to centralize date formats in a model.
+		// Main benefit is that if you want to change it, you only have to do it in one place.
+		//
+		// Recommended: Use a Tabular Editor Macro to assign this function to the format string of every Date field.
+		(
+		)
+		=>
+		    // Replace with one of the other, commented options, below.
+
+		    -- e.g. 2025-12-25 (ISO 8601 - International Standard)
+		    "YYYY-MM-DD"
+
+		    -- e.g. 12/25/2025 (Confusing Format)
+		    -- "MM/DD/YYYY"
+
+		    -- e.g. 25/12/2025 (European/UK Format)
+		    -- "DD/MM/YYYY"
+
+		    -- e.g. Dec 25, 2025 (Abbreviated Month)
+		    -- "MMM DD, YYYY"
+
+		    -- e.g. Dec 25, 2025 (Abbreviated Month and Year)
+		    -- "MMM DD, 'YY"
+
+		    -- e.g. December 25, 2025 (Full Month Name)
+		    -- "MMMM DD, YYYY"
+
+		    -- e.g. 25-Dec-2025 (Day-Month-Year with Dashes)
+		    -- "DD-MMM-YYYY"
+
+		    -- e.g. 25 Dec 2025 (Day Month Year with Spaces)
+		    -- "DD MMM YYYY"
+
+		    -- e.g. Thursday, December 25, 2025 (Full Day and Month Names)
+		    -- "DDDD, MMMM DD, YYYY"
+
+		    -- e.g. Thu, Dec 25, 2025 (Abbreviated Day Name)
+		    -- "DDD, MMM DD, YYYY"
+
+		    -- e.g. 25.12.2025 (European Format with Dots)
+		    -- "DD.MM.YYYY"
+		```
+
+	annotation DAXLIB_PackageId = DaxLib.FormatString
+
+	annotation DAXLIB_PackageVersion = 0.1.1
+
+function 'DaxLib.FormatString.Basic.Months' = ```
+
+		// Simple function to centralize month formats in a model.
+		// Main benefit is that if you want to change it, you only have to do it in one place.
+		//
+		// Recommended: Use a Tabular Editor Macro to assign this function to the format string of every Month field.
+		( ) => "YYYY-MM"
+
+		    -- e.g. Dec 2025 (Abbreviated Month Year)
+		    -- "MMM YYYY"
+
+		    -- e.g. December 2025 (Full Month Name with Year)
+		    -- "MMMM YYYY"
+
+		    -- e.g. 12/2025 (Numeric Month/Year)
+		    -- "MM/YYYY"
+
+		    -- e.g. 2025/12 (Year/Month for Sorting)
+		    -- "YYYY/MM"
+
+		    -- e.g. 2025 Dec (Year First with Abbreviated Month)
+		    -- "YYYY MMM"
+
+		    -- e.g. 2025 M12 (Year with 'M' Month Indicator)
+		    -- Note: quad-quotes necessary to avoid "M" being interpreted as a month number
+		    -- "YYYY" & """" & "M" & """" & "MM"
+
+		    -- e.g. Dec-25 (Abbreviated Month-Year Short)
+		    -- "MMM-YY"
+
+		    -- e.g. 12-2025 (Month-Year with Dash)
+		    -- "MM-YYYY"
+
+		    -- e.g. 2025.12 (Year.Month with Dot)
+		    -- "YYYY.MM"
+		```
+
+	annotation DAXLIB_PackageId = DaxLib.FormatString
+
+	annotation DAXLIB_PackageVersion = 0.1.1
+
+function 'DaxLib.FormatString.Basic.DateTimes' = ```
+
+		// Simple function to centralize datetime formats in a model.
+		// Main benefit is that if you want to change it, you only have to do it in one place.
+		//
+		// Recommended: Use a Tabular Editor Macro to assign this function to the format string of every DateTime field.
+		( ) => "YYYY-MM-DD HH:mm:ss"
+
+		    -- e.g. 12/25/2025 2:30 PM (US Format with 12-hour Time)
+		    -- "MM/DD/YYYY h:mm AM/PM"
+
+		    -- e.g. 25/12/2025 14:30 (European Format with 24-hour Time)
+		    -- "DD/MM/YYYY HH:mm"
+
+		    -- e.g. Dec 25, 2025 2:30:45 PM (Abbreviated Month with Full Time)
+		    -- "MMM DD, YYYY h:mm:ss AM/PM"
+
+		    -- e.g. 2025-12-25T14:30:00 (ISO 8601 Standard with T Separator)
+		    -- "YYYY-MM-DD\THH:mm:ss"
+
+		    -- e.g. 25-Dec-2025 14:30 (Day-Month-Year with Time)
+		    -- "DD-MMM-YYYY HH:mm"
+
+		    -- e.g. December 25, 2025 at 2:30 PM (Full Month with "at")
+		    -- "MMMM DD, YYYY \a\t h:mm AM/PM"
+
+		    -- e.g. Thu, Dec 25, 2025 14:30:00 (Abbreviated Day with Full Time)
+		    -- "DDD, MMM DD, YYYY HH:mm:ss"
+
+		    -- e.g. 2025-12-25 14:30 (Compact ISO Format)
+		    -- "YYYY-MM-DD HH:mm"
+
+		    -- e.g. 12/25 2:30 PM (Short Format without Year)
+		    -- "MM/DD h:mm AM/PM"
+		```
+
+	annotation DAXLIB_PackageId = DaxLib.FormatString
+
+	annotation DAXLIB_PackageVersion = 0.1.1
+
+function 'DaxLib.FormatString.Basic.Quarters' = ```
+
+		// Simple function to centralize quarter formats in a model.
+		// Main benefit is that if you want to change it, you only have to do it in one place.
+		//
+		// Recommended: Use a Tabular Editor Macro to assign this function to the format string of every Quarter field.
+		( ) =>
+		    -- Note: quad-quotes necessary to avoid "M" being interpreted as a month number
+		    VAR _Q = """""Q"""""
+		    VAR _Qtr = """""Qtr"""""
+		    VAR _FY = """""FY"""""
+
+		    VAR _Format =
+		        // Replace with one of the other, commented options, below.
+
+		        -- e.g. 2025 Q4 (Year Quarter - Most Common)
+		        "YYYY " & _Q & "Q"
+
+		        -- e.g. Q4 2025 (Quarter Year)
+		        -- _Q & "Q YYYY"
+
+		        -- e.g. 2025-Q4 (Year-Quarter with Dash)
+		        -- "YYYY-" & _Q & "Q"
+
+		        -- e.g. Q4/2025 (Quarter/Year with Slash)
+		        -- _Q & "Q/YYYY"
+
+		        -- e.g. 2025 Qtr 4 (Year with "Qtr" Abbreviation)
+		        -- "YYYY " & _Qtr & " Q"
+
+		        -- e.g. FY2025 Q4 (Fiscal Year Quarter)
+		        -- _FY & "YYYY " & _Q & "Q"
+
+		        -- e.g. 25 Q4 (Short Year Quarter)
+		        -- "YY " & _Q & "Q"
+
+		        -- e.g. 2025Q4 (Compact Format)
+		        -- "YYYY" & _Q & "Q"
+
+		        -- e.g. Q4-25 (Quarter-Short Year)
+		        -- _Q & "Q-YY"
+
+		        -- e.g. 4Q 2025 (Number Q Year)
+		        -- "Q " & _Q & " YYYY"
+
+		    RETURN
+		        _Format
+		```
+
+	annotation DAXLIB_PackageId = DaxLib.FormatString
+
+	annotation DAXLIB_PackageVersion = 0.1.1
+
+function 'DaxLib.FormatString.Basic.Numbers' = 
+
+		// Generic number format function with configurable decimal places.
+		// Centralizes number formatting logic for consistency across the model.
+		//
+		// Recommended: Use for all numeric measures where decimal precision needs to be standardized.
+		( ) => DaxLib.FormatString.Component.DecimalPlaces ( "#,##0", 0 )
+
+	annotation DAXLIB_PackageId = DaxLib.FormatString
+
+	annotation DAXLIB_PackageVersion = 0.1.1
+
+function 'DaxLib.FormatString.Basic.Percents' = 
+
+		// Generic number format function with configurable decimal places.
+		// Centralizes number formatting logic for consistency across the model.
+		//
+		// Recommended: Use for all numeric measures where decimal precision needs to be standardized.
+		( ) => DaxLib.FormatString.Component.DecimalPlaces ( "#,##0", 0 ) & "%"
+
+	annotation DAXLIB_PackageId = DaxLib.FormatString
+
+	annotation DAXLIB_PackageVersion = 0.1.1
+
+function 'DaxLib.FormatString.Basic.SmarterRounding' = 
+
+		// Generic number format function with configurable decimal places.
+		// Centralizes number formatting logic for consistency across the model.
+		//
+		// Recommended: Use in limited scenarios when you want more optimal control over number rounding than what Power BI provides.
+		( ) => DaxLib.FormatString.Component.DynamicUnits ( "#,##0", SELECTEDMEASURE () )
+
+	annotation DAXLIB_PackageId = DaxLib.FormatString
+
+	annotation DAXLIB_PackageVersion = 0.1.1
