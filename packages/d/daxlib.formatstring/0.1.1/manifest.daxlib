@@ -5,6 +5,6 @@
   "authors": "Kurt Buhler",
   "description": "A set of User-Defined Functions for streamlining the creation of custom and dynamic format strings.",
   "tags": "DAX,UDF,FUNCTION,LIB,FORMAT,FORMATSTRING",
-  "releasenotes": "Additional basic functions for centralizing simple, custom format strings"
+  "releaseNotes": "Additional basic functions for centralizing simple, custom format strings",
   "icon": "/icon.png"
 }
