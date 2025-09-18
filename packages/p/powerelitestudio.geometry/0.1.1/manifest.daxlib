@@ -1,0 +1,7 @@
+{
+  "$schema": "https://raw.githubusercontent.com/sql-bi/daxlib/main/schemas/manifest/1.0.0/manifest.schema.json",
+  "id": "PowerEliteStudio.Geometry",
+  "version": "0.1.1",
+  "description": "Areas, perimeters, surface areas, volumes and analytic geometry helpers in DAX.",
+  "authors": "Power Elite Studio (Miguel)"
+}

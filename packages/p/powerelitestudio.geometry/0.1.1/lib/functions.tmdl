@@ -1,0 +1,900 @@
+/// =========================
+/// AREAS — 2D
+/// =========================
+/// Area of a square (s^2)
+function 'PowerEliteStudio.Geometry.AreaSquare' = ```
+        (
+            side: DOUBLE
+        ) =>
+            VAR invalid = 
+                ISBLANK ( side ) || side < 0
+            VAR Result =  
+                IF ( 
+                    invalid, 
+                    BLANK ( ), 
+                    POWER ( side, 2 )
+                )
+            RETURN
+                Result
+    ```
+    annotation DAXLIB_PackageId = PowerEliteStudio.Geometry
+    annotation DAXLIB_PackageVersion = 0.1.1
+
+/// Area of a rectangle (w*h)
+function 'PowerEliteStudio.Geometry.AreaRectangle' = ```
+        (
+            width: DOUBLE,
+            height: DOUBLE
+        ) =>
+            VAR invalid = 
+                ISBLANK ( width ) || ISBLANK ( height ) || width < 0 || height < 0
+            VAR Result = 
+                IF ( 
+                    invalid, 
+                    BLANK ( ), 
+                    width * height
+                )
+            RETURN
+                Result
+    ```
+    annotation DAXLIB_PackageId = PowerEliteStudio.Geometry
+    annotation DAXLIB_PackageVersion = 0.1.1
+
+/// Area of a parallelogram (b*h)
+function 'PowerEliteStudio.Geometry.AreaParallelogram' = ```
+        (
+            baseLen: DOUBLE,
+            height: DOUBLE
+        ) =>
+            VAR invalid = 
+                ISBLANK ( baseLen ) || ISBLANK ( height ) || baseLen < 0 || height < 0
+            VAR Result = 
+                IF ( 
+                    invalid, 
+                    BLANK ( ), 
+                    baseLen * height
+                )
+            RETURN
+                Result
+    ```
+    annotation DAXLIB_PackageId = PowerEliteStudio.Geometry
+    annotation DAXLIB_PackageVersion = 0.1.1
+
+/// Area of a triangle by base and height (0.5*b*h)
+function 'PowerEliteStudio.Geometry.AreaTriangle' = ```
+        (
+            baseLen: DOUBLE,
+            height: DOUBLE
+        ) =>
+            VAR invalid = 
+                ISBLANK ( baseLen ) || ISBLANK ( height ) || baseLen < 0 || height < 0
+            VAR Result = 
+                IF ( 
+                    invalid, 
+                    BLANK ( ), 
+                    0.5 * baseLen * height
+                )
+            RETURN
+                Result
+    ```
+    annotation DAXLIB_PackageId = PowerEliteStudio.Geometry
+    annotation DAXLIB_PackageVersion = 0.1.1
+
+/// Area of a triangle by three sides (Heron's formula)
+function 'PowerEliteStudio.Geometry.AreaTriangleHeron' = ```
+        (
+            a: DOUBLE,
+            b: DOUBLE,
+            c: DOUBLE
+        ) =>
+            VAR blanks = ISBLANK ( a ) || ISBLANK ( b ) || ISBLANK ( c )
+            VAR nonPos = ( a <= 0 ) || ( b <= 0 ) || ( c <= 0 )
+            VAR violatesTri = ( a + b <= c ) || ( a + c <= b ) || ( b + c <= a )
+            VAR s = DIVIDE ( a + b + c, 2.0 )
+            VAR Result =
+                IF ( 
+                    blanks || nonPos || violatesTri, 
+                    BLANK ( ), 
+                    SQRT ( s * ( s - a ) * ( s - b ) * ( s - c ) )
+                )
+            RETURN
+                Result
+    ```
+    annotation DAXLIB_PackageId = PowerEliteStudio.Geometry
+    annotation DAXLIB_PackageVersion = 0.1.1
+
+/// Area of a circle (π r^2)
+function 'PowerEliteStudio.Geometry.AreaCircle' = ```
+        (
+            radius: DOUBLE
+        ) =>
+            VAR invalid = ISBLANK ( radius ) || radius < 0
+            VAR Result = 
+                IF ( 
+                    invalid, 
+                    BLANK ( ), 
+                    PI ( ) * POWER ( radius, 2 )
+                )
+            RETURN
+                Result
+    ```
+    annotation DAXLIB_PackageId = PowerEliteStudio.Geometry
+    annotation DAXLIB_PackageVersion = 0.1.1
+
+/// Area of an annulus (π (R^2 - r^2), R>=r)
+function 'PowerEliteStudio.Geometry.AreaAnnulus' = ```
+        (
+            outerR: DOUBLE,
+            innerR: DOUBLE
+        ) =>
+            VAR invalid = 
+                ISBLANK ( outerR ) || ISBLANK ( innerR ) || outerR < 0 || innerR < 0 || innerR > outerR
+            VAR Result = 
+                IF ( 
+                    invalid, 
+                    BLANK ( ), 
+                    PI ( ) * ( POWER ( outerR, 2 ) - POWER ( innerR, 2 ) )
+                )
+            RETURN
+                Result
+    ```
+    annotation DAXLIB_PackageId = PowerEliteStudio.Geometry
+    annotation DAXLIB_PackageVersion = 0.1.1
+
+/// Area of an ellipse (π a b)
+function 'PowerEliteStudio.Geometry.AreaEllipse' = ```
+        (
+            semiMajor: DOUBLE,
+            semiMinor: DOUBLE
+        ) =>
+            VAR invalid = 
+                ISBLANK ( semiMajor ) || ISBLANK ( semiMinor ) || semiMajor < 0 || semiMinor < 0
+            VAR Result = 
+                IF ( 
+                    invalid, 
+                    BLANK ( ), 
+                    PI ( ) * semiMajor * semiMinor
+                )
+            RETURN
+                Result
+    ```
+    annotation DAXLIB_PackageId = PowerEliteStudio.Geometry
+    annotation DAXLIB_PackageVersion = 0.1.1
+
+/// Area of a trapezoid (0.5*(a+b)*h)
+function 'PowerEliteStudio.Geometry.AreaTrapezoid' = ```
+        (
+            a: DOUBLE,
+            b: DOUBLE,
+            height: DOUBLE
+        ) =>
+            VAR invalid = 
+                ISBLANK ( a ) || ISBLANK ( b ) || ISBLANK ( height ) || a < 0 || b < 0 || height < 0
+            VAR Result = 
+                IF ( 
+                    invalid, 
+                    BLANK ( ), 
+                    0.5 * ( a + b ) * height
+                )
+            RETURN
+                Result
+    ```
+    annotation DAXLIB_PackageId = PowerEliteStudio.Geometry
+    annotation DAXLIB_PackageVersion = 0.1.1
+
+/// Area of a regular hexagon ( (3*sqrt(3)/2)*s^2 )
+function 'PowerEliteStudio.Geometry.AreaRegularHexagon' = ```
+        (
+            side: DOUBLE
+        ) =>
+            VAR invalid = ISBLANK ( side ) || side < 0
+            VAR Result = 
+                IF ( 
+                    invalid, 
+                    BLANK ( ), 
+                    ( 3.0 * SQRT ( 3.0 ) / 2.0 ) * POWER ( side, 2 )
+                )
+            RETURN
+                Result
+    ```
+    annotation DAXLIB_PackageId = PowerEliteStudio.Geometry
+    annotation DAXLIB_PackageVersion = 0.1.1
+
+/// Area of a regular n-gon by side ( n*s^2 / ( 4*tan(π/n) ), n >= 3 )
+function 'PowerEliteStudio.Geometry.AreaRegularPolygonNSide' = ```
+        (
+            n: INT64,
+            side: DOUBLE
+        ) =>
+            VAR invalid = ISBLANK ( n ) || ISBLANK ( side ) || n < 3 || side < 0
+            VAR Result = 
+                IF ( 
+                    invalid, 
+                    BLANK ( ), 
+                    DIVIDE ( n * POWER ( side, 2 ), 4.0 * TAN ( PI ( ) / n ) )
+                )
+            RETURN
+                Result
+    ```
+    annotation DAXLIB_PackageId = PowerEliteStudio.Geometry
+    annotation DAXLIB_PackageVersion = 0.1.1
+
+/// Area of a rhombus by diagonals ( d1 * d2 / 2 )
+function 'PowerEliteStudio.Geometry.AreaRhombusByDiagonals' = ```
+        (
+            d1: DOUBLE,
+            d2: DOUBLE
+        ) =>
+            VAR invalid = ISBLANK ( d1 ) || ISBLANK ( d2 ) || d1 < 0 || d2 < 0
+            VAR Result = 
+                IF ( 
+                    invalid, 
+                    BLANK ( ), 
+                    DIVIDE ( d1 * d2, 2.0 )
+                )
+            RETURN
+                Result
+    ```
+    annotation DAXLIB_PackageId = PowerEliteStudio.Geometry
+    annotation DAXLIB_PackageVersion = 0.1.1
+
+/// Area of a kite by diagonals ( d1 * d2 / 2 )
+function 'PowerEliteStudio.Geometry.AreaKiteByDiagonals' = ```
+        (
+            d1: DOUBLE,
+            d2: DOUBLE
+        ) =>
+            VAR invalid = ISBLANK ( d1 ) || ISBLANK ( d2 ) || d1 < 0 || d2 < 0
+            VAR Result = 
+                IF ( 
+                    invalid, 
+                    BLANK ( ), 
+                    DIVIDE ( d1 * d2, 2.0 )
+                )
+            RETURN
+                Result
+    ```
+    annotation DAXLIB_PackageId = PowerEliteStudio.Geometry
+    annotation DAXLIB_PackageVersion = 0.1.1
+
+/// =========================
+/// PERIMETERS — 2D
+/// =========================
+/// Perimeter of a rectangle ( 2 * ( w + h ) )
+function 'PowerEliteStudio.Geometry.PerimeterRectangle' = ```
+        (
+            width: DOUBLE,
+            height: DOUBLE
+        ) =>
+            VAR invalid = ISBLANK ( width ) || ISBLANK ( height ) || width < 0 || height < 0
+            VAR Result = 
+                IF ( 
+                    invalid, 
+                    BLANK ( ), 
+                    2.0 * ( width + height )
+                )
+            RETURN
+                Result
+    ```
+    annotation DAXLIB_PackageId = PowerEliteStudio.Geometry
+    annotation DAXLIB_PackageVersion = 0.1.1
+
+/// Perimeter of a regular n-gon ( n * s ), n >= 3
+function 'PowerEliteStudio.Geometry.PerimeterRegularPolygonNSide' = ```
+        (
+            n: INT64,
+            side: DOUBLE
+        ) =>
+            VAR invalid = ISBLANK ( n ) || ISBLANK ( side ) || n < 3 || side < 0
+            VAR Result = 
+                IF ( 
+                    invalid, 
+                    BLANK ( ), 
+                    n * side
+                )
+            RETURN
+                Result
+    ```
+    annotation DAXLIB_PackageId = PowerEliteStudio.Geometry
+    annotation DAXLIB_PackageVersion = 0.1.1
+
+/// Circumference of a circle ( 2πr )
+function 'PowerEliteStudio.Geometry.CircumferenceCircle' = ```
+        (
+            radius: DOUBLE
+        ) =>
+            VAR invalid = ISBLANK ( radius ) || radius < 0
+            VAR Result = 
+                IF ( 
+                    invalid, 
+                    BLANK ( ), 
+                    2.0 * PI ( ) * radius
+                )
+            RETURN
+                Result
+    ```
+    annotation DAXLIB_PackageId = PowerEliteStudio.Geometry
+    annotation DAXLIB_PackageVersion = 0.1.1
+
+/// Perimeter of a triangle ( a + b + c ) with triangle-inequality check
+function 'PowerEliteStudio.Geometry.PerimeterTriangle' = ```
+        (
+            a: DOUBLE, 
+            b: DOUBLE, 
+            c: DOUBLE
+        ) =>
+            VAR blanks = ISBLANK ( a ) || ISBLANK ( b ) || ISBLANK ( c )
+            VAR nonPos = ( a <= 0 ) || ( b <= 0 ) || ( c <= 0 )
+            VAR violatesTri = ( a + b <= c ) || ( a + c <= b ) || ( b + c <= a )
+            VAR Result = 
+                IF ( 
+                    blanks || nonPos || violatesTri,
+                    BLANK ( ), 
+                    a + b + c
+                )
+            RETURN
+                Result
+    ```
+    annotation DAXLIB_PackageId = PowerEliteStudio.Geometry
+    annotation DAXLIB_PackageVersion = 0.1.1
+
+/// =========================
+/// SURFACE AREAS — 3D
+/// =========================
+/// Surface area of a sphere ( 4π r^2 )
+function 'PowerEliteStudio.Geometry.SurfaceAreaSphere' = ```
+        (
+            radius: DOUBLE
+        ) =>
+            VAR invalid = ISBLANK ( radius ) || radius < 0
+            VAR Result = 
+                IF ( 
+                    invalid, 
+                    BLANK ( ), 
+                    4.0 * PI ( ) * POWER ( radius, 2 )
+                )
+            RETURN
+                Result
+    ```
+    annotation DAXLIB_PackageId = PowerEliteStudio.Geometry
+    annotation DAXLIB_PackageVersion = 0.1.1
+
+/// Surface area of a right circular cylinder ( 2π r ( h + r ) )
+function 'PowerEliteStudio.Geometry.SurfaceAreaCylinder' = ```
+        (
+            radius: DOUBLE,
+            height: DOUBLE
+        ) =>
+            VAR invalid = ISBLANK ( radius ) || ISBLANK ( height ) || radius < 0 || height < 0
+            VAR Result = 
+                IF ( 
+                    invalid, 
+                    BLANK ( ), 
+                    2.0 * PI ( ) * radius * ( height + radius )
+                )
+            RETURN
+                Result
+    ```
+    annotation DAXLIB_PackageId = PowerEliteStudio.Geometry
+    annotation DAXLIB_PackageVersion = 0.1.1
+
+/// Surface area of a right circular cone ( π r ( r + sqrt ( r^2 + h^2 ) ) )
+function 'PowerEliteStudio.Geometry.SurfaceAreaCone' = ```
+        (
+            radius: DOUBLE,
+            height: DOUBLE
+        ) =>
+            VAR invalid = ISBLANK ( radius ) || ISBLANK ( height ) || radius < 0 || height < 0
+            VAR Result = 
+                IF ( 
+                    invalid, 
+                    BLANK ( ), 
+                    PI ( ) * radius * ( radius + SQRT ( POWER ( radius, 2 ) + POWER ( height, 2 ) ) )
+                )
+            RETURN
+                Result
+    ```
+    annotation DAXLIB_PackageId = PowerEliteStudio.Geometry
+    annotation DAXLIB_PackageVersion = 0.1.1
+
+/// Surface area of a rectangular prism ( 2 * ( lw + lh + wh ) )
+function 'PowerEliteStudio.Geometry.SurfaceAreaRectangularPrism' = ```
+        (
+            length: DOUBLE,
+            width: DOUBLE,
+            height: DOUBLE
+        ) =>
+            VAR invalid = 
+                ISBLANK ( length ) || ISBLANK ( width ) || ISBLANK ( height ) ||
+                length < 0 || width < 0 || height < 0
+            VAR Result = 
+                IF ( 
+                    invalid, 
+                    BLANK ( ), 
+                    2.0 * ( length * width + length * height + width * height )
+                )
+            RETURN
+                Result
+    ```
+    annotation DAXLIB_PackageId = PowerEliteStudio.Geometry
+    annotation DAXLIB_PackageVersion = 0.1.1
+
+/// Surface area of a cube ( 6 s^2 )
+function 'PowerEliteStudio.Geometry.SurfaceAreaCube' = ```
+        (
+            side: DOUBLE
+        ) =>
+            VAR invalid = ISBLANK ( side ) || side < 0
+            VAR Result = 
+                IF ( 
+                    invalid, 
+                    BLANK ( ), 
+                    6.0 * POWER ( side, 2 )
+                )
+            RETURN
+                Result
+    ```
+    annotation DAXLIB_PackageId = PowerEliteStudio.Geometry
+    annotation DAXLIB_PackageVersion = 0.1.1
+
+/// =========================
+/// VOLUMES — 3D
+/// =========================
+/// Volume of a cube ( s^3 )
+function 'PowerEliteStudio.Geometry.VolumeCube' = ```
+        (
+            side: DOUBLE
+        ) =>
+            VAR invalid = ISBLANK ( side ) || side < 0
+            VAR Result = 
+                IF ( 
+                    invalid, 
+                    BLANK ( ), 
+                    POWER ( side, 3 )
+                )
+            RETURN
+                Result
+    ```
+    annotation DAXLIB_PackageId = PowerEliteStudio.Geometry
+    annotation DAXLIB_PackageVersion = 0.1.1
+
+/// Volume of a cuboid ( l * w * h )
+function 'PowerEliteStudio.Geometry.VolumeCuboid' = ```
+        (
+            length: DOUBLE,
+            width: DOUBLE,
+            height: DOUBLE
+        ) =>
+            VAR invalid = 
+                ISBLANK ( length ) || ISBLANK ( width ) || ISBLANK ( height ) ||
+                length < 0 || width < 0 || height < 0
+            VAR Result = 
+                IF ( 
+                    invalid, 
+                    BLANK ( ), 
+                    length * width * height
+                )
+            RETURN
+                Result
+    ```
+    annotation DAXLIB_PackageId = PowerEliteStudio.Geometry
+    annotation DAXLIB_PackageVersion = 0.1.1
+
+/// Volume of a sphere ( ( 4 / 3 ) π r^3 )
+function 'PowerEliteStudio.Geometry.VolumeSphere' = ```
+        (
+            radius: DOUBLE
+        ) =>
+            VAR invalid = ISBLANK ( radius ) || radius < 0
+            VAR Result = 
+                IF ( 
+                    invalid, 
+                    BLANK ( ), 
+                    DIVIDE ( 4.0 * PI ( ) * POWER ( radius, 3 ), 3.0 )
+                )
+            RETURN
+                Result
+    ```
+    annotation DAXLIB_PackageId = PowerEliteStudio.Geometry
+    annotation DAXLIB_PackageVersion = 0.1.1
+
+/// Volume of a cylinder ( π r^2 h )
+function 'PowerEliteStudio.Geometry.VolumeCylinder' = ```
+        (
+            radius: DOUBLE,
+            height: DOUBLE
+        ) =>
+            VAR invalid = ISBLANK ( radius ) || ISBLANK ( height ) || radius < 0 || height < 0
+            VAR Result = 
+                IF ( 
+                    invalid, 
+                    BLANK ( ), 
+                    PI ( ) * POWER ( radius, 2 ) * height
+                )
+            RETURN
+                Result
+    ```
+    annotation DAXLIB_PackageId = PowerEliteStudio.Geometry
+    annotation DAXLIB_PackageVersion = 0.1.1
+
+/// Volume of a cone ( ( 1 / 3 ) π r^2 h )
+function 'PowerEliteStudio.Geometry.VolumeCone' = ```
+        (
+            radius: DOUBLE,
+            height: DOUBLE
+        ) =>
+            VAR invalid = ISBLANK ( radius ) || ISBLANK ( height ) || radius < 0 || height < 0
+            VAR Result = 
+                IF ( 
+                    invalid, 
+                    BLANK ( ), 
+                    DIVIDE ( PI ( ) * POWER ( radius, 2 ) * height, 3.0 )
+                )
+            RETURN
+                Result
+    ```
+    annotation DAXLIB_PackageId = PowerEliteStudio.Geometry
+    annotation DAXLIB_PackageVersion = 0.1.1
+
+/// Volume of a pyramid ( generic ): ( 1 / 3 ) * A_base * h
+function 'PowerEliteStudio.Geometry.VolumePyramid' = ```
+        (
+            baseArea: DOUBLE,
+            height: DOUBLE
+        ) =>
+            VAR invalid = ISBLANK ( baseArea ) || ISBLANK ( height ) || baseArea < 0 || height < 0
+            VAR Result = 
+                IF ( 
+                    invalid, 
+                    BLANK ( ), 
+                    DIVIDE ( baseArea * height, 3.0 )
+                )
+            RETURN
+                Result
+    ```
+    annotation DAXLIB_PackageId = PowerEliteStudio.Geometry
+    annotation DAXLIB_PackageVersion = 0.1.1
+
+/// Volume of a prism ( generic ): A_base * h
+function 'PowerEliteStudio.Geometry.VolumePrism' = ```
+        (
+            baseArea: DOUBLE,
+            height: DOUBLE
+        ) =>
+            VAR invalid = ISBLANK ( baseArea ) || ISBLANK ( height ) || baseArea < 0 || height < 0
+            VAR Result = 
+                IF ( 
+                    invalid, 
+                    BLANK ( ), 
+                    baseArea * height
+                )
+            RETURN
+                Result
+    ```
+    annotation DAXLIB_PackageId = PowerEliteStudio.Geometry
+    annotation DAXLIB_PackageVersion = 0.1.1
+
+/// Volume of a right circular conical frustum ( ( 1 / 3 ) π h ( r1^2 + r2^2 + r1*r2 ) )
+function 'PowerEliteStudio.Geometry.VolumeConicalFrustum' = ```
+        (
+            r1: DOUBLE,
+            r2: DOUBLE,
+            height: DOUBLE
+        ) =>
+            VAR invalid = 
+                ISBLANK ( r1 ) || ISBLANK ( r2 ) || ISBLANK ( height ) ||
+                r1 < 0 || r2 < 0 || height < 0
+            VAR Result = 
+                IF ( 
+                    invalid, 
+                    BLANK ( ), 
+                    DIVIDE ( PI ( ) * height * ( POWER ( r1, 2 ) + POWER ( r2, 2 ) + ( r1 * r2 ) ), 3.0 )
+                )
+            RETURN
+                Result
+    ```
+    annotation DAXLIB_PackageId = PowerEliteStudio.Geometry
+    annotation DAXLIB_PackageVersion = 0.1.1
+
+/// Volume of a regular n-gonal prism: A_n ( side ) * h
+function 'PowerEliteStudio.Geometry.VolumeRegularPolygonPrism' = ```
+        (
+            n: INT64,
+            side: DOUBLE,
+            height: DOUBLE
+        ) =>
+            VAR invalid = 
+                ISBLANK ( n ) || ISBLANK ( side ) || ISBLANK ( height ) ||
+                n < 3 || side < 0 || height < 0
+            VAR baseArea = DIVIDE ( n * POWER ( side, 2 ), 4.0 * TAN ( PI ( ) / n ) )
+            VAR Result = 
+                IF ( 
+                    invalid, 
+                    BLANK ( ), 
+                    baseArea * height
+                )
+            RETURN
+                Result
+    ```
+    annotation DAXLIB_PackageId = PowerEliteStudio.Geometry
+    annotation DAXLIB_PackageVersion = 0.1.1
+
+/// Volume of a torus ( 2 π^2 R r^2 ), R = major radius, r = minor radius
+function 'PowerEliteStudio.Geometry.VolumeTorus' = ```
+        (
+            majorR: DOUBLE,
+            minorR: DOUBLE
+        ) =>
+            VAR invalid = 
+                ISBLANK ( majorR ) || ISBLANK ( minorR ) ||
+                majorR <= 0 || minorR <= 0 || majorR < minorR
+            VAR Result = 
+                IF ( 
+                    invalid, 
+                    BLANK ( ), 
+                    2.0 * POWER ( PI ( ), 2 ) * majorR * POWER ( minorR, 2 )
+                )
+            RETURN
+                Result
+    ```
+    annotation DAXLIB_PackageId = PowerEliteStudio.Geometry
+    annotation DAXLIB_PackageVersion = 0.1.1
+
+/// Volume of an ellipsoid ( ( 4 / 3 ) π a b c )
+function 'PowerEliteStudio.Geometry.VolumeEllipsoid' = ```
+        (
+            a: DOUBLE,
+            b: DOUBLE,
+            c: DOUBLE
+        ) =>
+            VAR invalid = 
+                ISBLANK ( a ) || ISBLANK ( b ) || ISBLANK ( c ) ||
+                a <= 0 || b <= 0 || c <= 0
+            VAR Result = 
+                IF ( 
+                    invalid, 
+                    BLANK ( ), 
+                    DIVIDE ( 4.0 * PI ( ) * a * b * c, 3.0 )
+                )
+            RETURN
+                Result
+    ```
+    annotation DAXLIB_PackageId = PowerEliteStudio.Geometry
+    annotation DAXLIB_PackageVersion = 0.1.1
+
+/// =========================
+/// ANALYTIC GEOMETRY — 2D / 3D
+/// =========================
+/// Euclidean distance in 2D: sqrt ( ( x2 - x1 )^2 + ( y2 - y1 )^2 )
+function 'PowerEliteStudio.Geometry.Distance2D' = ```
+        (
+            x1: DOUBLE, y1: DOUBLE,
+            x2: DOUBLE, y2: DOUBLE
+        ) =>
+            VAR blanks = ISBLANK ( x1 ) || ISBLANK ( y1 ) || ISBLANK ( x2 ) || ISBLANK ( y2 )
+            VAR dx = x2 - x1
+            VAR dy = y2 - y1
+            VAR Result = 
+                IF ( 
+                    blanks, 
+                    BLANK ( ), 
+                    SQRT ( POWER ( dx, 2 ) + POWER ( dy, 2 ) )
+                )
+            RETURN
+                Result
+    ```
+    annotation DAXLIB_PackageId = PowerEliteStudio.Geometry
+    annotation DAXLIB_PackageVersion = 0.1.1
+
+/// Manhattan ("taxicab") distance in 2D: | x2 - x1 | + | y2 - y1 |
+function 'PowerEliteStudio.Geometry.ManhattanDistance2D' = ```
+        (
+            x1: DOUBLE, y1: DOUBLE,
+            x2: DOUBLE, y2: DOUBLE
+        ) =>
+            VAR blanks = ISBLANK ( x1 ) || ISBLANK ( y1 ) || ISBLANK ( x2 ) || ISBLANK ( y2 )
+            VAR Result = 
+                IF ( 
+                    blanks, 
+                    BLANK ( ), 
+                    ABS ( x2 - x1 ) + ABS ( y2 - y1 )
+                )
+            RETURN
+                Result
+    ```
+    annotation DAXLIB_PackageId = PowerEliteStudio.Geometry
+    annotation DAXLIB_PackageVersion = 0.1.1
+
+/// Euclidean distance in 3D: sqrt ( ( x2 - x1 )^2 + ( y2 - y1 )^2 + ( z2 - z1 )^2 )
+function 'PowerEliteStudio.Geometry.Distance3D' = ```
+        (
+            x1: DOUBLE, y1: DOUBLE, z1: DOUBLE,
+            x2: DOUBLE, y2: DOUBLE, z2: DOUBLE
+        ) =>
+            VAR blanks = 
+                ISBLANK ( x1 ) || ISBLANK ( y1 ) || ISBLANK ( z1 ) ||
+                ISBLANK ( x2 ) || ISBLANK ( y2 ) || ISBLANK ( z2 )
+            VAR dx = x2 - x1
+            VAR dy = y2 - y1
+            VAR dz = z2 - z1
+            VAR Result = 
+                IF ( 
+                    blanks, 
+                    BLANK ( ), 
+                    SQRT ( POWER ( dx, 2 ) + POWER ( dy, 2 ) + POWER ( dz, 2 ) )
+                )
+            RETURN
+                Result
+    ```
+    annotation DAXLIB_PackageId = PowerEliteStudio.Geometry
+    annotation DAXLIB_PackageVersion = 0.1.1
+
+/// Manhattan ("taxicab") distance in 3D: | Δx | + | Δy | + | Δz |
+function 'PowerEliteStudio.Geometry.ManhattanDistance3D' = ```
+        (
+            x1: DOUBLE, y1: DOUBLE, z1: DOUBLE,
+            x2: DOUBLE, y2: DOUBLE, z2: DOUBLE
+        ) =>
+            VAR blanks = 
+                ISBLANK ( x1 ) || ISBLANK ( y1 ) || ISBLANK ( z1 ) ||
+                ISBLANK ( x2 ) || ISBLANK ( y2 ) || ISBLANK ( z2 )
+            VAR Result = 
+                IF ( 
+                    blanks, 
+                    BLANK ( ), 
+                    ABS ( x2 - x1 ) + ABS ( y2 - y1 ) + ABS ( z2 - z1 )
+                )
+            RETURN
+                Result
+    ```
+    annotation DAXLIB_PackageId = PowerEliteStudio.Geometry
+    annotation DAXLIB_PackageVersion = 0.1.1
+
+/// Midpoint X in 2D: ( x1 + x2 ) / 2
+function 'PowerEliteStudio.Geometry.MidpointX2D' = ```
+        (
+            x1: DOUBLE, x2: DOUBLE
+        ) =>
+            VAR blanks = ISBLANK ( x1 ) || ISBLANK ( x2 )
+            VAR Result = 
+                IF ( 
+                    blanks, 
+                    BLANK ( ), 
+                    DIVIDE ( x1 + x2, 2.0 )
+                )
+            RETURN
+                Result
+    ```
+    annotation DAXLIB_PackageId = PowerEliteStudio.Geometry
+    annotation DAXLIB_PackageVersion = 0.1.1
+
+/// Midpoint Y in 2D: ( y1 + y2 ) / 2
+function 'PowerEliteStudio.Geometry.MidpointY2D' = ```
+        (
+            y1: DOUBLE, y2: DOUBLE
+        ) =>
+            VAR blanks = ISBLANK ( y1 ) || ISBLANK ( y2 )
+            VAR Result = 
+                IF ( 
+                    blanks, 
+                    BLANK ( ), 
+                    DIVIDE ( y1 + y2, 2.0 )
+                )
+            RETURN
+                Result
+    ```
+    annotation DAXLIB_PackageId = PowerEliteStudio.Geometry
+    annotation DAXLIB_PackageVersion = 0.1.1
+
+/// Slope in 2D: ( y2 - y1 ) / ( x2 - x1 )
+function 'PowerEliteStudio.Geometry.Slope2D' = ```
+        (
+            x1: DOUBLE, y1: DOUBLE,
+            x2: DOUBLE, y2: DOUBLE
+        ) =>
+            VAR blanks = ISBLANK ( x1 ) || ISBLANK ( y1 ) || ISBLANK ( x2 ) || ISBLANK ( y2 )
+            VAR num = y2 - y1
+            VAR den = x2 - x1
+            VAR res = DIVIDE ( num, den )
+            VAR Result = 
+                IF ( 
+                    blanks, 
+                    BLANK ( ), 
+                    res
+                )
+            RETURN
+                Result
+    ```
+    annotation DAXLIB_PackageId = PowerEliteStudio.Geometry
+    annotation DAXLIB_PackageVersion = 0.1.1
+
+/// Hypotenuse: sqrt ( a^2 + b^2 )
+function 'PowerEliteStudio.Geometry.Hypotenuse' = ```
+        (
+            a: DOUBLE, b: DOUBLE
+        ) =>
+            VAR blanks = ISBLANK ( a ) || ISBLANK ( b )
+            VAR Result = 
+                IF ( 
+                    blanks, 
+                    BLANK ( ), 
+                    SQRT ( POWER ( a, 2 ) + POWER ( b, 2 ) )
+                )
+            RETURN
+                Result
+    ```
+    annotation DAXLIB_PackageId = PowerEliteStudio.Geometry
+    annotation DAXLIB_PackageVersion = 0.1.1
+
+/// Triangle area from 3 points ( shoelace formula )
+function 'PowerEliteStudio.Geometry.AreaTriangleFromPoints2D' = ```
+        (
+            x1: DOUBLE, y1: DOUBLE,
+            x2: DOUBLE, y2: DOUBLE,
+            x3: DOUBLE, y3: DOUBLE
+        ) =>
+            VAR blanks = 
+                ISBLANK ( x1 ) || ISBLANK ( y1 ) || ISBLANK ( x2 ) || ISBLANK ( y2 ) ||
+                ISBLANK ( x3 ) || ISBLANK ( y3 )
+            VAR area2 = ABS ( x1 * ( y2 - y3 ) + x2 * ( y3 - y1 ) + x3 * ( y1 - y2 ) )
+            VAR Result = 
+                IF ( 
+                    blanks, 
+                    BLANK ( ), 
+                    DIVIDE ( area2, 2.0 )
+                )
+            RETURN
+                Result
+    ```
+    annotation DAXLIB_PackageId = PowerEliteStudio.Geometry
+    annotation DAXLIB_PackageVersion = 0.1.1
+
+/// Distance from point ( x, y ) to line Ax + By + C = 0
+function 'PowerEliteStudio.Geometry.DistancePointLine2D' = ```
+        (
+            x: DOUBLE, y: DOUBLE,
+            A: DOUBLE, B: DOUBLE, C: DOUBLE
+        ) =>
+            VAR blanks = ISBLANK ( x ) || ISBLANK ( y ) || ISBLANK ( A ) || ISBLANK ( B ) || ISBLANK ( C )
+            VAR denom = SQRT ( POWER ( A, 2 ) + POWER ( B, 2 ) )
+            VAR invalid = blanks || denom = 0
+            VAR Result = 
+                IF ( 
+                    invalid, 
+                    BLANK ( ), 
+                    DIVIDE ( ABS ( A * x + B * y + C ), denom )
+                )
+            RETURN
+                Result
+    ```
+    annotation DAXLIB_PackageId = PowerEliteStudio.Geometry
+    annotation DAXLIB_PackageVersion = 0.1.1
+
+/// Distance from point to segment P1( x1, y1 )–P2( x2, y2 )
+function 'PowerEliteStudio.Geometry.DistancePointSegment2D' = ```
+        (
+            x: DOUBLE, y: DOUBLE,
+            x1: DOUBLE, y1: DOUBLE,
+            x2: DOUBLE, y2: DOUBLE
+        ) =>
+            VAR blanks = 
+                ISBLANK ( x ) || ISBLANK ( y ) ||
+                ISBLANK ( x1 ) || ISBLANK ( y1 ) || ISBLANK ( x2 ) || ISBLANK ( y2 )
+            VAR dx = x2 - x1
+            VAR dy = y2 - y1
+            VAR len2 = POWER ( dx, 2 ) + POWER ( dy, 2 )
+            VAR t = DIVIDE ( ( x - x1 ) * dx + ( y - y1 ) * dy, len2 )
+            VAR tC = MIN ( 1.0, MAX ( 0.0, t ) )
+            VAR px = x1 + tC * dx
+            VAR py = y1 + tC * dy
+            VAR Result = 
+                IF ( 
+                    blanks, 
+                    BLANK ( ), 
+                    SQRT ( POWER ( x - px, 2 ) + POWER ( y - py, 2 ) )
+                )
+            RETURN
+                Result
+    ```
+    annotation DAXLIB_PackageId = PowerEliteStudio.Geometry
+    annotation DAXLIB_PackageVersion = 0.1.1
