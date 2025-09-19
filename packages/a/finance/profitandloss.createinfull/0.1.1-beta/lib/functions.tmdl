@@ -1,0 +1,28 @@
+// Profit_and_loss: Create the P&L layout with appropriate sums, subtotals, and spacing
+	function finance.profitandloss.createinfull.Sum_Subtotal_and_Blanks =
+			(
+			    amount: EXPR
+			) =>
+			VAR accountinscope = ISFILTERED( Account )
+			VAR NCLD_filter_context_calculated_table =
+			    CALCULATETABLE(
+			        Layout,
+			        REMOVEFILTERS( Layout ),
+			        Layout[Income_Statement_Key] >= MIN( Layout[Subtotal_From] ),
+			        Layout[Income_Statement_Key] <= MIN( Layout[Subtotal_To] )
+			    )
+			VAR step1_lineitem = amount * MAX( Account[Account Type Indicator] )
+			VAR step2_subtotal =
+			    CALCULATE( amount * MAX( Account[Account Type Indicator] ), NCLD_filter_context_calculated_table )
+			VAR step3_addblanks = SWITCH(
+			        TRUE( ),
+			        accountinscope, BLANK( ),
+			        SELECTEDVALUE( Layout[Calculation_type] ) = "Blank", 0
+			    )
+			VAR step3_add_zero = COALESCE( step1_lineitem, step2_subtotal, step3_addblanks )
+			RETURN
+			    step3_add_zero
+
+
+    annotation DAXLIB_PackageId = profitandloss.createinfull\0.1.1-beta
+    annotation DAXLIB_PackageVersion = 0.1.1

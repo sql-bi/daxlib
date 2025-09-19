@@ -1,0 +1,9 @@
+{
+  "$schema": "https://raw.githubusercontent.com/sql-bi/daxlib/refs/heads/main/schemas/manifest/1.0.0/manifest.1.0.0.schema.json",
+  "id": "DaxLib.Convert",
+  "version": "0.1.1-beta",
+  "authors": "ChrisBarber",
+  "description": "Functions for producing the income statement (or P&L) in full.  Requires the standard pattern observed within organsiation: ledgers to accounts to line names",
+  "tags": "DAX,UDF,FUNCTION,CONVERSION, PATTERN",
+  "icon": "/icon.png"
+}
