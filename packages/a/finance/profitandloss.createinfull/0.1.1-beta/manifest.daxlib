@@ -3,7 +3,7 @@
   "id": "DaxLib.Convert",
   "version": "0.1.1-beta",
   "authors": "ChrisBarber",
-  "description": "Functions for producing the income statement (or P&L) in full.  Requires the standard pattern observed within organsiation: ledgers to accounts to line names",
+  "description": "Functions for producing the income statement (or P&L) in full.  Requires the standard pattern observed within organsiations: ledgers to accounts to line names",
   "tags": "DAX,UDF,FUNCTION,CONVERSION, PATTERN",
   "icon": "/icon.png"
 }
