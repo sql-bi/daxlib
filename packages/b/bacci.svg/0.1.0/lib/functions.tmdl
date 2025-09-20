@@ -1,6 +1,6 @@
-   	/// Creates an SVG Chip
-   	/// Warning: Any measures that use this function must have the "DataCategory" property = "ImageUrl"
-   	/// Defaults are width:150 and height:25
+	/// Creates an SVG Chip
+	/// Warning: Any measures that use this function must have the "DataCategory" property = "ImageUrl"
+	/// Defaults are width:150 and height:25
 	function 'Bacci.SVG.Chip' = 
 			(
 			        	// The value which will dictate the length of each bar
