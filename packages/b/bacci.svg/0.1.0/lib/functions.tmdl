@@ -92,7 +92,7 @@ function 'Bacci.SVG.Chip' =
 		        "</foreignObject>
 		        </svg>"
 
-annotation DAXLIB_PackageId = Bacci.SVG
+	annotation DAXLIB_PackageId = Bacci.SVG
 
-annotation DAXLIB_PackageVersion = 0.1.0
+	annotation DAXLIB_PackageVersion = 0.1.0
 
