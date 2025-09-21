@@ -1,0 +1,16 @@
+/// Calculate Mode of distribution
+    function Kolosko.SummaryStats.MODE = 
+        (t: Tableref expr, c: ColumnRef expr) =>
+            VAR FrequencyTable = 
+                SUMMARIZE (
+                    t,
+                    c,
+                    "Frequency", COUNTROWS(FILTER(t,c = EARLIER(c)))
+                )
+            VAR MaxFrequency = MAXX(FrequencyTable, [Frequency])
+            VAR ModeRows = FILTER(FrequencyTable, [Frequency] = MaxFrequency)
+            RETURN MAXX(ModeRows, c)
+
+	annotation DAXLIB_PackageId = Kolosko.SummaryStats
+
+	annotation DAXLIB_PackageVersion = 0.1.0
