@@ -1005,30 +1005,49 @@
 	/// @param {anyref expr} DataColumn - The column to analyze.
 	/// @return {table} A table containing 16 key descriptive statistics.
 	function 'BeIndian.SVGVisuals.CalculateDescriptiveStatistics' = ```
-		    (SourceTable: anyref expr, DataColumn: anyref expr) =>
-		    VAR N = COUNT(DataColumn) VAR Mean = AVERAGE(DataColumn) VAR MedianValue = MEDIAN(DataColumn)
-		    VAR StDev_S_Value = STDEV.S(DataColumn) VAR Var_S_Value = VAR.S(DataColumn) VAR Minimum = MIN(DataColumn)
-		    VAR Maximum = MAX(DataColumn) VAR Quartile1 = PERCENTILE.INC(DataColumn, 0.25) VAR Quartile3 = PERCENTILE.INC(DataColumn, 0.75)
-		    VAR Skewness = IF(N >= 3, (N / ((N - 1) * (N - 2))) * SUMX(SourceTable, POWER((DataColumn - Mean) / StDev_S_Value, 3)))
-		    VAR Kurtosis = IF(N >= 4, VAR S4 = SUMX(SourceTable, POWER((DataColumn - Mean) / StDev_S_Value, 4)) VAR T1 = (N*(N+1))/((N-1)*(N-2)*(N-3))*S4 VAR T2 = (3*POWER(N-1,2))/((N-2)*(N-3)) RETURN T1-T2)
-		    VAR R1 = DATATABLE("ID", INTEGER, "Metric", STRING, "Value", DOUBLE, {{1, "Average", Mean}})
-		    VAR R2 = DATATABLE("ID", INTEGER, "Metric", STRING, "Value", DOUBLE, {{2, "Median", MedianValue}})
-		    VAR R3 = DATATABLE("ID", INTEGER, "Metric", STRING, "Value", DOUBLE, {{3, "St. Dev. S", StDev_S_Value}})
-		    VAR R4 = DATATABLE("ID", INTEGER, "Metric", STRING, "Value", DOUBLE, {{4, "Sample Variance", Var_S_Value}})
-		    VAR R5 = DATATABLE("ID", INTEGER, "Metric", STRING, "Value", DOUBLE, {{5, "Kurtosis", Kurtosis}})
-		    VAR R6 = DATATABLE("ID", INTEGER, "Metric", STRING, "Value", DOUBLE, {{6, "Skewness S", Skewness}})
-		    VAR R7 = DATATABLE("ID", INTEGER, "Metric", STRING, "Value", DOUBLE, {{7, "Range", Maximum - Minimum}})
-		    VAR R8 = DATATABLE("ID", INTEGER, "Metric", STRING, "Value", DOUBLE, {{8, "Maximum", Maximum}})
-		    VAR R9 = DATATABLE("ID", INTEGER, "Metric", STRING, "Value", DOUBLE, {{9, "Minimum", Minimum}})
-		    VAR R10 = DATATABLE("ID", INTEGER, "Metric", STRING, "Value", DOUBLE, {{10, "Sum", SUM(DataColumn)}})
-		    VAR R11 = DATATABLE("ID", INTEGER, "Metric", STRING, "Value", DOUBLE, {{11, "Count", N}})
-		    VAR R12 = DATATABLE("ID", INTEGER, "Metric", STRING, "Value", DOUBLE, {{12, "Quartile1", Quartile1}})
-		    VAR R13 = DATATABLE("ID", INTEGER, "Metric", STRING, "Value", DOUBLE, {{13, "Quartile3", Quartile3}})
-		    VAR R14 = DATATABLE("ID", INTEGER, "Metric", STRING, "Value", DOUBLE, {{14, "IQR", Quartile3 - Quartile1}})
-		    VAR R15 = DATATABLE("ID", INTEGER, "Metric", STRING, "Value", DOUBLE, {{15, "Whisker Lower Bound", MAX(Quartile1 - (1.5 * (Quartile3 - Quartile1)), Minimum)}})
-		    VAR R16 = DATATABLE("ID", INTEGER, "Metric", STRING, "Value", DOUBLE, {{16, "Whisker Outer Bound", MIN(Quartile3 + (1.5 * (Quartile3 - Quartile1)), Maximum)}})
-		    RETURN UNION(R1, R2, R3, R4, R5, R6, R7, R8, R9, R10, R11, R12, R13, R14, R15, R16)
-		```
+		(SourceTable: anyref expr, DataColumn: anyref expr) =>
+
+		// --- Perform all calculations first ---
+		VAR N = COUNT(DataColumn)
+		VAR Mean = AVERAGE(DataColumn)
+		VAR MedianValue = MEDIAN(DataColumn)
+		VAR StDev_S_Value = STDEV.S(DataColumn)
+		VAR Var_S_Value = VAR.S(DataColumn)
+		VAR Minimum = MIN(DataColumn)
+		VAR Maximum = MAX(DataColumn)
+		VAR Quartile1 = PERCENTILE.INC(DataColumn, 0.25)
+		VAR Quartile3 = PERCENTILE.INC(DataColumn, 0.75)
+		VAR Skewness = IF(N >= 3, (N / ((N - 1) * (N - 2))) * SUMX(SourceTable, POWER((DataColumn - Mean) / StDev_S_Value, 3)))
+		VAR Kurtosis = 
+			IF(
+				N >= 4,
+				VAR SumFourthPowerZScore = SUMX(SourceTable, POWER((DataColumn - Mean) / StDev_S_Value, 4))
+				VAR Term1 = (N * (N + 1)) / ((N - 1) * (N - 2) * (N - 3)) * SumFourthPowerZScore
+				VAR Term2 = (3 * POWER(N - 1, 2)) / ((N - 2) * (N - 3))
+				RETURN Term1 - Term2
+			)
+			
+		// --- Assemble the final output table row by row ---
+		VAR Row1 = ROW("ID", 1, "Metric", "Average", "Value", Mean)
+		VAR Row2 = ROW("ID", 2, "Metric", "Median", "Value", MedianValue)
+		VAR Row3 = ROW("ID", 3, "Metric", "St. Dev. S", "Value", StDev_S_Value)
+		VAR Row4 = ROW("ID", 4, "Metric", "Sample Variance", "Value", Var_S_Value)
+		VAR Row5 = ROW("ID", 5, "Metric", "Kurtosis", "Value", Kurtosis)
+		VAR Row6 = ROW("ID", 6, "Metric", "Skewness S", "Value", Skewness)
+		VAR Row7 = ROW("ID", 7, "Metric", "Range", "Value", Maximum - Minimum)
+		VAR Row8 = ROW("ID", 8, "Metric", "Maximum", "Value", Maximum)
+		VAR Row9 = ROW("ID", 9, "Metric", "Minimum", "Value", Minimum)
+		VAR Row10 = ROW("ID", 10, "Metric", "Sum", "Value", SUM(DataColumn))
+		VAR Row11 = ROW("ID", 11, "Metric", "Count", "Value", N)
+		VAR Row12 = ROW("ID", 12, "Metric", "Quartile1", "Value", Quartile1)
+		VAR Row13 = ROW("ID", 13, "Metric", "Quartile3", "Value", Quartile3)
+		VAR Row14 = ROW("ID", 14, "Metric", "IQR", "Value", Quartile3 - Quartile1)
+		VAR Row15 = ROW("ID", 15, "Metric", "Whisker Lower Bound", "Value", MAX(Quartile1 - (1.5 * (Quartile3 - Quartile1)), Minimum))
+		VAR Row16 = ROW("ID", 16, "Metric", "Whisker Outer Bound", "Value", MIN(Quartile3 + (1.5 * (Quartile3 - Quartile1)), Maximum))
+		
+		RETURN
+			UNION(Row1, Row2, Row3, Row4, Row5, Row6, Row7, Row8, Row9, Row10, Row11, Row12, Row13, Row14, Row15, Row16)
+				```
 		annotation DAXLIB_PackageId = "BeIndian.SVGVisuals"
 		annotation DAXLIB_PackageVersion = "1.0.0"
 
@@ -1038,7 +1057,7 @@
 	function 'BeIndian.SVGVisuals.RenderDescriptiveStatisticsSVG' = ```
 		    (StatsTable: table) =>
 		    VAR RowHeight = 22 VAR TextPadding = 5 VAR Col1Width = 170 VAR TotalHeight = COUNTROWS(StatsTable) * RowHeight
-		    VAR SVG_Header = "data:image/svg+xml;utf8," & "<svg width='280' height='" & TotalHeight & "' xmlns='[http://www.w3.org/2000/svg](http://www.w3.org/2000/svg)'>"
+		    VAR SVG_Header = "data:image/svg+xml;utf8," & "<svg width='280' height='" & TotalHeight & "' xmlns='http://www.w3.org/2000/svg'>"
 		    VAR SVG_Style = "<style>.metric{font-family:Segoe UI,sans-serif;font-size:13px;fill:#333}.value{font-family:Segoe UI,sans-serif;font-size:13px;text-anchor:end;fill:#333}.bg_even{fill:#F7F7F7}.bg_odd{fill:#FFF}</style>"
 		    VAR SVG_Body = CONCATENATEX(StatsTable,
 		            VAR Y = ([ID] - 1) * RowHeight VAR Bg = IF(MOD([ID], 2) = 0, "bg_even", "bg_odd")
