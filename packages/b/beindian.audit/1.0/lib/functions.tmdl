@@ -911,7 +911,7 @@
 	/// @param {numeric} InputNumber - The number to convert.
 	/// @return {string} The number in Indian words.
 	function 'BeIndian.TextUtil.Indian_Num2Word' = ```
-			    (InputNumber: numeric) =>
+			    (InputNumber:Int64) =>
 			    IF(ISBLANK(InputNumber), BLANK(),
 			    IF(InputNumber = 0, "Zero",
 			    IF(InputNumber >= 1000000000000000, "Overflow!", 
@@ -941,22 +941,23 @@
 	/// @param {numeric} InputNumber - The number to convert.
 	/// @return {string} The number in International words.
 	function 'BeIndian.TextUtil.Number_ToWord' = ```
-			    (Number: int64) =>
-			    VAR Ones = DATATABLE("ID", INTEGER, "Word", STRING, {{1,"One"}, {2,"Two"}, {3,"Three"}, {4,"Four"}, {5,"Five"}, {6,"Six"}, {7,"Seven"}, {8,"Eight"}, {9,"Nine"}})
-			    VAR Teens = DATATABLE("ID", INTEGER, "Word", STRING, {{10,"Ten"}, {11,"Eleven"}, {12,"Twelve"}, {13,"Thirteen"}, {14,"Fourteen"}, {15,"Fifteen"}, {16,"Sixteen"}, {17,"Seventeen"}, {18,"Eighteen"}, {19,"Nineteen"}})
-			    VAR Tens = DATATABLE("ID", INTEGER, "Word", STRING, {{2,"Twenty"}, {3,"Thirty"}, {4,"Forty"}, {5,"Fifty"}, {6,"Sixty"}, {7,"Seventy"}, {8,"Eighty"}, {9,"Ninety"}})
-			    VAR Num_Tens = TRUNC(Number / 10)
-			    VAR Num_Ones = MOD(Number, 10)
-			    RETURN
-			        IF(Number = 0, BLANK(),
-			            IF(Number >= 10 && Number <= 19,
-			                MAXX(FILTER(Teens, [ID] = Number), [Word]),
-			                TRIM(
-			                    IF(Num_Tens >= 2, MAXX(FILTER(Tens, [ID] = Num_Tens), [Word]), "") & " " &
-			                    IF(Num_Ones > 0, MAXX(FILTER(Ones, [ID] = Num_Ones), [Word]), "")
-			                )
-			            )
-			        )
+		(InputNumber:Int64) =>
+		IF(ISBLANK(InputNumber), BLANK(),
+		IF(InputNumber = 0, "Zero",
+		IF(InputNumber >= 1000000000000000, "Overflow!",
+		VAR Trillions = TRUNC(InputNumber / 1000000000000)
+		VAR Billions = TRUNC(MOD(InputNumber, 1000000000000) / 1000000000)
+		VAR Millions = TRUNC(MOD(InputNumber, 1000000000) / 1000000)
+		VAR Thousands = TRUNC(MOD(InputNumber, 1000000) / 1000)
+		VAR Remainder = MOD(InputNumber, 1000)
+		VAR TrillionsText = IF(Trillions > 0, BeIndian.TextUtil.Helper_ConvertThreeDigitsToWords(Trillions) & " Trillion, ", "")
+		VAR BillionsText = IF(Billions > 0, BeIndian.TextUtil.Helper_ConvertThreeDigitsToWords(Billions) & " Billion, ", "")
+		VAR MillionsText = IF(Millions > 0, BeIndian.TextUtil.Helper_ConvertThreeDigitsToWords(Millions) & " Million, ", "")
+		VAR ThousandsText = IF(Thousands > 0, BeIndian.TextUtil.Helper_ConvertThreeDigitsToWords(Thousands) & " Thousand, ", "")
+		VAR RemainderText = IF(Remainder > 0, BeIndian.TextUtil.Helper_ConvertThreeDigitsToWords(Remainder), "")
+		VAR Result = TRIM(TrillionsText & BillionsText & MillionsText & ThousandsText & RemainderText)
+		RETURN IF(RIGHT(Result, 1) = ",", LEFT(Result, LEN(Result) - 1), Result)
+		)))
 		```
 		annotation DAXLIB_PackageId = "BeIndian.Text"
 		annotation DAXLIB_PackageVersion = "1.0.0"
