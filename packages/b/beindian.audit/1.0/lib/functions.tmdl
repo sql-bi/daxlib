@@ -556,26 +556,26 @@
 	/// @param {double} FundsFromOperations - The funds from operations.
 	/// @return {string} A formatted text string with the O-Score and verdict.
 	function 'BeIndian.FinancialModels.OhlsonOScore' = ```
-		    (
-		        TotalAssets: double, GNP_Index: double, TotalLiabilities: double, WorkingCapital: double,
-		        CurrentLiabilities: double, CurrentAssets: double, LastYear_NetIncome: double,
-		        CurrentYear_NetIncome: double, FundsFromOperations: double
-		    ) =>
-		    VAR SIZE = LOG(TotalAssets / GNP_Index, 10)
-		    VAR TLTA = DIVIDE(TotalLiabilities, TotalAssets)
-		    VAR WCTA = DIVIDE(WorkingCapital, TotalAssets)
-		    VAR CLCA = DIVIDE(CurrentLiabilities, CurrentAssets)
-		    VAR OENEG = IF(TotalLiabilities > TotalAssets, 1, 0)
-		    VAR NITA = DIVIDE(CurrentYear_NetIncome, TotalAssets)
-		    VAR FUTL = DIVIDE(FundsFromOperations, TotalLiabilities)
-		    VAR INTWO = IF(LastYear_NetIncome < 0 && CurrentYear_NetIncome < 0, 1, 0)
-		    VAR CHIN = DIVIDE(CurrentYear_NetIncome - LastYear_NetIncome, ABS(CurrentYear_NetIncome) + ABS(LastYear_NetIncome))
-		    VAR OScore = -1.32 - (0.407 * SIZE) + (6.03 * TLTA) - (1.43 * WCTA) + (0.076 * CLCA) - (1.72 * OENEG) - (2.37 * NITA) - (1.83 * FUTL) + (0.285 * INTWO) - (0.521 * CHIN)
-		    VAR Verdict = IF(OScore > 0.5, "Likely to default within two years", "Not likely to default within two years")
-		    RETURN "Score: " & FORMAT(OScore, "0.0000") & " - " & Verdict
-		```
-		annotation DAXLIB_PackageId = "BeIndian.FinancialModels"
-		annotation DAXLIB_PackageVersion = "1.0.0"
+				(
+					TotalAssets: double, GNP_Index: double, TotalLiabilities: double, WorkingCapital: double,
+					CurrentLiabilities: double, CurrentAssets: double, LastYear_NetIncome: double,
+					CurrentYear_NetIncome: double, FundsFromOperations: double
+				) =>
+				VAR SIZE = Ln(TotalAssets / GNP_Index)
+				VAR TLTA = DIVIDE(TotalLiabilities, TotalAssets)
+				VAR WCTA = DIVIDE(WorkingCapital, TotalAssets)
+				VAR CLCA = DIVIDE(CurrentLiabilities, CurrentAssets)
+				VAR OENEG = IF(TotalLiabilities > TotalAssets, 1, 0)
+				VAR NITA = DIVIDE(CurrentYear_NetIncome, TotalAssets)
+				VAR FUTL = DIVIDE(FundsFromOperations, TotalLiabilities)
+				VAR INTWO = IF(LastYear_NetIncome < 0 && CurrentYear_NetIncome < 0, 1, 0)
+				VAR CHIN = DIVIDE(CurrentYear_NetIncome - LastYear_NetIncome, ABS(CurrentYear_NetIncome) + ABS(LastYear_NetIncome))
+				VAR OScore = -1.32 - (0.407 * SIZE) + (6.03 * TLTA) - (1.43 * WCTA) + (0.0757 * CLCA) - (1.72 * OENEG) - (2.37 * NITA) - (1.83 * FUTL) + (0.285 * INTWO) - (0.521 * CHIN)
+				VAR Verdict = IF(OScore > 0.5, "Likely to default within two years", "Not likely to default within two years")
+				RETURN "Score: " & FORMAT(OScore, "0.0000") & " - " & Verdict
+			```
+			annotation DAXLIB_PackageId = "BeIndian.FinancialModels"
+			annotation DAXLIB_PackageVersion = "1.0.0"
 
 	/// [Financial Model] Calculates the Piotroski F-Score and returns a formatted result.
 	/// @param {table} InputData - A table with columns [Metric], [LY_Value], [CY_Value].
