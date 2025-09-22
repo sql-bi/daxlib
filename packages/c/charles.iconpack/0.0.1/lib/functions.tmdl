@@ -1,7 +1,7 @@
 /// Creates a icon pack, which is a table of SVG images that is passed a name and a color and returns the corresponding icon in that color.
 /// icon_name STRING a name of a icon
 /// hex STRING the color to return the icon in
-function 'charles.iconpack.example' =
+function 'Charles.IconPack.Example' =
 		(
 			icon_name: STRING
 			, hex: STRING
@@ -29,6 +29,7 @@ function 'charles.iconpack.example' =
 		RETURN
 			FinalSvgString
 
-	annotation DAXLIB_PackageId = charles.iconpack
+	annotation DAXLIB_PackageId = Charles.IconPack
 
 	annotation DAXLIB_PackageVersion = 0.0.1
+
