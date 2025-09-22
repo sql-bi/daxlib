@@ -989,7 +989,7 @@
 		    VAR MaxFrequency = MAXX(HistogramTable, [Frequency]) VAR BarPadding = 5 VAR NumberOfBars = COUNTROWS(HistogramTable)
 		    VAR BarWidth = (SVG_Width / NumberOfBars) - BarPadding
 		    VAR HistogramWithIndex = ADDCOLUMNS(HistogramTable, "__Index", RANKX(HistogramTable, [Value], , ASC))
-		    VAR SVG_Header = "data:image/svg+xml;utf8," & "<svg width='" & SVG_Width & "' height='" & SVG_Height & "' xmlns='[http://www.w3.org/2000/svg](http://www.w3.org/2000/svg)'>"
+		    VAR SVG_Header = "data:image/svg+xml;utf8," & "<svg width='" & SVG_Width & "' height='" & SVG_Height & "' xmlns='http://www.w3.org/2000/svg'>"
 		    VAR SVG_Style = "<style>.bar{fill:" & BarColor & "}.label{font-family:Segoe UI,sans-serif;font-size:11px;text-anchor:middle;fill:" & FontColor & "}</style>"
 		    VAR SVG_Body = CONCATENATEX(HistogramWithIndex,
 		            VAR BarHeight = ([Frequency] / MaxFrequency) * (SVG_Height * 0.9) VAR X_Pos = ([__Index] - 1) * (BarWidth + BarPadding) VAR Y_Pos = SVG_Height - BarHeight
@@ -1106,7 +1106,7 @@
 		                    "__Color", MAXX(FILTER(Colors, [ID] = MOD(RANKX(WordFrequencyTable, [__Frequency]), ColorCount)+1), [Color])
 		                ), [__Frequency], DESC)
 		        VAR WordsHTML = CONCATENATEX(WordsWithFormatting, "<span style='font-size:"&[__FontSize]&"px;color:"&[__Color]&";'> "&[__Word]&" </span>")
-		        VAR SVG_String = "data:image/svg+xml;utf8," & "<svg width='800' height='400' xmlns='[http://www.w3.org/2000/svg](http://www.w3.org/2000/svg)'><foreignObject width='100%' height='100%'><div xmlns='[http://www.w3.org/1999/xhtml](http://www.w3.org/1999/xhtml)' style='font-family:Impact,sans-serif;text-align:justify;line-height:1.5;'>" & WordsHTML & "</div></foreignObject></svg>"
+		        VAR SVG_String = "data:image/svg+xml;utf8," & "<svg width='800' height='400' xmlns='http://www.w3.org/2000/svg'><foreignObject width='100%' height='100%'><div xmlns='http://www.w3.org/1999/xhtml' style='font-family:Impact,sans-serif;text-align:justify;line-height:1.5;'>" & WordsHTML & "</div></foreignObject></svg>"
 		        RETURN SVG_String
 		    )
 		```
