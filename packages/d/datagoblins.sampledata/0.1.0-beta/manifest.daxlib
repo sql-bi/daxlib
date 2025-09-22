@@ -1,0 +1,12 @@
+{
+  "$schema": "https://raw.githubusercontent.com/sql-bi/daxlib/refs/heads/main/schemas/manifest/1.0.0/manifest.1.0.0.schema.json",
+  "id": "DataGoblins.SampleData",
+  "version": "0.1.0-beta",
+  "authors": "Kurt Buhler",
+  "description": "A set of functions that can be used in calculated tables to generate random sample data for experimentation, prototypes, and testing. During beta, functions and parameters are likely to evolve and change dramatically.",
+  "tags": "DAX,UDF,FUNCTION,LIB,SAMPLE DATA,DATA",
+  "releaseNotes": "Initial beta release of DataGoblins.SampleData library. Provides 6 functions for generating realistic sample data: Orders (fact table with line-level variations), Inventory (warehouse snapshots), Customer/Product/Store (dimension tables with configurable data quality issues), and Dates (comprehensive calendar table). Functions support configurable parameters for volume, date ranges, data quality, and reproducible seeding. Note that Power BI may complain with syntax errors, but the functions should work in calculated tables, regardless.",
+  "projectUrl": "https://github.com/data-goblin/DataGoblin.SampleData",
+  "repositoryUrl": "https://github.com/data-goblin/DataGoblin.SampleData",
+  "icon": "/icon.png"
+}
