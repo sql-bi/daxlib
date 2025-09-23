@@ -871,7 +871,7 @@ function 'BeIndian.Audit.Validation_LuhnAlgorithm' = ```
 		VAR LuhnSum = SUMX(DigitsTable, VAR cd = [__Digit] VAR io = (MOD([__Index], 2) = 1) RETURN IF(io, cd, VAR d = cd * 2 RETURN IF(d > 9, d - 9, d)))
 		RETURN MOD(LuhnSum, 10) = 0
 	```
-	annotation DAXLIB_PackageId = "BeIndian.Audit_Validation"
+	annotation DAXLIB_PackageId = BeIndian.Audit
 	annotation DAXLIB_PackageVersion = 1.0.0
 
 /// [Text] Helper function that converts any number from 0-99 into words.
