@@ -6,6 +6,6 @@
   "tags": "DAX,UDF",
   "releaseNotes": "DaxLib release 0.1.0-beta",
   "projectUrl": "https://github.com/sql-bi/daxlib",
-  "repositoryUrl": "https://github.com/sql-bi/daxlib/tree/main/packages/t/time.prioryearmeas",
+  "repositoryUrl": "https://github.com/sql-bi/daxlib/tree/main/packages/s/storybi.prioryearmeas",
   "icon": ""
 }
