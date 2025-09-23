@@ -1,5 +1,5 @@
 /// This function evaluates a prior year result base on the measure parameter.
-function PriorYearMeasure =
+function 'StoryBi.PriorYearMeas.PriorYearMeasure' =
 			(
 			expMeasure : ANYREF EXPR,
 			dateTable : ANYREF EXPR,
