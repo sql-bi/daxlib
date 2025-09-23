@@ -498,49 +498,6 @@ function 'BeIndian.Audit.FinancialModels_AltmanZScore' = ```
 	annotation DAXLIB_PackageId = BeIndian.Audit
 	annotation DAXLIB_PackageVersion = 1.0.0
 
-/// [Financial Model] Calculates the Beneish M-Score and returns a formatted result.
-/// @param {table} InputData - A table with columns [Metric], [LY_Value], [CY_Value].
-/// @return {string} A formatted text string with the M-Score and verdict.
-function 'BeIndian.Audit.FinancialModels_BeneishMScore' = ```
-		(InputData: table) =>
-		VAR LY_NS = MAXX(FILTER(InputData, [Metric] = "Net Sales"), [LY_Value])
-		VAR LY_CGS = MAXX(FILTER(InputData, [Metric] = "Cost of Goods Sold"), [LY_Value])
-		VAR LY_SGA = MAXX(FILTER(InputData, [Metric] = "Selling, General and Admin Expenses"), [LY_Value])
-		VAR LY_NI = MAXX(FILTER(InputData, [Metric] = "Net Income"), [LY_Value])
-		VAR LY_PPE = MAXX(FILTER(InputData, [Metric] = "Property, Plant and Equipment"), [LY_Value])
-		VAR LY_DEP = MAXX(FILTER(InputData, [Metric] = "Depreciation"), [LY_Value])
-		VAR LY_CA = MAXX(FILTER(InputData, [Metric] = "Current Assets"), [LY_Value])
-		VAR LY_NR = MAXX(FILTER(InputData, [Metric] = "Net Receivables"), [LY_Value])
-		VAR LY_TA = MAXX(FILTER(InputData, [Metric] = "Total Assets"), [LY_Value])
-		VAR LY_LD = MAXX(FILTER(InputData, [Metric] = "Long-tem Debt"), [LY_Value])
-		VAR LY_CL = MAXX(FILTER(InputData, [Metric] = "Current Liabilities"), [LY_Value])
-		VAR LY_CF = MAXX(FILTER(InputData, [Metric] = "Cash Flow from Operations"), [LY_Value])
-		VAR CY_NS = MAXX(FILTER(InputData, [Metric] = "Net Sales"), [CY_Value])
-		VAR CY_CGS = MAXX(FILTER(InputData, [Metric] = "Cost of Goods Sold"), [CY_Value])
-		VAR CY_SGA = MAXX(FILTER(InputData, [Metric] = "Selling, General and Admin Expenses"), [CY_Value])
-		VAR CY_NI = MAXX(FILTER(InputData, [Metric] = "Net Income"), [CY_Value])
-		VAR CY_PPE = MAXX(FILTER(InputData, [Metric] = "Property, Plant and Equipment"), [CY_Value])
-		VAR CY_DEP = MAXX(FILTER(InputData, [Metric] = "Depreciation"), [CY_Value])
-		VAR CY_CA = MAXX(FILTER(InputData, [Metric] = "Current Assets"), [CY_Value])
-		VAR CY_NR = MAXX(FILTER(InputData, [Metric] = "Net Receivables"), [CY_Value])
-		VAR CY_TA = MAXX(FILTER(InputData, [Metric] = "Total Assets"), [CY_Value])
-		VAR CY_LD = MAXX(FILTER(InputData, [Metric] = "Long-tem Debt"), [CY_Value])
-		VAR CY_CL = MAXX(FILTER(InputData, [Metric] = "Current Liabilities"), [CY_Value])
-		VAR CY_CF = MAXX(FILTER(InputData, [Metric] = "Cash Flow from Operations"), [CY_Value])
-		VAR DSRI = DIVIDE(CY_NR / CY_NS, LY_NR / LY_NS)
-		VAR GMI = DIVIDE((LY_NS - LY_CGS) / LY_NS, (CY_NS - CY_CGS) / CY_NS)
-		VAR AQI = DIVIDE(1 - (CY_CA + CY_PPE) / CY_TA, 1 - (LY_CA + LY_PPE) / LY_TA)
-		VAR SGI = DIVIDE(CY_NS, LY_NS)
-		VAR DEPI = DIVIDE(LY_DEP / (LY_DEP + LY_PPE), CY_DEP / (CY_DEP + CY_PPE))
-		VAR SGAI = DIVIDE(CY_SGA / CY_NS, LY_SGA / LY_NS)
-		VAR LVGI = DIVIDE((CY_CL + CY_LD) / CY_TA, (LY_CL + LY_LD) / LY_TA)
-		VAR TATA = DIVIDE(CY_NI - CY_CF, CY_TA)
-		VAR MScore8 = -4.84 + (0.92 * DSRI) + (0.528 * GMI) + (0.404 * AQI) + (0.892 * SGI) + (0.115 * DEPI) - (0.172 * SGAI) - (0.327 * LVGI) + (4.679 * TATA)
-		VAR Verdict = IF(MScore8 < -2.22, "Unlikely to be a Manipulator", "Potential Manipulator")
-		RETURN "Score: " & FORMAT(MScore8, "0.0000") & " - " & Verdict
-	```
-	annotation DAXLIB_PackageId = BeIndian.Audit
-	annotation DAXLIB_PackageVersion = 1.0.0
 
 /// [Financial Model] Calculates the Ohlson O-Score for financial distress and returns a formatted result.
 /// @param {double} TotalAssets - The total assets of the company.
@@ -574,48 +531,6 @@ function 'BeIndian.Audit.FinancialModels_OhlsonOScore' = ```
 		```
 		annotation DAXLIB_PackageId = BeIndian.Audit
 		annotation DAXLIB_PackageVersion = 1.0.0
-
-/// [Financial Model] Calculates the Piotroski F-Score and returns a formatted result.
-/// @param {table} InputData - A table with columns [Metric], [LY_Value], [CY_Value].
-/// @return {string} A formatted text string with the F-Score and verdict.
-function 'BeIndian.Audit.FinancialModels_PiotroskiFScore' = ```
-		(InputData: table) =>
-		VAR LY_NI = MAXX(FILTER(InputData, [Metric] = "Net Income"), [LY_Value])
-		VAR LY_OPTA = MAXX(FILTER(InputData, [Metric] = "Opening Total Assets"), [LY_Value])
-		VAR LY_CLTA = MAXX(FILTER(InputData, [Metric] = "Closing Total Assets"), [LY_Value])
-		VAR LY_CF = MAXX(FILTER(InputData, [Metric] = "Cashflow from Operations"), [LY_Value])
-		VAR LY_LTD = MAXX(FILTER(InputData, [Metric] = "Long Term Debt"), [LY_Value])
-		VAR LY_CA = MAXX(FILTER(InputData, [Metric] = "Current Assets"), [LY_Value])
-		VAR LY_CL = MAXX(FILTER(InputData, [Metric] = "Current Liabilities"), [LY_Value])
-		VAR LY_EQ = MAXX(FILTER(InputData, [Metric] = "Common Equity"), [LY_Value])
-		VAR LY_NS = MAXX(FILTER(InputData, [Metric] = "Net Sales"), [LY_Value])
-		VAR LY_GPR = MAXX(FILTER(InputData, [Metric] = "GP Ratio"), [LY_Value])
-		VAR CY_NI = MAXX(FILTER(InputData, [Metric] = "Net Income"), [CY_Value])
-		VAR CY_OPTA = MAXX(FILTER(InputData, [Metric] = "Opening Total Assets"), [CY_Value])
-		VAR CY_CLTA = MAXX(FILTER(InputData, [Metric] = "Closing Total Assets"), [CY_Value])
-		VAR CY_CF = MAXX(FILTER(InputData, [Metric] = "Cashflow from Operations"), [CY_Value])
-		VAR CY_LTD = MAXX(FILTER(InputData, [Metric] = "Long Term Debt"), [CY_Value])
-		VAR CY_CA = MAXX(FILTER(InputData, [Metric] = "Current Assets"), [CY_Value])
-		VAR CY_CL = MAXX(FILTER(InputData, [Metric] = "Current Liabilities"), [CY_Value])
-		VAR CY_EQ = MAXX(FILTER(InputData, [Metric] = "Common Equity"), [CY_Value])
-		VAR CY_NS = MAXX(FILTER(InputData, [Metric] = "Net Sales"), [CY_Value])
-		VAR CY_GPR = MAXX(FILTER(InputData, [Metric] = "GP Ratio"), [CY_Value])
-		VAR RoA = IF(CY_NI > 0, 1, 0)
-		VAR CFO = IF(CY_CF > 0, 1, 0)
-		VAR RoAChange = IF(DIVIDE(CY_NI, CY_CLTA) > DIVIDE(LY_NI, LY_CLTA), 1, 0)
-		VAR CashFlowROA = IF(CY_CF > CY_NI, 1, 0)
-		VAR Leverage = IF(DIVIDE(CY_LTD, (CY_OPTA + CY_CLTA)/2) < DIVIDE(LY_LTD, (LY_OPTA + LY_CLTA)/2), 1, 0)
-		VAR CR = IF(DIVIDE(CY_CA, CY_CL) > DIVIDE(LY_CA, LY_CL), 1, 0)
-		VAR Eq = IF(CY_EQ <= LY_EQ, 1, 0)
-		VAR GPR = IF(CY_GPR > LY_GPR, 1, 0)
-		VAR AssetTO = IF(DIVIDE(CY_NS, CY_OPTA) > DIVIDE(LY_NS, LY_OPTA), 1, 0)
-		VAR FScore = RoA + CFO + RoAChange + CashFlowROA + Leverage + CR + Eq + GPR + AssetTO
-		VAR Verdict = SWITCH(TRUE(), FScore >= 8, "Strong", FScore <= 2, "Weak", "Average")
-		RETURN "Score: " & FScore & "/9 - " & Verdict
-	```
-	annotation DAXLIB_PackageId = BeIndian.Audit
-	annotation DAXLIB_PackageVersion = 1.0.0
-
 
 /// [Forensic Test] Calculates the GEL1 ratio for a specific pair of attribute values.
 /// @param {anyref expr} SourceTable - A reference to the table containing the data.
