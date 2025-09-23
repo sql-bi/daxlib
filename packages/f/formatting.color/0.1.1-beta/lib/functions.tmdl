@@ -1,5 +1,5 @@
 /// Converts a numeric value to a gradient color between three colors (bad, neutral, good). The colors should be provided as HEX codes (e.g., "#FF0000" for red). The function calculates the color based on the position of the current value between the min, neutral, and max values.If the current value is below the neutral value, it interpolates between the bad and neutral colors. If the current value is above the neutral value, it interpolates between the neutral and good colors.
-function 'AgulloBernat.Color.ValueToGradientColor' =
+function 'Formatting.Color.ValueToGradientColor' =
 		
 		(
 			// HEX code for the color representing bad values (e.g., "#FF0000" for red)
