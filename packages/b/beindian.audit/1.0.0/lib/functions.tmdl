@@ -13,8 +13,8 @@ function 'BeIndian.Audit.About_GetInfo' = ```
 		    LineBreak &
 			"Disclaimer: This library comes with no warranties or guarantees of accuracy or fitness for a specific purpose."
 	```
-	annotation DAXLIB_PackageId = "BeIndian.Audit"
-	annotation DAXLIB_PackageVersion = "1.0.0"
+	annotation DAXLIB_PackageId = BeIndian.Audit
+	annotation DAXLIB_PackageVersion = 1.0.0
 
 
 /// [Benford's Law] Generates a dimension table containing digits 1-9 for First Digit analysis.
@@ -22,8 +22,8 @@ function 'BeIndian.Audit.About_GetInfo' = ```
 function 'BeIndian.Audit.BenfordLaw_FirstDigit_DimTable' = ```
 		() => SELECTCOLUMNS(GENERATESERIES(1, 9, 1), "Digit", [Value])
 	```
-	annotation DAXLIB_PackageId = "BeIndian.Audit"
-	annotation DAXLIB_PackageVersion = "1.0.0"
+	annotation DAXLIB_PackageId = BeIndian.Audit
+	annotation DAXLIB_PackageVersion = 1.0.0
 
 /// [Benford's Law] Calculates the actual frequency of a specific first digit.
 /// @param {anyref expr} SourceTable - A reference to the table containing the data (e.g., 'Orders').
@@ -40,8 +40,8 @@ function 'BeIndian.Audit.BenfordLaw_FirstDigit_Actual' = ```
 		    RETURN DIVIDE(Freq, TotalCount)
 		)
 	```
-	annotation DAXLIB_PackageId = "BeIndian.Audit"
-	annotation DAXLIB_PackageVersion = "1.0.0"
+	annotation DAXLIB_PackageId = BeIndian.Audit
+	annotation DAXLIB_PackageVersion = 1.0.0
 
 /// [Benford's Law] Calculates the expected frequency for a specific first digit.
 /// @param {int64} SelectedDigit - The single digit (1-9) to calculate.
@@ -49,8 +49,8 @@ function 'BeIndian.Audit.BenfordLaw_FirstDigit_Actual' = ```
 function 'BeIndian.Audit.BenfordLaw_FirstDigit_Expected' = ```
 		(SelectedDigit: int64) => IF(ISBLANK(SelectedDigit), 0, LOG((SelectedDigit + 1) / SelectedDigit, 10))
 	```
-	annotation DAXLIB_PackageId = "BeIndian.Audit"
-	annotation DAXLIB_PackageVersion = "1.0.0"
+	annotation DAXLIB_PackageId = BeIndian.Audit
+	annotation DAXLIB_PackageVersion = 1.0.0
 
 /// [Benford's Law] Calculates the Mean Absolute Deviation for the first digit test.
 /// @param {anyref expr} SourceTable - A reference to the table containing the data.
@@ -65,16 +65,16 @@ function 'BeIndian.Audit.BenfordLaw_FirstDigit_MAD' = ```
 		    )
 		RETURN AVERAGEX(Summary, ABS([Actual] - [Expected]))
 	```
-	annotation DAXLIB_PackageId = "BeIndian.Audit"
-	annotation DAXLIB_PackageVersion = "1.0.0"
+	annotation DAXLIB_PackageId = BeIndian.Audit
+	annotation DAXLIB_PackageVersion = 1.0.0
 
 /// [Benford's Law] Generates a dimension table containing numbers 10-99 for First Two Digits analysis.
 /// @return {table} A single-column table named [Digit].
 function 'BeIndian.Audit.BenfordLaw_FirstTwoDigits_DimTable' = ```
 		() => SELECTCOLUMNS(GENERATESERIES(10, 99, 1), "Digit", [Value])
 	```
-	annotation DAXLIB_PackageId = "BeIndian.Audit"
-	annotation DAXLIB_PackageVersion = "1.0.0"
+	annotation DAXLIB_PackageId = BeIndian.Audit
+	annotation DAXLIB_PackageVersion = 1.0.0
 
 /// [Benford's Law] Calculates the actual frequency of a specific two-digit number.
 /// @param {anyref expr} SourceTable - A reference to the table containing the data.
@@ -91,8 +91,8 @@ function 'BeIndian.Audit.BenfordLaw_FirstTwoDigits_Actual' = ```
 		    RETURN DIVIDE(Freq, TotalCount)
 		)
 	```
-	annotation DAXLIB_PackageId = "BeIndian.Audit"
-	annotation DAXLIB_PackageVersion = "1.0.0"
+	annotation DAXLIB_PackageId = BeIndian.Audit
+	annotation DAXLIB_PackageVersion = 1.0.0
 
 /// [Benford's Law] Calculates the expected frequency for a specific two-digit number.
 /// @param {int64} SelectedDigits - The two-digit number (10-99) to calculate.
@@ -100,8 +100,8 @@ function 'BeIndian.Audit.BenfordLaw_FirstTwoDigits_Actual' = ```
 function 'BeIndian.Audit.BenfordLaw_FirstTwoDigits_Expected' = ```
 		(SelectedDigits: int64) => IF(ISBLANK(SelectedDigits), 0, LOG(1 + (1 / SelectedDigits), 10))
 	```
-	annotation DAXLIB_PackageId = "BeIndian.Audit"
-	annotation DAXLIB_PackageVersion = "1.0.0"
+	annotation DAXLIB_PackageId = BeIndian.Audit
+	annotation DAXLIB_PackageVersion = 1.0.0
 
 /// [Benford's Law] Calculates the Mean Absolute Deviation for the first two digits test.
 /// @param {anyref expr} SourceTable - A reference to the table containing the data.
@@ -116,16 +116,16 @@ function 'BeIndian.Audit.BenfordLaw_FirstTwoDigits_MAD' = ```
 		    )
 		RETURN AVERAGEX(Summary, ABS([Actual] - [Expected]))
 	```
-	annotation DAXLIB_PackageId = "BeIndian.Audit"
-	annotation DAXLIB_PackageVersion = "1.0.0"
+	annotation DAXLIB_PackageId = BeIndian.Audit
+	annotation DAXLIB_PackageVersion = 1.0.0
 
 /// [Benford's Law] Generates a dimension table containing numbers 100-999 for First Three Digits analysis.
 /// @return {table} A single-column table named [Digit].
 function 'BeIndian.Audit.BenfordLaw_FirstThreeDigits_DimTable' = ```
 		() => SELECTCOLUMNS(GENERATESERIES(100, 999, 1), "Digit", [Value])
 	```
-	annotation DAXLIB_PackageId = "BeIndian.Audit"
-	annotation DAXLIB_PackageVersion = "1.0.0"
+	annotation DAXLIB_PackageId = BeIndian.Audit
+	annotation DAXLIB_PackageVersion = 1.0.0
 
 /// [Benford's Law] Calculates the actual frequency of a specific three-digit number.
 /// @param {anyref expr} SourceTable - A reference to the table containing the data.
@@ -142,8 +142,8 @@ function 'BeIndian.Audit.BenfordLaw_FirstThreeDigits_Actual' = ```
 		    RETURN DIVIDE(Freq, TotalCount)
 		)
 	```
-	annotation DAXLIB_PackageId = "BeIndian.Audit"
-	annotation DAXLIB_PackageVersion = "1.0.0"
+	annotation DAXLIB_PackageId = BeIndian.Audit
+	annotation DAXLIB_PackageVersion = 1.0.0
 
 /// [Benford's Law] Calculates the expected frequency for a specific three-digit number.
 /// @param {int64} SelectedDigits - The three-digit number (100-999) to calculate.
@@ -151,8 +151,8 @@ function 'BeIndian.Audit.BenfordLaw_FirstThreeDigits_Actual' = ```
 function 'BeIndian.Audit.BenfordLaw_FirstThreeDigits_Expected' = ```
 		(SelectedDigits: int64) => IF(ISBLANK(SelectedDigits), 0, LOG(1 + (1 / SelectedDigits), 10))
 	```
-	annotation DAXLIB_PackageId = "BeIndian.Audit"
-	annotation DAXLIB_PackageVersion = "1.0.0"
+	annotation DAXLIB_PackageId = BeIndian.Audit
+	annotation DAXLIB_PackageVersion = 1.0.0
 
 /// [Benford's Law] Calculates the Mean Absolute Deviation for the first three digits test.
 /// @param {anyref expr} SourceTable - A reference to the table containing the data.
@@ -167,16 +167,16 @@ function 'BeIndian.Audit.BenfordLaw_FirstThreeDigits_MAD' = ```
 		    )
 		RETURN AVERAGEX(Summary, ABS([Actual] - [Expected]))
 	```
-	annotation DAXLIB_PackageId = "BeIndian.Audit"
-	annotation DAXLIB_PackageVersion = "1.0.0"
+	annotation DAXLIB_PackageId = BeIndian.Audit
+	annotation DAXLIB_PackageVersion = 1.0.0
 
 /// [Benford's Law] Generates a dimension table containing numbers 0-99 for Last Two Digits analysis.
 /// @return {table} A single-column table named [Digit].
 function 'BeIndian.Audit.BenfordLaw_LastTwoDigits_DimTable' = ```
 		() => SELECTCOLUMNS(GENERATESERIES(0, 99, 1), "Digit", [Value])
 	```
-	annotation DAXLIB_PackageId = "BeIndian.Audit"
-	annotation DAXLIB_PackageVersion = "1.0.0"
+	annotation DAXLIB_PackageId = BeIndian.Audit
+	annotation DAXLIB_PackageVersion = 1.0.0
 
 /// [Benford's Law] Calculates the actual frequency of a specific last-two-digit number.
 /// @param {anyref expr} SourceTable - A reference to the table containing the data.
@@ -193,8 +193,8 @@ function 'BeIndian.Audit.BenfordLaw_LastTwoDigits_Actual' = ```
 		    RETURN DIVIDE(Freq, TotalCount)
 		)
 	```
-	annotation DAXLIB_PackageId = "BeIndian.Audit"
-	annotation DAXLIB_PackageVersion = "1.0.0"
+	annotation DAXLIB_PackageId = BeIndian.Audit
+	annotation DAXLIB_PackageVersion = 1.0.0
 
 /// [Benford's Law] Calculates the expected frequency for a specific last-two-digit number (uniform distribution).
 /// @param {int64} SelectedDigits - The two-digit number (0-99) to calculate.
@@ -202,8 +202,8 @@ function 'BeIndian.Audit.BenfordLaw_LastTwoDigits_Actual' = ```
 function 'BeIndian.Audit.BenfordLaw_LastTwoDigits_Expected' = ```
 		(SelectedDigits: int64) => IF(ISBLANK(SelectedDigits), 0, 0.01)
 	```
-	annotation DAXLIB_PackageId = "BeIndian.Audit"
-	annotation DAXLIB_PackageVersion = "1.0.0"
+	annotation DAXLIB_PackageId = BeIndian.Audit
+	annotation DAXLIB_PackageVersion = 1.0.0
 
 /// [Benford's Law] Calculates the Mean Absolute Deviation for the last two digits test.
 /// @param {anyref expr} SourceTable - A reference to the table containing the data.
@@ -218,16 +218,16 @@ function 'BeIndian.Audit.BenfordLaw_LastTwoDigits_MAD' = ```
 		    )
 		RETURN AVERAGEX(Summary, ABS([Actual] - [Expected]))
 	```
-	annotation DAXLIB_PackageId = "BeIndian.Audit"
-	annotation DAXLIB_PackageVersion = "1.0.0"
+	annotation DAXLIB_PackageId = BeIndian.Audit
+	annotation DAXLIB_PackageVersion = 1.0.0
 
 /// [Benford's Law] Generates a dimension table containing digits 0-9 for Second Digit analysis.
 /// @return {table} A single-column table named [Digit].
 function 'BeIndian.Audit.BenfordLaw_SecondDigit_DimTable' = ```
 		() => SELECTCOLUMNS(GENERATESERIES(0, 9, 1), "Digit", [Value])
 	```
-	annotation DAXLIB_PackageId = "BeIndian.Audit"
-	annotation DAXLIB_PackageVersion = "1.0.0"
+	annotation DAXLIB_PackageId = BeIndian.Audit
+	annotation DAXLIB_PackageVersion = 1.0.0
 
 /// [Benford's Law] Calculates the actual frequency of a specific second digit.
 /// @param {anyref expr} SourceTable - A reference to the table containing the data.
@@ -244,8 +244,8 @@ function 'BeIndian.Audit.BenfordLaw_SecondDigit_Actual' = ```
 		    RETURN DIVIDE(Freq, TotalCount)
 		)
 	```
-	annotation DAXLIB_PackageId = "BeIndian.Audit"
-	annotation DAXLIB_PackageVersion = "1.0.0"
+	annotation DAXLIB_PackageId = BeIndian.Audit
+	annotation DAXLIB_PackageVersion = 1.0.0
 
 /// [Benford's Law] Calculates the expected frequency for a specific second digit.
 /// @param {int64} SelectedDigit - The single digit (0-9) to calculate.
@@ -258,8 +258,8 @@ function 'BeIndian.Audit.BenfordLaw_SecondDigit_Expected' = ```
 		    RETURN SUMX(FirstDigits, LOG(1 + (1 / ([Value] * 10 + SelectedDigit)), 10))
 		)
 	```
-	annotation DAXLIB_PackageId = "BeIndian.Audit"
-	annotation DAXLIB_PackageVersion = "1.0.0"
+	annotation DAXLIB_PackageId = BeIndian.Audit
+	annotation DAXLIB_PackageVersion = 1.0.0
 
 /// [Benford's Law] Calculates the Mean Absolute Deviation for the second digit test.
 /// @param {anyref expr} SourceTable - A reference to the table containing the data.
@@ -274,16 +274,16 @@ function 'BeIndian.Audit.BenfordLaw_SecondDigit_MAD' = ```
 		    )
 		RETURN AVERAGEX(Summary, ABS([Actual] - [Expected]))
 	```
-	annotation DAXLIB_PackageId = "BeIndian.Audit"
-	annotation DAXLIB_PackageVersion = "1.0.0"
+	annotation DAXLIB_PackageId = BeIndian.Audit
+	annotation DAXLIB_PackageVersion = 1.0.0
 
 /// [Benford's Law] Generates a dimension table containing digits 0-9 for Third Digit analysis.
 /// @return {table} A single-column table named [Digit].
 function 'BeIndian.Audit.BenfordLaw_ThirdDigit_DimTable' = ```
 		() => SELECTCOLUMNS(GENERATESERIES(0, 9, 1), "Digit", [Value])
 	```
-	annotation DAXLIB_PackageId = "BeIndian.Audit"
-	annotation DAXLIB_PackageVersion = "1.0.0"
+	annotation DAXLIB_PackageId = BeIndian.Audit
+	annotation DAXLIB_PackageVersion = 1.0.0
 
 /// [Benford's Law] Calculates the actual frequency of a specific third digit.
 /// @param {anyref expr} SourceTable - A reference to the table containing the data.
@@ -300,8 +300,8 @@ function 'BeIndian.Audit.BenfordLaw_ThirdDigit_Actual' = ```
 		    RETURN DIVIDE(Freq, TotalCount)
 		)
 	```
-	annotation DAXLIB_PackageId = "BeIndian.Audit"
-	annotation DAXLIB_PackageVersion = "1.0.0"
+	annotation DAXLIB_PackageId = BeIndian.Audit
+	annotation DAXLIB_PackageVersion = 1.0.0
 
 /// [Benford's Law] Calculates the expected frequency for a specific third digit.
 /// @param {int64} SelectedDigit - The single digit (0-9) to calculate.
@@ -314,8 +314,8 @@ function 'BeIndian.Audit.BenfordLaw_ThirdDigit_Expected' = ```
 		    RETURN SUMX(FirstTwoDigits, LOG(1 + (1 / ([Value] * 10 + SelectedDigit)), 10))
 		)
 	```
-	annotation DAXLIB_PackageId = "BeIndian.Audit"
-	annotation DAXLIB_PackageVersion = "1.0.0"
+	annotation DAXLIB_PackageId = BeIndian.Audit
+	annotation DAXLIB_PackageVersion = 1.0.0
 
 /// [Benford's Law] Calculates the Mean Absolute Deviation for the third digit test.
 /// @param {anyref expr} SourceTable - A reference to the table containing the data.
@@ -330,8 +330,8 @@ function 'BeIndian.Audit.BenfordLaw_ThirdDigit_MAD' = ```
 		    )
 		RETURN AVERAGEX(Summary, ABS([Actual] - [Expected]))
 	```
-	annotation DAXLIB_PackageId = "BeIndian.Audit"
-	annotation DAXLIB_PackageVersion = "1.0.0"
+	annotation DAXLIB_PackageId = BeIndian.Audit
+	annotation DAXLIB_PackageVersion = 1.0.0
 
 /// [Benford's Law] Helper function to calculate second-order differences.
 /// @param {anyref expr} SourceTable - A reference to the table containing the data.
@@ -354,16 +354,16 @@ function 'BeIndian.Audit.BenfordLaw_SecondOrder_GetDifferences' = ```
 		    )
 		RETURN SELECTCOLUMNS(FILTER(Differences, [__Difference] >= 10), "Value", VALUE(LEFT([__Difference], 2)))
 	```
-	annotation DAXLIB_PackageId = "BeIndian.Audit"
-	annotation DAXLIB_PackageVersion = "1.0.0"
+	annotation DAXLIB_PackageId = BeIndian.Audit
+	annotation DAXLIB_PackageVersion = 1.0.0
 
 /// [Benford's Law] Generates a dimension table for Second Order analysis (digits 10-99).
 /// @return {table} A single-column table named [Digit].
 function 'BeIndian.Audit.BenfordLaw_SecondOrder_DimTable' = ```
 		() => SELECTCOLUMNS(GENERATESERIES(10, 99, 1), "Digit", [Value])
 	```
-	annotation DAXLIB_PackageId = "BeIndian.Audit"
-	annotation DAXLIB_PackageVersion = "1.0.0"
+	annotation DAXLIB_PackageId = BeIndian.Audit
+	annotation DAXLIB_PackageVersion = 1.0.0
 
 /// [Benford's Law] Calculates the actual frequency for a second-order test.
 /// @param {anyref expr} SourceTable - A reference to the table containing the data.
@@ -378,8 +378,8 @@ function 'BeIndian.Audit.BenfordLaw_SecondOrder_Actual' = ```
 		VAR Freq = COUNTROWS(FILTER(SecondOrderDigits, [Value] = SelectedDigits))
 		RETURN DIVIDE(Freq, TotalCount)
 	```
-	annotation DAXLIB_PackageId = "BeIndian.Audit"
-	annotation DAXLIB_PackageVersion = "1.0.0"
+	annotation DAXLIB_PackageId = BeIndian.Audit
+	annotation DAXLIB_PackageVersion = 1.0.0
 
 /// [Benford's Law] Calculates the expected frequency for a second-order test.
 /// @param {int64} SelectedDigits - The two-digit number (10-99) to calculate.
@@ -387,8 +387,8 @@ function 'BeIndian.Audit.BenfordLaw_SecondOrder_Actual' = ```
 function 'BeIndian.Audit.BenfordLaw_SecondOrder_Expected' = ```
 		(SelectedDigits: int64) => IF(ISBLANK(SelectedDigits), 0, LOG(1 + (1 / SelectedDigits), 10))
 	```
-	annotation DAXLIB_PackageId = "BeIndian.Audit"
-	annotation DAXLIB_PackageVersion = "1.0.0"
+	annotation DAXLIB_PackageId = BeIndian.Audit
+	annotation DAXLIB_PackageVersion = 1.0.0
 
 /// [Benford's Law] Calculates the Mean Absolute Deviation for the second-order test.
 /// @param {anyref expr} SourceTable - A reference to the table containing the data.
@@ -404,8 +404,8 @@ function 'BeIndian.Audit.BenfordLaw_SecondOrder_MAD' = ```
 		    )
 		RETURN AVERAGEX(Summary, ABS([Actual] - [Expected]))
 	```
-	annotation DAXLIB_PackageId = "BeIndian.Audit"
-	annotation DAXLIB_PackageVersion = "1.0.0"
+	annotation DAXLIB_PackageId = BeIndian.Audit
+	annotation DAXLIB_PackageVersion = 1.0.0
 
 /// [Benford's Law] Helper function that sums data grouped by the first two digits.
 /// @param {anyref expr} SourceTable - A reference to the table containing the data.
@@ -416,16 +416,16 @@ function 'BeIndian.Audit.BenfordLaw_SummaryTest_GetSums' = ```
 		VAR TableWithDigits = ADDCOLUMNS(FILTER(SourceTable, ISNUMBER(DataColumn) && DataColumn >= 10), "__FirstTwoDigits", VALUE(LEFT(DataColumn, 2)))
 		RETURN SUMMARIZE(TableWithDigits, [__FirstTwoDigits], "__Sum", SUM(DataColumn))
 	```
-	annotation DAXLIB_PackageId = "BeIndian.Audit"
-	annotation DAXLIB_PackageVersion = "1.0.0"
+	annotation DAXLIB_PackageId = BeIndian.Audit
+	annotation DAXLIB_PackageVersion = 1.0.0
 
 /// [Benford's Law] Generates a dimension table for Summary Test analysis (digits 10-99).
 /// @return {table} A single-column table named [Digit].
 function 'BeIndian.Audit.BenfordLaw_SummaryTest_DimTable' = ```
 		() => SELECTCOLUMNS(GENERATESERIES(10, 99, 1), "Digit", [Value])
 	```
-	annotation DAXLIB_PackageId = "BeIndian.Audit"
-	annotation DAXLIB_PackageVersion = "1.0.0"
+	annotation DAXLIB_PackageId = BeIndian.Audit
+	annotation DAXLIB_PackageVersion = 1.0.0
 
 /// [Benford's Law] Calculates the actual summed proportion for a specific two-digit number.
 /// @param {anyref expr} SourceTable - A reference to the table containing the data.
@@ -439,8 +439,8 @@ function 'BeIndian.Audit.BenfordLaw_SummaryTest_Actual' = ```
 		VAR SumForSelected = MAXX(FILTER(SumsByDigit, [__FirstTwoDigits] = SelectedDigits), [__Sum])
 		RETURN DIVIDE(SumForSelected, TotalSum)
 	```
-	annotation DAXLIB_PackageId = "BeIndian.Audit"
-	annotation DAXLIB_PackageVersion = "1.0.0"
+	annotation DAXLIB_PackageId = BeIndian.Audit
+	annotation DAXLIB_PackageVersion = 1.0.0
 
 /// [Benford's Law] Calculates the expected probability for the summary test (uniform distribution).
 /// @param {int64} SelectedDigits - The two-digit number (10-99) to analyze.
@@ -448,8 +448,8 @@ function 'BeIndian.Audit.BenfordLaw_SummaryTest_Actual' = ```
 function 'BeIndian.Audit.BenfordLaw_SummaryTest_Expected' = ```
 		(SelectedDigits: int64) => IF(ISBLANK(SelectedDigits), 0, DIVIDE(1, 90))
 	```
-	annotation DAXLIB_PackageId = "BeIndian.Audit"
-	annotation DAXLIB_PackageVersion = "1.0.0"
+	annotation DAXLIB_PackageId = BeIndian.Audit
+	annotation DAXLIB_PackageVersion = 1.0.0
 
 /// [Benford's Law] Calculates the Mean Absolute Deviation for the summary test.
 /// @param {anyref expr} SourceTable - A reference to the table containing the data.
@@ -464,8 +464,8 @@ function 'BeIndian.Audit.BenfordLaw_SummaryTest_MAD' = ```
 		    )
 		RETURN AVERAGEX(Summary, ABS([Actual] - [Expected]))
 	```
-	annotation DAXLIB_PackageId = "BeIndian.Audit"
-	annotation DAXLIB_PackageVersion = "1.0.0"
+	annotation DAXLIB_PackageId = BeIndian.Audit
+	annotation DAXLIB_PackageVersion = 1.0.0
 
 
 /// [Financial Model] Calculates the Altman Z-Score for bankruptcy risk and returns a formatted result.
@@ -495,8 +495,8 @@ function 'BeIndian.Audit.FinancialModels_AltmanZScore' = ```
 		    )
 		RETURN FORMAT(ZScore, "#,##0.00") & " - " & Verdict
 	```
-	annotation DAXLIB_PackageId = "BeIndian.Audit"
-	annotation DAXLIB_PackageVersion = "1.0.0"
+	annotation DAXLIB_PackageId = BeIndian.Audit
+	annotation DAXLIB_PackageVersion = 1.0.0
 
 /// [Financial Model] Calculates the Beneish M-Score and returns a formatted result.
 /// @param {table} InputData - A table with columns [Metric], [LY_Value], [CY_Value].
@@ -539,8 +539,8 @@ function 'BeIndian.Audit.FinancialModels_BeneishMScore' = ```
 		VAR Verdict = IF(MScore8 < -2.22, "Unlikely to be a Manipulator", "Potential Manipulator")
 		RETURN "Score: " & FORMAT(MScore8, "0.0000") & " - " & Verdict
 	```
-	annotation DAXLIB_PackageId = "BeIndian.Audit"
-	annotation DAXLIB_PackageVersion = "1.0.0"
+	annotation DAXLIB_PackageId = BeIndian.Audit
+	annotation DAXLIB_PackageVersion = 1.0.0
 
 /// [Financial Model] Calculates the Ohlson O-Score for financial distress and returns a formatted result.
 /// @param {double} TotalAssets - The total assets of the company.
@@ -572,8 +572,8 @@ function 'BeIndian.Audit.FinancialModels_OhlsonOScore' = ```
 			VAR Verdict = IF(OScore > 0.5, "Likely to default within two years", "Not likely to default within two years")
 			RETURN "Score: " & FORMAT(OScore, "0.0000") & " - " & Verdict
 		```
-		annotation DAXLIB_PackageId = "BeIndian.Audit"
-		annotation DAXLIB_PackageVersion = "1.0.0"
+		annotation DAXLIB_PackageId = BeIndian.Audit
+		annotation DAXLIB_PackageVersion = 1.0.0
 
 /// [Financial Model] Calculates the Piotroski F-Score and returns a formatted result.
 /// @param {table} InputData - A table with columns [Metric], [LY_Value], [CY_Value].
@@ -613,8 +613,8 @@ function 'BeIndian.Audit.FinancialModels_PiotroskiFScore' = ```
 		VAR Verdict = SWITCH(TRUE(), FScore >= 8, "Strong", FScore <= 2, "Weak", "Average")
 		RETURN "Score: " & FScore & "/9 - " & Verdict
 	```
-	annotation DAXLIB_PackageId = "BeIndian.Audit"
-	annotation DAXLIB_PackageVersion = "1.0.0"
+	annotation DAXLIB_PackageId = BeIndian.Audit
+	annotation DAXLIB_PackageVersion = 1.0.0
 
 
 /// [Forensic Test] Calculates the GEL1 ratio for a specific pair of attribute values.
@@ -628,8 +628,8 @@ function 'BeIndian.Audit.ForensicTests_GEL1Ratio' = ```
 		VAR TotalAnalyzeCount = CALCULATE(COUNTROWS(SourceTable), REMOVEFILTERS(RelatedColumn))
 		RETURN DIVIDE(PairCount, TotalAnalyzeCount)
 	```
-	annotation DAXLIB_PackageId = "BeIndian.Audit"
-	annotation DAXLIB_PackageVersion = "1.0.0"
+	annotation DAXLIB_PackageId = BeIndian.Audit
+	annotation DAXLIB_PackageVersion = 1.0.0
 
 /// [Forensic Test] Calculates the Relative Size Factor (RSF) for the currently selected category.
 /// @param {anyref expr} SourceTable - A reference to the table containing the data.
@@ -648,8 +648,8 @@ function 'BeIndian.Audit.ForensicTests_RSFRatio' = ```
 		        RETURN DIVIDE(FirstLargest, SecondLargest)
 		    )
 	```
-	annotation DAXLIB_PackageId = "BeIndian.Audit"
-	annotation DAXLIB_PackageVersion = "1.0.0"
+	annotation DAXLIB_PackageId = BeIndian.Audit
+	annotation DAXLIB_PackageVersion = 1.0.0
 
 /// [Forensic Test] Calculates the Subset Number Duplication Test factor for a single category.
 /// @param {anyref expr} SourceTable - A reference to the table containing the data.
@@ -665,8 +665,8 @@ function 'BeIndian.Audit.ForensicTests_SubsetNumberDuplicationTest' = ```
 		VAR SumOfSquares = SUMX(ValueCounts, [__ni] * [__ni])
 		RETURN DIVIDE(SumOfSquares, N * N)
 	```
-	annotation DAXLIB_PackageId = "BeIndian.Audit"
-	annotation DAXLIB_PackageVersion = "1.0.0"
+	annotation DAXLIB_PackageId = BeIndian.Audit
+	annotation DAXLIB_PackageVersion = 1.0.0
 
 /// [Time Intelligence] Creates a comprehensive Date Table with columns tailored for the Indian Fiscal Year (April-March).
 /// @param {datetime} StartDate - The first date to include in the calendar.
@@ -688,8 +688,8 @@ function 'BeIndian.Audit.TimeIntelligence_CreateDateTable_Indian' = ```
 		    "MonthIndex", DATEDIFF(StartDate, [Date], MONTH) + 1
 		)
 	```
-	annotation DAXLIB_PackageId = "BeIndian.Audit"
-	annotation DAXLIB_PackageVersion = "1.0.0"
+	annotation DAXLIB_PackageId = BeIndian.Audit
+	annotation DAXLIB_PackageVersion = 1.0.0
 
 /// [Time Intelligence] Calculates a moving average for a time series over a given interval.
 /// @param {anyref expr} DateColumn - A reference to the date column in your Date table.
@@ -701,8 +701,8 @@ function 'BeIndian.Audit.TimeIntelligence_MovingAverage' = ```
 		VAR MovingWindow = WINDOW(-(Interval - 1), REL, 0, REL, ALLSELECTED(DateColumn), ORDERBY(DateColumn, ASC))
 		RETURN IF(COUNTROWS(MovingWindow) = Interval, AVERAGEX(MovingWindow, CALCULATE(ValueExpression)))
 	```
-	annotation DAXLIB_PackageId = "BeIndian.Audit"
-	annotation DAXLIB_PackageVersion = "1.0.0"
+	annotation DAXLIB_PackageId = BeIndian.Audit
+	annotation DAXLIB_PackageVersion = 1.0.0
 
 /// [Time Intelligence] Calculates the moving standard error for a time series over a given interval.
 /// @param {anyref expr} DateColumn - A reference to the date column in your Date table.
@@ -718,8 +718,8 @@ function 'BeIndian.Audit.TimeIntelligence_MovingStdErr' = ```
 		        RETURN SQRT(SumOfSquaredDiffs / Interval)
 		    )
 	```
-	annotation DAXLIB_PackageId = "BeIndian.Audit"
-	annotation DAXLIB_PackageVersion = "1.0.0"
+	annotation DAXLIB_PackageId = BeIndian.Audit
+	annotation DAXLIB_PackageVersion = 1.0.0
 
 /// [Time Intelligence] Calculates working days based on Indian holidays (2nd/4th Saturdays, Sundays, and provided list).
 /// @param {datetime} StartDate - The first date in the period.
@@ -739,8 +739,8 @@ function 'BeIndian.Audit.TimeIntelligence_NetworkDays_Indian' = ```
 		    )
 		RETURN COUNTROWS(WorkingDays)
 	```
-	annotation DAXLIB_PackageId = "BeIndian.Audit"
-	annotation DAXLIB_PackageVersion = "1.0.0"
+	annotation DAXLIB_PackageId = BeIndian.Audit
+	annotation DAXLIB_PackageVersion = 1.0.0
 
 
 /// [Utility] Creates a running count for an attribute, useful for sampling.
@@ -755,8 +755,8 @@ function 'BeIndian.Audit.Utilities_AttributeCumulativeCount' = ```
 		VAR RowsUpToCurrent = FILTER(SourceTable, UniqueIdColumn <= CurrentUniqueId)
 		RETURN COUNTROWS(FILTER(RowsUpToCurrent, AttributeColumn = CurrentAttributeValue))
 	```
-	annotation DAXLIB_PackageId = "BeIndian.Audit"
-	annotation DAXLIB_PackageVersion = "1.0.0"
+	annotation DAXLIB_PackageId = BeIndian.Audit
+	annotation DAXLIB_PackageVersion = 1.0.0
 
 /// [Utility] Returns a table of the top N percent of rows based on the value of a column.
 /// @param {anyref expr} SourceTable - A reference to the table containing the data.
@@ -768,8 +768,8 @@ function 'BeIndian.Audit.Utilities_TopNPercent_Table' = ```
 		VAR PercentileCutoff = PERCENTILEX.INC(SourceTable, ValueColumn, 1 - PercentValue)
 		RETURN FILTER(SourceTable, ValueColumn >= PercentileCutoff)
 	```
-	annotation DAXLIB_PackageId = "BeIndian.Audit"
-	annotation DAXLIB_PackageVersion = "1.0.0"
+	annotation DAXLIB_PackageId = BeIndian.Audit
+	annotation DAXLIB_PackageVersion = 1.0.0
 
 /// [Utility] Helper function that returns a list of the top N% of categories.
 /// @param {anyref expr} SourceTable - A reference to the table containing the data.
@@ -784,8 +784,8 @@ function 'BeIndian.Audit.Utilities_GetTopNPercentCategories' = ```
 		VAR TopCategories = FILTER(CategoryTotals, [__TotalValue] >= PercentileCutoff)
 		RETURN SELECTCOLUMNS(TopCategories, "TopCategories", CategoryColumn)
 	```
-	annotation DAXLIB_PackageId = "BeIndian.Audit"
-	annotation DAXLIB_PackageVersion = "1.0.0"
+	annotation DAXLIB_PackageId = BeIndian.Audit
+	annotation DAXLIB_PackageVersion = 1.0.0
 
 /// [Utility] Flags a category if it's in the top N%. If true, returns its total value, otherwise BLANK.
 /// @param {anyref expr} SourceTable - A reference to the table containing the data.
@@ -799,8 +799,8 @@ function 'BeIndian.Audit.Utilities_GetValueForTopNPercent' = ```
 		VAR SelectedCategory = SELECTEDVALUE(CategoryColumn)
 		RETURN IF(HASONEVALUE(CategoryColumn) && SelectedCategory IN TopCategoriesList, CALCULATE(SUM(ValueColumn)), BLANK())
 	```
-	annotation DAXLIB_PackageId = "BeIndian.Audit"
-	annotation DAXLIB_PackageVersion = "1.0.0"
+	annotation DAXLIB_PackageId = BeIndian.Audit
+	annotation DAXLIB_PackageVersion = 1.0.0
 
 /// [Utility] Generates a table of reproducible pseudo-random numbers with a serial number.
 /// @param {int64} Size - The number of random numbers to generate.
@@ -815,8 +815,8 @@ function 'BeIndian.Audit.Utilities_GenerateRandom_Table' = ```
 		    )
 		RETURN SELECTCOLUMNS(RandomNumbers, "SerialNumber", [Value], "RandomNumber", [__RandomNumber])
 	```
-	annotation DAXLIB_PackageId = "BeIndian.Audit"
-	annotation DAXLIB_PackageVersion = "1.0.0"
+	annotation DAXLIB_PackageId = BeIndian.Audit
+	annotation DAXLIB_PackageVersion = 1.0.0
 
 /// [Utility] Generates a table of reproducible pseudo-random numbers within a specified range.
 /// @param {int64} Seed - The starting seed for the random number sequence.
@@ -832,8 +832,8 @@ function 'BeIndian.Audit.Utilities_GenerateRandomBetween' = ```
 		VAR FinalNumbers = ADDCOLUMNS(ScaledNumbers, "FinalValue", IF(NOT ISBLANK(ReturnAsInteger) && ReturnAsInteger, TRUNC([ScaledValue]), [ScaledValue]))
 		RETURN SELECTCOLUMNS(FinalNumbers, "SerialNumber", [SerialNumber], "RandomNumberBetween", [FinalValue])
 	```
-	annotation DAXLIB_PackageId = "BeIndian.Audit"
-	annotation DAXLIB_PackageVersion = "1.0.0"
+	annotation DAXLIB_PackageId = BeIndian.Audit
+	annotation DAXLIB_PackageVersion = 1.0.0
 
 /// [Validation] Verifies whether an Indian Income Tax PAN is structurally valid.
 /// @param {string} PAN_Text - The PAN string to validate.
@@ -858,8 +858,8 @@ function 'BeIndian.Audit.Validation_IsValidPAN' = ```
 		    ), FALSE()
 		)
 	```
-	annotation DAXLIB_PackageId = "BeIndian.Audit"
-	annotation DAXLIB_PackageVersion = "1.0.0"
+	annotation DAXLIB_PackageId = BeIndian.Audit
+	annotation DAXLIB_PackageVersion = 1.0.0
 
 /// [Validation] Validates a number (like a credit card number) using the Luhn Algorithm.
 /// @param {string} CardNumber_Text - The number string to validate.
@@ -872,7 +872,7 @@ function 'BeIndian.Audit.Validation_LuhnAlgorithm' = ```
 		RETURN MOD(LuhnSum, 10) = 0
 	```
 	annotation DAXLIB_PackageId = "BeIndian.Audit_Validation"
-	annotation DAXLIB_PackageVersion = "1.0.0"
+	annotation DAXLIB_PackageVersion = 1.0.0
 
 /// [Text] Helper function that converts any number from 0-99 into words.
 /// @param {int64} Number - The number to convert (0-99).
@@ -886,8 +886,8 @@ function 'BeIndian.Audit.TextUtil_Helper_ConvertToWords' = ```
 		VAR Num_Ones = MOD(Number, 10)
 		RETURN IF(Number=0, BLANK(), IF(Number>=10&&Number<=19, MAXX(FILTER(Teens,[ID]=Number),[Word]), TRIM(IF(Num_Tens>=2,MAXX(FILTER(Tens,[ID]=Num_Tens),[Word]),"")&" "&IF(Num_Ones>0,MAXX(FILTER(Ones,[ID]=Num_Ones),[Word]),""))))
 	```
-	annotation DAXLIB_PackageId = "BeIndian.Audit"
-	annotation DAXLIB_PackageVersion = "1.0.0"
+	annotation DAXLIB_PackageId = BeIndian.Audit
+	annotation DAXLIB_PackageVersion = 1.0.0
 
 /// [Text] Helper function that converts any number from 0-999 into words.
 /// @param {int64} Number - The number to convert (0-999).
@@ -902,8 +902,8 @@ function 'BeIndian.Audit.TextUtil_Helper_ConvertThreeDigitsToWords' = ```
 			RETURN
 			    TRIM(HundredsText & IF(Hundreds > 0 && Remainder > 0, " and ", "") & RemainderText)
 	```
-	annotation DAXLIB_PackageId = "BeIndian.Audit"
-	annotation DAXLIB_PackageVersion = "1.0.0"
+	annotation DAXLIB_PackageId = BeIndian.Audit
+	annotation DAXLIB_PackageVersion = 1.0.0
 
 /// [Text] Converts a number to the Indian numbering system (Lakhs, Crores).
 /// @param {numeric} InputNumber - The number to convert.
@@ -932,8 +932,8 @@ function 'BeIndian.Audit.TextUtil_Indian_Num2Word' = ```
 			RETURN Result
 			)))
 	```
-	annotation DAXLIB_PackageId = "BeIndian.Audit"
-	annotation DAXLIB_PackageVersion = "1.0.0"
+	annotation DAXLIB_PackageId = BeIndian.Audit
+	annotation DAXLIB_PackageVersion = 1.0.0
 
 /// [Text] Converts a number to the International numbering system (Millions, Billions).
 /// @param {numeric} InputNumber - The number to convert.
@@ -957,8 +957,8 @@ function 'BeIndian.Audit.TextUtil_Number_ToWord' = ```
 	RETURN IF(RIGHT(Result, 1) = ",", LEFT(Result, LEN(Result) - 1), Result)
 	)))
 	```
-	annotation DAXLIB_PackageId = "BeIndian.Audit"
-	annotation DAXLIB_PackageVersion = "1.0.0"
+	annotation DAXLIB_PackageId = BeIndian.Audit
+	annotation DAXLIB_PackageVersion = 1.0.0
 
 /// [SVG Visual] Calculates a frequency distribution (histogram) for a given column of data.
 /// @param {anyref expr} SourceTable - A reference to the table containing the data.
@@ -976,8 +976,8 @@ function 'BeIndian.Audit.SVGVisuals_CalculateHistogram' = ```
 		        RETURN COUNTROWS(FILTER(SourceTable, DataColumn >= BinLower && DataColumn < BinUpper))), [Frequency] > 0)
 		RETURN ADDCOLUMNS(HistogramData, "BinLabel", FORMAT([Value], "#,##0") & " - " & FORMAT([Value] + BinIncrement, "#,##0"))
 	```
-	annotation DAXLIB_PackageId = "BeIndian.Audit"
-	annotation DAXLIB_PackageVersion = "1.0.0"
+	annotation DAXLIB_PackageId = BeIndian.Audit
+	annotation DAXLIB_PackageVersion = 1.0.0
 
 /// [SVG Visual] Renders a histogram table as an SVG bar chart.
 /// @param {table} HistogramTable - A table generated by CalculateHistogram.
@@ -996,8 +996,8 @@ function 'BeIndian.Audit.SVGVisuals_RenderHistogramSVG' = ```
 		    )
 		RETURN SVG_Header & SVG_Style & SVG_Body & "</svg>"
 	```
-	annotation DAXLIB_PackageId = "BeIndian.Audit"
-	annotation DAXLIB_PackageVersion = "1.0.0"
+	annotation DAXLIB_PackageId = BeIndian.Audit
+	annotation DAXLIB_PackageVersion = 1.0.0
 
 /// [SVG Visual] Calculates a full set of descriptive statistics and returns them as a table.
 /// @param {anyref expr} SourceTable - A reference to the table containing the data.
@@ -1047,8 +1047,8 @@ function 'BeIndian.Audit.SVGVisuals_CalculateDescriptiveStatistics' = ```
 	RETURN
 		UNION(Row1, Row2, Row3, Row4, Row5, Row6, Row7, Row8, Row9, Row10, Row11, Row12, Row13, Row14, Row15, Row16)
 			```
-	annotation DAXLIB_PackageId = "BeIndian.Audit"
-	annotation DAXLIB_PackageVersion = "1.0.0"
+	annotation DAXLIB_PackageId = BeIndian.Audit
+	annotation DAXLIB_PackageVersion = 1.0.0
 
 /// [SVG Visual] Renders a statistics table as an SVG visual.
 /// @param {table} StatsTable - A table generated by CalculateDescriptiveStatistics.
@@ -1065,8 +1065,8 @@ function 'BeIndian.Audit.SVGVisuals_RenderDescriptiveStatisticsSVG' = ```
 		    )
 		RETURN SVG_Header & SVG_Style & SVG_Body & "</svg>"
 	```
-	annotation DAXLIB_PackageId = "BeIndian.Audit"
-	annotation DAXLIB_PackageVersion = "1.0.0"
+	annotation DAXLIB_PackageId = BeIndian.Audit
+	annotation DAXLIB_PackageVersion = 1.0.0
 
 /// [SVG Visual] Calculates word frequencies from a text column.
 /// @param {anyref expr} SourceTable - A reference to the table containing the data.
@@ -1085,8 +1085,8 @@ function 'BeIndian.Audit.SVGVisuals_CalculateWordFrequency' = ```
 		VAR ResultRows = IF(TopN_Value > 0, TopN_Value, COUNTROWS(WordFrequency))
 		RETURN TOPN(ResultRows, WordFrequency, [__Frequency], DESC)
 	```
-	annotation DAXLIB_PackageId = "BeIndian.Audit"
-	annotation DAXLIB_PackageVersion = "1.0.0"
+	annotation DAXLIB_PackageId = BeIndian.Audit
+	annotation DAXLIB_PackageVersion = 1.0.0
 
 /// [SVG Visual] Renders a word frequency table as an SVG "word box".
 /// @param {table} WordFrequencyTable - A table generated by CalculateWordFrequency.
@@ -1109,8 +1109,8 @@ function 'BeIndian.Audit.SVGVisuals_RenderWordBoxSVG' = ```
 		    RETURN SVG_String
 		)
 	```
-	annotation DAXLIB_PackageId = "BeIndian.Audit"
-	annotation DAXLIB_PackageVersion = "1.0.0"
+	annotation DAXLIB_PackageId = BeIndian.Audit
+	annotation DAXLIB_PackageVersion = 1.0.0
 
 /// [SVG Visual] Creates a monthly calendar for a given month and year as an SVG image.
 /// @param {int64} TargetYear - The year for the calendar (e.g., 2025).
@@ -1135,5 +1135,5 @@ function 'BeIndian.Audit.SVGVisuals_MonthlyCalendar' = ```
 		VAR SVG_DayNumbers = CONCATENATEX(Days, VAR dv = [Value] VAR dow = WEEKDAY(DATE(TargetYear, TargetMonth, dv), 2) VAR wom = QUOTIENT(dv + StartDayOfWeek - 2, 7) VAR X = ((dow - 1) * CellSize) + (CellSize / 2) + 20 VAR Y = wom * CellSize + 85 RETURN "<text class='day-number' x='" & X & "' y='" & Y & "'>" & dv & "</text>")
 		RETURN SVG_Header & SVG_Style & SVG_MonthHeader & SVG_WeekdayHeaders & SVG_DayNumbers & "</svg>"
 	```			
-	annotation DAXLIB_PackageId = "BeIndian.Audit"
-	annotation DAXLIB_PackageVersion = "1.0.0"
+	annotation DAXLIB_PackageId = BeIndian.Audit
+	annotation DAXLIB_PackageVersion = 1.0.0
