@@ -37,7 +37,6 @@ function 'Arekchr.Tokens.ColumnBased' = ```
                 RETURN
                 __result
         ```
-    lineageTag: 11fabc19-e51c-4ef6-a160-de9b2d129240
 
     annotation DAXLIB_PackageId = Arekchr.Tokens
 	annotation DAXLIB_PackageVersion = 0.1.0
@@ -74,7 +73,6 @@ function 'Arekchr.Tokens.Default' = ```
                 RETURN
                 CONCATENATE(__switch,"")
         ```
-    lineageTag: 21f679f5-9eaf-417a-b06a-497bcae16933
 
     annotation DAXLIB_PackageId = Arekchr.Tokens
 	annotation DAXLIB_PackageVersion = 0.1.0
@@ -92,7 +90,6 @@ function 'Arekchr.Tokens.ThemeSwitch' =
                             {"Dark", "◐"}
                         }
                     )
-    lineageTag: 1a45536d-7788-494d-b003-6d59fb6dd2a8
 
     annotation DAXLIB_PackageId = Arekchr.Tokens
 	annotation DAXLIB_PackageVersion = 0.1.0
