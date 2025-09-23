@@ -149,7 +149,7 @@ createOrReplace
 			        myHex
 			)
 
-    annotation DAXLIB_PackageId = AgulloBernat.Color
+    annotation DAXLIB_PackageId = Formatting.Color
     annotation DAXLIB_PackageVersion = 0.1.1-beta
 	
 
