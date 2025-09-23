@@ -20,5 +20,5 @@
 
   ```
     annotation DAXLIB_PackageId = Time.PriorYearMeas
-    annotation DAXLIB_PackageVersion = 0.1.0-Beta
+    annotation DAXLIB_PackageVersion = 0.1.0-beta
 
