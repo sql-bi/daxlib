@@ -1,5 +1,5 @@
 /// Calculate Mode of distribution. Thanks to Ian Altosaar codingitch.com
-function Kolosko.SummaryStats.MODE = 
+function 'Kolosko.SummaryStats.MODE' = 
         (t: Tableref expr, c: ColumnRef expr) =>
             VAR FrequencyTable = 
                 SUMMARIZE (
