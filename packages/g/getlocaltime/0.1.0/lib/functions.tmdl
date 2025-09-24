@@ -1,0 +1,54 @@
+/// Returns the current local time for the requested US time zone using daylight saving rules.
+function 'GetLocalTime.GetLocalTime' =
+            (
+                tz: STRING
+            ) =>
+                VAR _utcnow   = UTCNOW()
+                VAR _todayUTC = TRUNC(_utcnow)
+                VAR _y        = YEAR(_todayUTC)
+                VAR _tz       = LOWER(TRIM(tz))
+
+                /* US DST window: 2nd Sunday in March → 1st Sunday in November */
+                VAR _mar1          = DATE(_y, 3, 1)
+                VAR _nov1          = DATE(_y, 11, 1)
+                VAR _secondSunMar  = (_mar1 + MOD(8 - WEEKDAY(_mar1), 7)) + 7
+                VAR _firstSunNov   = _nov1 + MOD(8 - WEEKDAY(_nov1), 7)
+                VAR _isDST         = _todayUTC >= _secondSunMar && _todayUTC < _firstSunNov
+
+                /* Standard offsets (hours to ADD to UTC) */
+                VAR _std =
+                    SWITCH(
+                        TRUE(),
+                        _tz = "useastern",   -5,
+                        _tz = "uscentral",   -6,
+                        _tz = "usmountain",  -7,
+                        _tz = "usarizona",   -7,
+                        _tz = "uspacific",   -8,
+                        _tz = "usalaska",    -9,
+                        _tz = "ushawaii",   -10,
+                        BLANK()
+                    )
+
+                /* DST offsets */
+                VAR _dst =
+                    SWITCH(
+                        TRUE(),
+                        _tz = "useastern",   -4,
+                        _tz = "uscentral",   -5,
+                        _tz = "usmountain",  -6,
+                        _tz = "usarizona",   -7,
+                        _tz = "uspacific",   -7,
+                        _tz = "usalaska",    -8,
+                        _tz = "ushawaii",   -10,
+                        BLANK()
+                    )
+
+                VAR _usesDST   = NOT ( _tz IN { "usarizona", "ushawaii" } )
+                VAR _offsetHrs = IF( _usesDST && _isDST, _dst, _std )
+
+                RETURN
+                    IF( NOT ISBLANK( _offsetHrs ), _utcnow + ( _offsetHrs / 24.0 ) )
+
+        annotation DAXLIB_PackageId = GetLocalTime
+
+        annotation DAXLIB_PackageVersion = 0.1.0
