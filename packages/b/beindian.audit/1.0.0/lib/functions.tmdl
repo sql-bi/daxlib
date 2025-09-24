@@ -1043,7 +1043,7 @@ function 'BeIndian.Audit.SVGVisuals_MonthlyCalendar' = ```
 		VAR CellSize = 45
 		VAR WeekdayTable = DATATABLE("ID", INTEGER, "Name", STRING, {{1, "Mon"}, {2, "Tue"}, {3, "Wed"}, {4, "Thu"}, {5, "Fri"}, {6, "Sat"}, {7, "Sun"}})
 		VAR Days = GENERATESERIES(1, DaysInMonth)
-		VAR SVG_Header = "data:image/svg+xml;utf8," & "<svg width='" & SVG_Width & "' height='" & SVG_Height & "'xmlns='http://www.w3.org/2000/svg'>"
+		VAR SVG_Header = "data:image/svg+xml;utf8," & "<svg width='" & SVG_Width & "' height='" & SVG_Height & "' xmlns='http://www.w3.org/2000/svg'>"
 		VAR SVG_Style = "<style>.month-header{font-family:Segoe UI,sans-serif;font-size:24px;font-weight:bold;fill:#0056b3;text-anchor:middle}.weekday-header{font-family:Segoe UI,sans-serif;font-size:14px;font-weight:bold;fill:#555;text-anchor:middle}.day-number{font-family:Segoe UI,sans-serif;font-size:14px;fill:#111;text-anchor:middle}</style>"
 		VAR SVG_MonthHeader = "<text class='month-header' x='" & SVG_Width / 2 & "' y='30'>" & MonthName & " " & TargetYear & "</text>"
 		VAR SVG_WeekdayHeaders = CONCATENATEX(WeekdayTable, "<text class='weekday-header' x='" & (([ID] - 1) * CellSize) + (CellSize / 2) + 20 & "' y='60'>" & [Name] & "</text>")
