@@ -92,4 +92,4 @@ function 'Arekchr.Tokens.ThemeSwitch' =
                     )
 
     annotation DAXLIB_PackageId = Arekchr.Tokens
-	annotation DAXLIB_PackageVersion = 0.1.0
+	annotation DAXLIB_PackageVersion = 0.1.1
