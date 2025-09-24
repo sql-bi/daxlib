@@ -39,7 +39,7 @@ function 'Arekchr.Tokens.ColumnBased' = ```
         ```
 
     annotation DAXLIB_PackageId = Arekchr.Tokens
-	annotation DAXLIB_PackageVersion = 0.1.0
+	annotation DAXLIB_PackageVersion = 0.1.1
 
 /// Returns a ready to use token value tied to Arekchr.Theme function.
 function 'Arekchr.Tokens.Default' = ```
@@ -75,7 +75,7 @@ function 'Arekchr.Tokens.Default' = ```
         ```
 
     annotation DAXLIB_PackageId = Arekchr.Tokens
-	annotation DAXLIB_PackageVersion = 0.1.0
+	annotation DAXLIB_PackageVersion = 0.1.1
 
 /// Doesn't take a parameter, returns a theme table.
 function 'Arekchr.Tokens.ThemeSwitch' =
