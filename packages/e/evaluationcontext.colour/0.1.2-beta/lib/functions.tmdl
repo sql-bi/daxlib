@@ -390,7 +390,7 @@ function 'EvaluationContext.Colour.Hex.Interpolate' =
 
 			RETURN result
 
-	annotation DAXLIB_PackageId = EvaluationContext.SVG
+	annotation DAXLIB_PackageId = EvaluationContext.Colour
 
 	annotation DAXLIB_PackageVersion = 0.1.2-beta
 
