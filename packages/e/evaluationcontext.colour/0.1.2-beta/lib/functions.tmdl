@@ -390,9 +390,9 @@ function 'EvaluationContext.Colour.Hex.Interpolate' =
 
 			RETURN result
 
-annotation DAXLIB_PackageId = EvaluationContext.SVG
+	annotation DAXLIB_PackageId = EvaluationContext.SVG
 
-annotation DAXLIB_PackageVersion = 0.1.0-beta
+	annotation DAXLIB_PackageVersion = 0.1.0-beta
 
 /// Select theme colour, wrapping around to the start if variant exceeds available options
 /// themeName	STRING	The theme name e.g. "Office", "Power BI"
