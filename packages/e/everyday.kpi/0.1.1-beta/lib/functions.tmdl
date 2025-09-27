@@ -1,4 +1,3 @@
-/// <summary>
 /// This function returns the percentual difference between two values. Using a macro it will automatically create the measure with the correct naming, display folder and table. https://github.com/bernatagulloesbrina/TabularEditor-Scripts/blob/main/Advanced/DaxUDF%20Macros/create%20measures%20from%20daxudfs.csx
 function 'EveryDay.Kpi.Variance.Pct' =
 		
