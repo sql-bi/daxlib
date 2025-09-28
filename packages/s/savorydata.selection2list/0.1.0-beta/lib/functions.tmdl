@@ -2,19 +2,19 @@
 function 'SavoryData.Selection2List.Text2List' =
 		(MyColumn : ANYREF EXPR) =>
 			VAR Limit = 3
-			VAR CountOfSelection = COUNTROWS(VALUES(MyColumn))
+			VAR CountOfSelection = COUNTROWS(VALUES(myColumn))
 			VAR BeyondLimit = CountOfSelection > Limit
 			VAR Result =
 				SWITCH(
 					TRUE(),
-					NOT(ISCROSSFILTERED(MyColumn)), "All Products", // all
-					CountOfSelection = 2, CONCATENATEX(VALUES(MyColumn), MyColumn, " & "), // only 2
+					NOT(ISCROSSFILTERED(myColumn)), "All Products", // all
+					CountOfSelection = 2, CONCATENATEX(VALUES(myColumn), myColumn, " & "), // only 2
 					BeyondLimit, 
 						//"More than " & Limit & " Products", // beyond limit V1
-						CONCATENATEX(TOPN(Limit, VALUES(MyColumn)), MyColumn, ", ") & ", ...", // beyond limit V2
+						CONCATENATEX(TOPN(Limit, VALUES(myColumn)), myColumn, ", ") & ", ...", // beyond limit V2
 					SELECTEDVALUE(
-						MyColumn, // 1
-						CONCATENATEX(VALUES(MyColumn), MyColumn, ", ") // until limit
+						myColumn, // 1
+						CONCATENATEX(VALUES(myColumn), myColumn, ", ") // until limit
 					)
 				)
 			RETURN Result
