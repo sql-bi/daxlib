@@ -1,6 +1,6 @@
 /// returns list of selected text values
 function 'SavoryData.Selection2List.Text2List' =
-		(MyColumn : ANYREF EXPR) =>
+		(myColumn : ANYREF EXPR) =>
 			VAR Limit = 3
 			VAR CountOfSelection = COUNTROWS(VALUES(myColumn))
 			VAR BeyondLimit = CountOfSelection > Limit
