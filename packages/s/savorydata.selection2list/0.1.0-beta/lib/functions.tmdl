@@ -21,4 +21,4 @@ function 'SavoryData.Selection2List.Text2List' =
 
 	annotation DAXLIB_PackageId = SavoryData.Selection2List
 
-	annotation DAXLIB_PackageVersion = 0.1.1-beta
+	annotation DAXLIB_PackageVersion = 0.1.0-beta
