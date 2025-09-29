@@ -13,7 +13,6 @@ function 'TimeSeries.MovingAverage.Simple' = ```
         RETURN
             AVERAGEX( _Window, expression )
         ```
-    lineageTag: 7acd66f5-2b24-44c3-ad1c-ca9fba738c4d
 
     annotation DAXLIB_PackageId = TimeSeries.MovingAverage
 
@@ -37,7 +36,6 @@ function 'TimeSeries.MovingAverage.Weighted' = ```
         RETURN
             DIVIDE( _Numerator, _Denominator )
         ```
-    lineageTag: a3aa3ac0-2426-4eb7-8593-f1d993180cc6
 
     annotation DAXLIB_PackageId = TimeSeries.MovingAverage
 
@@ -57,7 +55,6 @@ function 'TimeSeries.MovingAverage.LinearWeighted' = ```
                 SUMX( _IndexedWindow, [@Index] )
             )
         ```
-    lineageTag: 1fd8713a-7cb9-4318-9db6-b77ee719ea27
 
     annotation DAXLIB_PackageId = TimeSeries.MovingAverage
 
@@ -84,7 +81,6 @@ function 'TimeSeries.MovingAverage.Exponential' = ```
             // Fix beginning of time series due to exponential weighting.
             SUMX( INDEX( 1, _IndexedWindow), expression * _SmoothingFactor * POWER( 1 - _SmoothingFactor, [@Index] ) * DIVIDE(lookbackPeriods - 1, 2) )
         ```
-    lineageTag: 3d793391-63f7-4373-a580-0dd894575152
 
     annotation DAXLIB_PackageId = TimeSeries.MovingAverage
 
@@ -112,7 +108,6 @@ function 'TimeSeries.MovingAverage.DoubleExponential' = ```
             ( SUMX( _EWMAWindow, [EWMA] * _SmoothingFactor * POWER( 1 - _SmoothingFactor, [@Index] ) ) +
             SUMX( INDEX( 1, _EWMAWindow), [EWMA] * _SmoothingFactor * POWER( 1 - _SmoothingFactor, [@Index] ) * DIVIDE(lookbackPeriods - 1, 2) ) )
         ```
-    lineageTag: f903bc23-b8be-47e5-83a3-afd51105fcfb
 
     annotation DAXLIB_PackageId = TimeSeries.MovingAverage
 
@@ -133,7 +128,6 @@ function 'TimeSeries.MovingAverage.Triangular' = ```
         RETURN 
             AVERAGEX( ADDCOLUMNS( _Window, "SMA", TimeSeries.MovingAverage.Simple( dateColumn, timeSeriesTable, lookbackPeriods, expression )), [SMA] )
         ```
-    lineageTag: 5ae8a574-ba0c-4d72-bca2-b4dd5f5b188b
 
     annotation DAXLIB_PackageId = TimeSeries.MovingAverage
 
@@ -154,7 +148,6 @@ function 'TimeSeries.MovingAverage.Geometric' = ```
         RETURN
             GEOMEANX( _Window, expression )
         ```
-    lineageTag: 0c9ab132-2f6c-47b8-8e8a-5a2480e43071
 
     annotation DAXLIB_PackageId = TimeSeries.MovingAverage
 
