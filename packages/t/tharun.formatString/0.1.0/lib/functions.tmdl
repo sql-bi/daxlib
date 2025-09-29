@@ -1,11 +1,11 @@
 function 'Tharun.FormatString.GetDynamicFormatString' =
-	(
-		Val: anyref, numberOfDecimalPlaces: numeric, 
-		thousandSeperator: boolean, 
-		multiplesOfThousand: boolean, 
-		negativeNumbersBracket: boolean, 
-		truncateZero:boolean, deltaIcon: boolean
-	) =>
+		(
+			Val: anyref, numberOfDecimalPlaces: numeric, 
+			thousandSeperator: boolean, 
+			multiplesOfThousand: boolean, 
+			negativeNumbersBracket: boolean, 
+			truncateZero:boolean, deltaIcon: boolean
+		) =>
 			VAR __AbsVal = ABS(Val)
 			VAR __decimalPart = IF(
 				numberOfDecimalPlaces > 0,
