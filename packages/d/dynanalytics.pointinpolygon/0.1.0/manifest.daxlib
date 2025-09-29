@@ -7,6 +7,6 @@
   "tags": "Geometric,Geographic,PointInPolygon",
   "releaseNotes": "Initial release",
   "projectUrl": "https://www.dynAnalytics.com/2024/11/03/Geoanalysis-with-Power-BI.html",
-  "repositoryUrl": "https://github.com/sql-bi/daxlib/tree/main/packages/d/dynanalytics.pointinpolygon"
+  "repositoryUrl": "https://github.com/sql-bi/daxlib/tree/main/packages/d/dynanalytics.pointinpolygon",
   "icon": "/icon.png"
 }
