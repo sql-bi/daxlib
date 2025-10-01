@@ -1,31 +1,4 @@
 # DaxPatterns.AbcClassification
-Functions to implement the [ABC Classification](https://www.daxpatterns.com/abc-classification/) patterns from [DAX Patterns](https://www.daxpatterns.com/).
-
-## Usage
-Use the ComputeInAbcClass to implement the Dynamic ABC Analysis pattern
-```
-ComputeInAbcClass (
-    [Sales Amount],
-    Sales, 
-    'Product',
-    'Product'[ProductKey],
-    'ABC Classes',
-    'ABC Classes'[Lower Boundary],
-    'ABC Classes'[Upper Boundary]
-)
-```
-
-## Documentation
-
-- See the `manifest.daxlib` and `lib/functions.tmdl` files for more details.
-
-
-## License
-
-This project is licensed under the MIT License.
-
-
-# DaxPatterns.AbcClassification
 
 Functions to implement the [ABC Classification](https://www.daxpatterns.com/abc-classification/) pattern (dynamic version) from [DAX Patterns](https://www.daxpatterns.com/).
 
@@ -49,7 +22,7 @@ ComputeInAbcClass (
 )
 ```
 
-**Return:** `TRUE` if the entity’s cumulative share (by `<ValueMeasure>`) falls within the class boundaries on the current row of `<ClassesTable>`. Otherwise `FALSE`. Use it inside measures to filter or label entities.
+**Return:** `TRUE` if the entity’s cumulative share (by `<valueExpr>`) falls within the class boundaries on the current row of `<abcClassTable>`. Otherwise `FALSE`. Use it inside measures to filter or label entities.
 
 **Assumptions:** Dynamic ABC as in the DAX Patterns article with a parameter table of class boundaries. The measure supplied must aggregate with `SUM`. ([daxpatterns.com][1])
 
@@ -111,7 +84,7 @@ These produce a **dynamic** ABC where class membership updates with filters (e.g
 
 ## Tips, constraints, and performance
 
-* **Additivity:** `<ValueMeasure>` must be SUM-based for correct cumulative ranking in the dynamic pattern. Non-additive measures break the logic. ([daxpatterns.com][1])
+* **Additivity:** `<valueExpr>` must be SUM-based for correct cumulative ranking in the dynamic pattern. Non-additive measures break the logic. ([daxpatterns.com][1])
 * **Boundaries:** Treat `Lower Boundary` as inclusive and `Upper Boundary` as exclusive to avoid overlaps at exact cut points (e.g., 0.70 belongs to B if A ends at 0.70).
 * **Disconnected classes:** Do **not** relate `ABC Classes` to other tables. It is a parameter table used by the measure. ([daxpatterns.com][2])
 * **Granularity:** Pass the **entity key** that defines classification granularity.
