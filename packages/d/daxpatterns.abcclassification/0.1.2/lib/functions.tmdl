@@ -1,4 +1,4 @@
-/// Return the value compouted in the filtered ABC classes
+/// Return the value computed in the filtered ABC classes
 /// Implement Dynamic ABC Classification pattern from DAX Patterns
 /// Article: https://www.daxpatterns.com/abc-classification/
 /// You must have a table with the definition of 
@@ -31,7 +31,7 @@ function 'DaxPatterns.AbcClassification.ComputeInAbcClass' = ```
                 ) 
             VAR Result =
                 CALCULATE (           
-                    ValueExpr,
+                    valueExpr,
                     KEEPFILTERS ( ProductsInClass )
                 )
             RETURN Result
