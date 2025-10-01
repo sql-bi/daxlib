@@ -51,6 +51,11 @@
       "type": "string",
       "maxLength": 64,
       "description": "A path to a PNG image file within the package used as the package icon."
+    },
+    "readme": {
+      "type": "string",
+      "maxLength": 64,
+      "description": "A path to a Markdown file within the package used as the package README."
     }
   },
   "type": "object",
@@ -84,6 +89,9 @@
     },
     "icon": {
       "$ref": "#/definitions/icon"
+    },
+    "readme": {
+      "$ref": "#/definitions/readme"
     }
   },
   "required": [
