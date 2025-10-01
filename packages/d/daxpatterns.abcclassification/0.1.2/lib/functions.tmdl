@@ -21,10 +21,10 @@ function 'DaxPatterns.AbcClassification.ComputeInAbcClass' = ```
         ) =>
             VAR ProductsInClass = 
                 DaxPatterns.AbcClassification.ItemsInClass( 
+                    valueExpr,
                     TransactionsTable, 
                     ItemTable, 
                     ItemKeyColumn, 
-                    ValueMeasure,
                     abcClassTable,
                     abcLowerBoundaryColumn,
                     abcUpperBoundaryColumn 
