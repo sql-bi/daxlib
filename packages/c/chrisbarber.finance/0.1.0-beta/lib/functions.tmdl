@@ -1,5 +1,5 @@
 /// Creates the P&L Lines ||| amount = credit less debit amount ||| layoutTable = table containing the P&L layout |||layoutKey = column containing the primary key for the layout table ||| layoutCalculationType = column containing the type of calculation on the line ||| layoutFromColumn = column for subtotals containing the primary key from ||| layoutToColumn = column for subtotals containing the primary key t||| accountIndicator = indicator for "Revenue" (1) or "Expense" (-1) for the account
-function 'ChrisBarber.Finance.Profitandloss.basic' =
+function 'ChrisBarber.Finance.ProfitAndLoss.Basic' =
 		(
 		    amount: EXPR,
 			layoutTable: anyref EXPR, 
