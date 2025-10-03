@@ -3,7 +3,7 @@
   "id": "ChrisBarber.Finance",
   "version": "0.1.0-beta",
   "authors": "jakeduddy",
-  "description": "A comprehensive set of User-Defined Functions designed to enable easy creation of SVG images",
+  "description": "Functions to automate the production of the profit and loss in full using a standardized pattern",
   "tags": "DAX,UDF,SVG",
   "projectUrl": "https://github.com/sql-bi/daxlib",
   "repositoryUrl": "https://github.com/sql-bi/daxlib/tree/main/packages/e/evaluationcontext.svg"
