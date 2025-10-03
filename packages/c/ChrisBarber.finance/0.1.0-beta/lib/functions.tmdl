@@ -30,6 +30,6 @@ function 'ChrisBarber.Finance.Profitandloss.basic' =
 		RETURN
 		    step3_add_zero
 
-	annotation DAXLIB_PackageId = EvaluationContext.SVG
+	annotation DAXLIB_PackageId = ChrisBarber.Finance
 
 	annotation DAXLIB_PackageVersion = 0.1.0-beta
