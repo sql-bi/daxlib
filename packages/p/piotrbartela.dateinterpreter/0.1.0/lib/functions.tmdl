@@ -286,5 +286,5 @@ function 'PiotrBartela.DateInterpreter' = ```
 			_Result
 		```
 
-annotation DAXLIB_PackageId = PiotrBartela.DateInterpreter
-annotation DAXLIB_PackageVersion = 0.1.0
+	annotation DAXLIB_PackageId = PiotrBartela.DateInterpreter
+	annotation DAXLIB_PackageVersion = 0.1.0
