@@ -4,7 +4,7 @@
   "version": "0.1.0",
   "authors": "Piotr Bartela",
   "description": "Dynamic DAX function that turns a filtered date range into a clear, presentation-style title (e.g., Revenue Qtr 4'23 – Qtr 2'24 (3 Qtrs) or Revenue Last Year (2024)). Simply provide a prefix (e.g., "Revenue") and a date column (e.g., 'Calendar'[Date]).",
-  "tags": "DAX, DATE, DYNAMIC, TIME, VISUAL, CONTEXT",
+  "tags": "DAX, DATE, DYNAMIC, TIME, VISUAL, CONTEXT", DURATION, CONVERSION, PERIOD"
   "releaseNotes": "Initial commit",
   "projectUrl": "https://github.com/sql-bi/daxlib",
   "repositoryUrl": "https://github.com/sql-bi/daxlib/tree/main/packages/p/piotrbartela.dateinterpreter"
