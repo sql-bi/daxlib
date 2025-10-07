@@ -2,7 +2,7 @@
 /// Example: 10/1/2023–6/30/2024 -> "Revenue Qtr 4'23 – Qtr 2'24 (3 Qtrs)"
 /// or 1/1/2024–12/31/2024 -> "Revenue Last Year (2024)".
 /// Parameters: prefix (e.g. "Revenue"), date column (e.g. 'Calendar'[Date]).
-function 'PiotrBartela.DateInterpreter' = ```
+function 'piotrbartela.titlecontext.date' = ```
 		(
 			Title : STRING,
 			DateCol : ANYREF
