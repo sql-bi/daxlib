@@ -2,7 +2,7 @@
 /// Example: 10/1/2023–6/30/2024 -> "Revenue Qtr 4'23 – Qtr 2'24 (3 Qtrs)"
 /// or 1/1/2024–12/31/2024 -> "Revenue Last Year (2024)".
 /// Parameters: prefix (e.g. "Revenue"), date column (e.g. 'Calendar'[Date]).
-function 'piotrbartela.titlecontext.period' = ```
+function 'PiotrBartela.TitleContext.Period' = ```
 		(
 			Title : STRING,
 			DateCol : ANYREF
@@ -286,5 +286,5 @@ function 'piotrbartela.titlecontext.period' = ```
 			_Result
 		```
 
-	annotation DAXLIB_PackageId = PiotrBartela.DateInterpreter
+	annotation DAXLIB_PackageId = PiotrBartela.TitleContext
 	annotation DAXLIB_PackageVersion = 0.1.0
