@@ -1,4 +1,3 @@
-DEFINE
 	/// ⭐ Description: Creates a dynamic design template directly from a data table, applying custom colors, sizes, and positioning defined in the dataset.
 	///    Warning: DataCategory must be "ImageUrl" for proper rendering in Power BI visuals
 	///    Notes: Panoramasoft.UI.WindowCanvas(canvasHeight, canvasWidth, layoutDefinition, showInfo)
