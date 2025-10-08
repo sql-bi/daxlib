@@ -16,7 +16,7 @@
 /// - ShowInfo: Boolean (display size and position info)
 ///
 /// 📤 Returns: Text string (SVG data URI compatible with Power BI Image URL)
-FUNCTION Panoramasoft.UI.WindowCanvas =
+FUNCTION 'Panoramasoft.UI.WindowCanvas' =
 		(
             canvasHeight: INT64 VAL,
 			canvasWidth: INT64 VAL,
