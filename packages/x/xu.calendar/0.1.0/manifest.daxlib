@@ -7,5 +7,5 @@
   "tags": "Calendar, XU, UDF, date table",
   "releaseNotes": "Initial release with three date table UDFs: full (with fiscal), no-fiscal, and basic.",
   "icon": "/icon.png",
-  "readme": "README.md"
+  "readme": "/README.md"
 }
