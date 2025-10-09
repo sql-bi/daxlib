@@ -6,5 +6,6 @@
   "description": "A DAX UDF library for generating robust, customizable date dimension tables (Calendar Table) in Power BI.",
   "tags": "Calendar, XU, UDF, date table",
   "releaseNotes": "Initial release with three date table UDFs: full (with fiscal), no-fiscal, and basic.",
-  "icon": "/icon.png"
+  "icon": "/icon.png",
+  "readme": "README.md"
 }
