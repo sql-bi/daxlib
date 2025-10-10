@@ -17,7 +17,37 @@ Import the library into your Power BI file and then you can follow next steps (D
 
 Follow these steps to display the WindowCanvas UDF in Power BI:
 
-#### Step 1: Add and Configure the Card Visual
+#### Step 1: Create and Configure the Measure
+
+1. **Create a Measure**
+
+```
+canvas =
+
+VAR _layout =
+"
+{1, 920, 1280, 0, 0, 25, #1e1d2f},
+{2, 785, 1070, 175, 100, 20, #eff2f3},
+{3, 340, 165, 188, 178, 15, #FFFFFF},
+{4, 340, 165, 188, 532, 15, #FFFFFF},
+{5, 162, 252, 366, 178, 15, #FFFFFF},
+{6, 162, 258, 632, 178, 15, #FFFFFF},
+{7, 162, 252, 366, 358, 15, #FFFFFF},
+{8, 162, 258, 632, 358, 15, #FFFFFF},
+{9, 340, 520, 366, 532, 15, #FFFFFF},
+{10, 340, 330, 900, 178, 15, #FFFFFF},
+{11, 340, 330, 900, 532, 15, #FFFFFF},
+{12, 48, 292, 935, 116, 25, #FFFFFF},
+{13, 40, 280, 918, 30, 15, #2e2e49}
+"
+
+RETURN
+    Panoramasoft.UI.WindowCanvas(_layout,true)
+```
+
+Do not forget to set the Data category as Image URL for the measure.
+
+#### Step 2: Add and Configure the Card Visual
 
 1. **Insert the Visual**
 
@@ -30,48 +60,7 @@ Follow these steps to display the WindowCanvas UDF in Power BI:
    - For full-screen backgrounds, expand it to cover the entire canvas
    - The visual will serve as the container for your dynamic layout
 
-#### Step 2: Create and Configure the Measure
-
-1. **Create a Measure**
-
-```
-_Canvas =
-
-VAR _layout =
-    DATATABLE(
-        "WindowID", INTEGER,
-        "Height", INTEGER,
-        "Width", INTEGER,
-        "Horizontal", INTEGER,
-        "Vertical", INTEGER,
-        "CornerRadius", INTEGER,
-        "FillColor", STRING,
-        {
-            {1, 920, 1280, 0, 0, 25, "#1e1d2f"},
-            {2, 785, 1070, 175, 100, 20, "#eff2f3"},
-            {3, 340, 165, 188, 178, 15, "#FFFFFF"},
-            {4, 340, 165, 188, 532, 15, "#FFFFFF"},
-            {5, 162, 252, 366, 178, 15, "#FFFFFF"},
-            {6, 162, 258, 632, 178, 15, "#FFFFFF"},
-            {7, 162, 252, 366, 358, 15, "#FFFFFF"},
-            {8, 162, 258, 632, 358, 15, "#FFFFFF"},
-            {9, 340, 520, 366, 532, 15, "#FFFFFF"},
-            {10, 340, 330, 900, 178, 15, "#FFFFFF"},
-            {11, 340, 330, 900, 532, 15, "#FFFFFF"},
-            {12, 48, 292, 935, 116, 25, "#FFFFFF"},
-            {13, 40, 280, 918, 30, 15, "#2e2e49"}
-        }
-    )
-
-RETURN
-    Panoramasoft.UI.WindowCanvas(920, 1280, _layout,TRUE)
-```
-
-Do not forget to set the Data category as Image URL for the measure.
-
 #### Step 3: Add Measure to Visual
-
-Select your Card visual
 
 Once you added a value in the Data section, locate the Image section and turn it on.
 Set Image type = Image URL.
