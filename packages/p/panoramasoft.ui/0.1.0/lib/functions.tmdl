@@ -145,5 +145,5 @@ FUNCTION 'Panoramasoft.UI.WindowCanvas' =
             IF(NOT IsValidInput, ErrorSVG, SVGTemplate)
 
     annotation DAXLIB_PackageId = Panoramasoft.UI
-    annotation DAXLIB_PackageVersion = 1.0.0
+    annotation DAXLIB_PackageVersion = 0.1.0
 
