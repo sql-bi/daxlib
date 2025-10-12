@@ -8,7 +8,7 @@ function 'DaxLib.Convert.AcresToSquareMeters' =
 
 	annotation DAXLIB_PackageId = DaxLib.Convert
 
-	annotation DAXLIB_PackageVersion = 0.1.1-beta
+	annotation DAXLIB_PackageVersion = 0.1.2
 
 /// Temperature: convert Celsius(°C) to Fahrenheit(°F)
 function 'DaxLib.Convert.CelsiusToFahrenheit' =
@@ -20,7 +20,7 @@ function 'DaxLib.Convert.CelsiusToFahrenheit' =
 
 	annotation DAXLIB_PackageId = DaxLib.Convert
 
-	annotation DAXLIB_PackageVersion = 0.1.1-beta
+	annotation DAXLIB_PackageVersion = 0.1.2
 
 /// Temperature: convert Celsius(°C) to Kelvin(K)
 function 'DaxLib.Convert.CelsiusToKelvin' =
@@ -32,7 +32,7 @@ function 'DaxLib.Convert.CelsiusToKelvin' =
 
 	annotation DAXLIB_PackageId = DaxLib.Convert
 
-	annotation DAXLIB_PackageVersion = 0.1.1-beta
+	annotation DAXLIB_PackageVersion = 0.1.2
 
 /// Volume: convert cubic feet(ft³) to cubic meters(m³)
 function 'DaxLib.Convert.CubicFeetToCubicMeters' =
@@ -44,7 +44,7 @@ function 'DaxLib.Convert.CubicFeetToCubicMeters' =
 
 	annotation DAXLIB_PackageId = DaxLib.Convert
 
-	annotation DAXLIB_PackageVersion = 0.1.1-beta
+	annotation DAXLIB_PackageVersion = 0.1.2
 
 /// Flow: convert cubic meters per hour (m³/h) to liters per second (L/s)
 function 'DaxLib.Convert.CubicMetersPerHourToLitersPerSecond' =
@@ -56,7 +56,7 @@ function 'DaxLib.Convert.CubicMetersPerHourToLitersPerSecond' =
 
 	annotation DAXLIB_PackageId = DaxLib.Convert
 
-	annotation DAXLIB_PackageVersion = 0.1.1-beta
+	annotation DAXLIB_PackageVersion = 0.1.2
 
 /// Volume: convert cubic meters(m³) to cubic feet(ft³)
 function 'DaxLib.Convert.CubicMetersToCubicFeet' =
@@ -68,7 +68,7 @@ function 'DaxLib.Convert.CubicMetersToCubicFeet' =
 
 	annotation DAXLIB_PackageId = DaxLib.Convert
 
-	annotation DAXLIB_PackageVersion = 0.1.1-beta
+	annotation DAXLIB_PackageVersion = 0.1.2
 
 /// Time: convert human-readable time to epoch(Unix time)
 function 'DaxLib.Convert.DateToEpoch' =
@@ -80,7 +80,7 @@ function 'DaxLib.Convert.DateToEpoch' =
 
 	annotation DAXLIB_PackageId = DaxLib.Convert
 
-	annotation DAXLIB_PackageVersion = 0.1.1-beta
+	annotation DAXLIB_PackageVersion = 0.1.2
 
 /// Time: convert epoch(Unix time) to human-readable time
 function 'DaxLib.Convert.EpochToDate' =
@@ -92,7 +92,7 @@ function 'DaxLib.Convert.EpochToDate' =
 
 	annotation DAXLIB_PackageId = DaxLib.Convert
 
-	annotation DAXLIB_PackageVersion = 0.1.1-beta
+	annotation DAXLIB_PackageVersion = 0.1.2
 
 /// Temperature: convert Fahrenheit(°F) to Celsius(°C)
 function 'DaxLib.Convert.FahrenheitToCelsius' =
@@ -104,7 +104,7 @@ function 'DaxLib.Convert.FahrenheitToCelsius' =
 
 	annotation DAXLIB_PackageId = DaxLib.Convert
 
-	annotation DAXLIB_PackageVersion = 0.1.1-beta
+	annotation DAXLIB_PackageVersion = 0.1.2
 
 /// Temperature: convert Fahrenheit(°F) to Kelvin(K)
 function 'DaxLib.Convert.FahrenheitToKelvin' =
@@ -116,7 +116,7 @@ function 'DaxLib.Convert.FahrenheitToKelvin' =
 
 	annotation DAXLIB_PackageId = DaxLib.Convert
 
-	annotation DAXLIB_PackageVersion = 0.1.1-beta
+	annotation DAXLIB_PackageVersion = 0.1.2
 
 /// Distance: convert feet(ft) to meters(m)
 function 'DaxLib.Convert.FeetToMeters' =
@@ -128,7 +128,7 @@ function 'DaxLib.Convert.FeetToMeters' =
 
 	annotation DAXLIB_PackageId = DaxLib.Convert
 
-	annotation DAXLIB_PackageVersion = 0.1.1-beta
+	annotation DAXLIB_PackageVersion = 0.1.2
 
 /// Volume: convert gallons(gal:US-fluid) to liters(L)
 function 'DaxLib.Convert.GallonsToLiters' =
@@ -140,7 +140,7 @@ function 'DaxLib.Convert.GallonsToLiters' =
 
 	annotation DAXLIB_PackageId = DaxLib.Convert
 
-	annotation DAXLIB_PackageVersion = 0.1.1-beta
+	annotation DAXLIB_PackageVersion = 0.1.2
 
 /// Weight: convert kilograms(kg) to pounds(lb:avdp)
 function 'DaxLib.Convert.KilogramsToPounds' =
@@ -152,7 +152,7 @@ function 'DaxLib.Convert.KilogramsToPounds' =
 
 	annotation DAXLIB_PackageId = DaxLib.Convert
 
-	annotation DAXLIB_PackageVersion = 0.1.1-beta
+	annotation DAXLIB_PackageVersion = 0.1.2
 
 /// Temperature: convert Kelvin(K) to Celsius(°C)
 function 'DaxLib.Convert.KelvinToCelsius' =
@@ -164,7 +164,7 @@ function 'DaxLib.Convert.KelvinToCelsius' =
 
 	annotation DAXLIB_PackageId = DaxLib.Convert
 
-	annotation DAXLIB_PackageVersion = 0.1.1-beta
+	annotation DAXLIB_PackageVersion = 0.1.2
 
 /// Temperature: convert Kelvin(K) to Fahrenheit(°F)
 function 'DaxLib.Convert.KelvinToFahrenheit' =
@@ -176,7 +176,7 @@ function 'DaxLib.Convert.KelvinToFahrenheit' =
 
 	annotation DAXLIB_PackageId = DaxLib.Convert
 
-	annotation DAXLIB_PackageVersion = 0.1.1-beta
+	annotation DAXLIB_PackageVersion = 0.1.2
 
 /// Distance: convert kilometers(km) to miles(mi)
 function 'DaxLib.Convert.KilometersToMiles' =
@@ -188,7 +188,7 @@ function 'DaxLib.Convert.KilometersToMiles' =
 
 	annotation DAXLIB_PackageId = DaxLib.Convert
 
-	annotation DAXLIB_PackageVersion = 0.1.1-beta
+	annotation DAXLIB_PackageVersion = 0.1.2
 
 /// Flow: convert liters per second (L/s) to cubic meters per hour (m³/h)
 function 'DaxLib.Convert.LitersPerSecondToCubicMetersPerHour' =
@@ -200,7 +200,7 @@ function 'DaxLib.Convert.LitersPerSecondToCubicMetersPerHour' =
 
 	annotation DAXLIB_PackageId = DaxLib.Convert
 
-	annotation DAXLIB_PackageVersion = 0.1.1-beta
+	annotation DAXLIB_PackageVersion = 0.1.2
 
 /// Volume: convert liters(L) to gallons(US fluid)
 function 'DaxLib.Convert.LitersToGallons' =
@@ -212,7 +212,7 @@ function 'DaxLib.Convert.LitersToGallons' =
 
 	annotation DAXLIB_PackageId = DaxLib.Convert
 
-	annotation DAXLIB_PackageVersion = 0.1.1-beta
+	annotation DAXLIB_PackageVersion = 0.1.2
 
 /// Distance: convert meters(m) to feet(ft)
 function 'DaxLib.Convert.MetersToFeet' =
@@ -224,7 +224,7 @@ function 'DaxLib.Convert.MetersToFeet' =
 
 	annotation DAXLIB_PackageId = DaxLib.Convert
 
-	annotation DAXLIB_PackageVersion = 0.1.1-beta
+	annotation DAXLIB_PackageVersion = 0.1.2
 
 /// Speed: convert miles per hour (mph) to kilometers per hour (km/h)
 function 'DaxLib.Convert.MilesPerHourToKilometersPerHour' =
@@ -236,7 +236,7 @@ function 'DaxLib.Convert.MilesPerHourToKilometersPerHour' =
 
 	annotation DAXLIB_PackageId = DaxLib.Convert
 
-	annotation DAXLIB_PackageVersion = 0.1.1-beta
+	annotation DAXLIB_PackageVersion = 0.1.2
 
 /// Distance: convert miles(mi) to kilometers(km)
 function 'DaxLib.Convert.MilesToKilometers' =
@@ -248,7 +248,7 @@ function 'DaxLib.Convert.MilesToKilometers' =
 
 	annotation DAXLIB_PackageId = DaxLib.Convert
 
-	annotation DAXLIB_PackageVersion = 0.1.1-beta
+	annotation DAXLIB_PackageVersion = 0.1.2
 
 /// Weight: convert pounds(lb:avdp) to kilograms(kg)
 function 'DaxLib.Convert.PoundsToKilograms' =
@@ -260,7 +260,7 @@ function 'DaxLib.Convert.PoundsToKilograms' =
 
 	annotation DAXLIB_PackageId = DaxLib.Convert
 
-	annotation DAXLIB_PackageVersion = 0.1.1-beta
+	annotation DAXLIB_PackageVersion = 0.1.2
 
 /// Weight: convert pounds(lb:avdp) to stones(st)
 function 'DaxLib.Convert.PoundsToStones' =
@@ -272,7 +272,7 @@ function 'DaxLib.Convert.PoundsToStones' =
 
 	annotation DAXLIB_PackageId = DaxLib.Convert
 
-	annotation DAXLIB_PackageVersion = 0.1.1-beta
+	annotation DAXLIB_PackageVersion = 0.1.2
 
 /// Area: convert square feet(ft²) to square meters(m²)
 function 'DaxLib.Convert.SquareFeetToSquareMeters' =
@@ -284,7 +284,7 @@ function 'DaxLib.Convert.SquareFeetToSquareMeters' =
 
 	annotation DAXLIB_PackageId = DaxLib.Convert
 
-	annotation DAXLIB_PackageVersion = 0.1.1-beta
+	annotation DAXLIB_PackageVersion = 0.1.2
 
 /// Area: convert square meters(m²) to acres(ac)
 function 'DaxLib.Convert.SquareMetersToAcres' =
@@ -296,7 +296,7 @@ function 'DaxLib.Convert.SquareMetersToAcres' =
 
 	annotation DAXLIB_PackageId = DaxLib.Convert
 
-	annotation DAXLIB_PackageVersion = 0.1.1-beta
+	annotation DAXLIB_PackageVersion = 0.1.2
 
 /// Area: convert square meters(m²) to square feet(ft²)
 function 'DaxLib.Convert.SquareMetersToSquareFeet' =
@@ -308,7 +308,7 @@ function 'DaxLib.Convert.SquareMetersToSquareFeet' =
 
 	annotation DAXLIB_PackageId = DaxLib.Convert
 
-	annotation DAXLIB_PackageVersion = 0.1.1-beta
+	annotation DAXLIB_PackageVersion = 0.1.2
 
 /// Weight: convert stones(st) to pounds(lb:avdp)
 function 'DaxLib.Convert.StonesToPounds' =
@@ -320,4 +320,4 @@ function 'DaxLib.Convert.StonesToPounds' =
 
 	annotation DAXLIB_PackageId = DaxLib.Convert
 
-	annotation DAXLIB_PackageVersion = 0.1.1-beta
+	annotation DAXLIB_PackageVersion = 0.1.2
