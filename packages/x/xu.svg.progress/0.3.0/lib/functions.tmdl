@@ -1,29 +1,29 @@
 /// Returns a formatted informational string about the XU.SVG.Progress DAX UDF library.
 function 'XU.SVG.Progress.About' = 
-    () =>
-        VAR LB = UNICHAR(10)
-        RETURN
-            "💡 Library Name: XU.SVG.Progress" & LB &
-            "🧑 Author: HD XU" & LB &
-            "📦 Version: 0.3.0" & LB &
-            "⚖️ License: MIT – Free to use and modify" & LB &
-            "📧 Contact: vic.haodong.xu@outlook.com" & LB &
-            LB &
-            "💎 Functions included:" & LB &
-            "• XU.SVG.Progress.SimpleBar(ProgressRatio, BarBackgroundColor, BarFillColor, BarCornerRadius, IfShowLabel, LabelContent, LabelTextColor) → Basic horizontal progress bar" & LB &
-            "• XU.SVG.Progress.Capsule(ProgressRatio, BarBackgroundColor, BarFillColor, IfShowLabel, LabelContent, LabelTextColor) → Rounded capsule-style progress bar" & LB &
-            "• XU.SVG.Progress.Dashed(ProgressRatio, LineColor, IfShowLabel, LabelContent, LabelTextColor) → Dashed-line progress indicator" & LB &
-            "• XU.SVG.Progress.LabeledBar(ProgressRatio, BarBackgroundColor, BarFillColor, BarCornerRadius, IfShowLabel, LabelContent, LabelTextColor) → Two-line layout with label above bar" & LB &
-            "• XU.SVG.Progress.Pie(ProgressRatio, BackgroundColor, FillColor, StrokeColor) → Circular pie-style progress indicator" & LB &
-            "• XU.SVG.Progress.Donut(ProgressRatio, BackgroundColor, InnerBackgroundColor, InnerRadiusPCT, FillColor, StrokeColor, IfShowLabel, LabelTextColor) → Donut chart with center label" & LB &
-            LB &
-            "⚠️ Important: " & LB &
-            "All measures using these functions must have the 'DataCategory' property set to 'ImageUrl' in Power BI." & LB &
-            "Use XU.SVG.Progress.Config.* functions to customize global styles (BoxWidth, BoxHeight, FontFamily)."
+		() =>
+			VAR LB = UNICHAR(10)
+			RETURN
+				"💡 Library Name: XU.SVG.Progress" & LB &
+				"🧑 Author: HD XU" & LB &
+				"📦 Version: 0.3.0" & LB &
+				"⚖️ License: MIT – Free to use and modify" & LB &
+				"📧 Contact: vic.haodong.xu@outlook.com" & LB &
+				LB &
+				"💎 Functions included:" & LB &
+				"• XU.SVG.Progress.SimpleBar(ProgressRatio, BarBackgroundColor, BarFillColor, BarCornerRadius, IfShowLabel, LabelContent, LabelTextColor) → Basic horizontal progress bar" & LB &
+				"• XU.SVG.Progress.Capsule(ProgressRatio, BarBackgroundColor, BarFillColor, IfShowLabel, LabelContent, LabelTextColor) → Rounded capsule-style progress bar" & LB &
+				"• XU.SVG.Progress.Dashed(ProgressRatio, LineColor, IfShowLabel, LabelContent, LabelTextColor) → Dashed-line progress indicator" & LB &
+				"• XU.SVG.Progress.LabeledBar(ProgressRatio, BarBackgroundColor, BarFillColor, BarCornerRadius, IfShowLabel, LabelContent, LabelTextColor) → Two-line layout with label above bar" & LB &
+				"• XU.SVG.Progress.Pie(ProgressRatio, BackgroundColor, FillColor, StrokeColor) → Circular pie-style progress indicator" & LB &
+				"• XU.SVG.Progress.Donut(ProgressRatio, BackgroundColor, InnerBackgroundColor, InnerRadiusPCT, FillColor, StrokeColor, IfShowLabel, LabelTextColor) → Donut chart with center label" & LB &
+				LB &
+				"⚠️ Important: " & LB &
+				"All measures using these functions must have the 'DataCategory' property set to 'ImageUrl' in Power BI." & LB &
+				"Use XU.SVG.Progress.Config.* functions to customize global styles (BoxWidth, BoxHeight, FontFamily)."
 
-    annotation DAXLIB_PackageId = XU.SVG.Progress
+	annotation DAXLIB_PackageId = XU.SVG.Progress
 
-    annotation DAXLIB_PackageVersion = 0.3.0
+	annotation DAXLIB_PackageVersion = 0.3.0
 
 /// Width for all progress indicators
 function 'XU.SVG.Progress.Config.BoxWidth' = () => 140 
