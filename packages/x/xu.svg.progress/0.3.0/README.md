@@ -1,6 +1,6 @@
 # XU.SVG.Progress
 
-![Screenshot.png](https://private-user-images.githubusercontent.com/173887760/499646812-a47f802c-78fa-46e4-9446-dc9a386d8d6f.png)
+![XU.SVG.Progress1.png](https://raw.githubusercontent.com/DS-Vic/PIC/main/XU.SVG.Progress1.png)
 
 A DAX user-defined function (UDF) library for generating **SVG-based progress indicators** directly inside Power BI — no custom visuals required.
 
