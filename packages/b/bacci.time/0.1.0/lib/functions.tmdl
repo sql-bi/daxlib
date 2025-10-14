@@ -27,7 +27,10 @@ function 'Bacci.Time.Duration' = ```
 		    RETURN
 		    sign & yFormat &  mFormat & dFormat
 		```
-	lineageTag: 2db0a479-56ce-4fef-8200-90c2a4f5b9da
+
+	annotation DAXLIB_PackageId = Bacci.Time
+
+	annotation DAXLIB_PackageVersion = 0.1.0
 
 /// Returns a string in the format 'n years n months n days' using a simple calculation with 30 days in a month and 365 days in a year
 function 'Bacci.Time.Duration30365' = ```
@@ -56,8 +59,6 @@ function 'Bacci.Time.Duration30365' = ```
 		        )
 		        RETURN ret
 		```
-	lineageTag: fce63753-d852-4586-8bb5-13f1ecae63a4
-
 
 	annotation DAXLIB_PackageId = Bacci.Time
 
