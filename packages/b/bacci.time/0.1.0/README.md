@@ -1,4 +1,4 @@
-# Bacci.SVG
+# Bacci.Time
 
 A user-defined function that calculates the duration between two dates in the format `n years n months n days.`
 
