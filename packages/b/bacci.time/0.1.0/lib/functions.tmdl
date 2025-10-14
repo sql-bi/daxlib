@@ -1,0 +1,67 @@
+
+
+	/// Returns a string in the format 'n years n months n days' using month limits to give a more accurate human duration
+	function 'Bacci.Time.Duration' = ```
+			(
+			        	// The first date
+			        	date1 : SCALAR DATETIME VAL,
+			        
+			        	// The second date
+			        	date2 : SCALAR DATETIME VAL
+			        )
+			        =>
+			     
+			    VAR d1 = IF(date1<=date2, date1, date2)
+			    VAR d2 = IF(date1<=date2, date2, date1)
+			    VAR diff = DATEDIFF(d1,d2, MONTH)
+			    VAR series = GENERATESERIES(0,diff+0, 1)
+			    VAR t = FILTER(ADDCOLUMNS(series, "limit", EDATE(d1, [Value])), [limit] <= d2)
+			    VAR val = MAXX(t, [Value])
+			    VAR limit = MAXX(t, [limit])
+			    
+			    VAR y = QUOTIENT(val, 12)
+			    VAR yFormat = IF(y<>0, y & " year" & IF(ABS(y)=1," ","s "),BLANK()) 
+			    VAR m = MOD(val,12)
+			    VAR mFormat = IF(m<>0, m & " month" & IF(ABS(m)=1," ","s "),BLANK()) 
+			    VAR d = DATEDIFF(limit, d2,DAY)
+			    VAR dFormat = IF(d<>0 || (m=0 && y=0), d & " day" & IF(ABS(d)=1," ","s "),BLANK())
+			    VAR sign = IF(date1 <= date2, "", "-")
+			    RETURN
+			    sign & yFormat &  mFormat & dFormat
+			```
+		lineageTag: 2db0a479-56ce-4fef-8200-90c2a4f5b9da
+
+	/// Returns a string in the format 'n years n months n days' using a simple calculation with 30 days in a month and 365 days in a year
+	function 'Bacci.Time.Duration30365' = ```
+			(
+			        	// The first date
+			        	date1 : SCALAR DATETIME VAL,
+			        
+			        	// The second date
+			        	date2 : SCALAR DATETIME VAL
+			        )
+			        =>
+			
+			        VAR diff = DATEDIFF(date1, date2, DAY)
+			        VAR ret=
+			        SWITCH(TRUE(),
+			            diff>365, 
+			                VAR y = QUOTIENT(diff, 365)
+			                VAR m = QUOTIENT(MOD(diff,365),30)
+			                VAR d = MOD(MOD(diff,365),30)
+			                RETURN y & " year" & IF(ABS(y)=1," ","s ") &  m & " month" & IF(ABS(m)=1," ","s ")  & d & " day" & IF(ABS(d)=1," ","s "),
+			            diff>30, 
+			                VAR m = QUOTIENT(diff, 30)
+			                VAR d = MOD(diff, 30)
+			                RETURN m &" month" & IF(ABS(m)=1," ","s ")  & d & " day" & IF(ABS(d)=1," ","s "), 
+			            diff & " day" & IF(ABS(diff)=1,"","s")
+			        )
+			        RETURN ret
+			```
+		lineageTag: fce63753-d852-4586-8bb5-13f1ecae63a4
+
+
+	annotation DAXLIB_PackageId = Bacci.Time
+
+	annotation DAXLIB_PackageVersion = 0.1.0
+
