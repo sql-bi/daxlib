@@ -6,6 +6,6 @@
   "description": "A simple SVG UDF to create colourful chips",
   "tags": "SVG, Chip, Colour",
   "projectUrl": "https://github.com/PBI-David/PBI-Core-Visuals-SVG-HTML",
-  "repositoryUrl": "https://github.com/PBI-David/PBI-Core-Visuals-SVG-HTML?tab=readme-ov-file#chips-dax-udf",
+  "repositoryUrl": "https://github.com/PBI-David/PBI-Core-Visuals-SVG-HTML",
   "readme": "/README.md"
 }
