@@ -6,6 +6,6 @@
   "description": "Creates a duration between two dates in the format 'n years n months n days'",
   "tags": "Date, Time, Duration, Format",
   "projectUrl": "https://github.com/PBI-David/PBI-Core-Visuals-SVG-HTML",
-  "repositoryUrl": "https://github.com/PBI-David/PBI-Core-Visuals-SVG-HTML?tab=readme-ov-file#duration-dax-udf",
+  "repositoryUrl": "https://github.com/PBI-David/PBI-Core-Visuals-SVG-HTML",
   "readme": "/README.md"
 }
