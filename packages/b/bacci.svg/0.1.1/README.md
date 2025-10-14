@@ -2,7 +2,7 @@
 
 Easily create colourful SVG chips like the example below. 
 
-![Thumbnail](./0.1.0/thumbnail.png)
+![Thumbnail](https://raw.githubusercontent.com/PBI-David/PBI-Core-Visuals-SVG-HTML/refs/heads/main/Chips%20(DAX%20UDF)/thumbnail.png)
 
 ## Usage
 
