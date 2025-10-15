@@ -1,8 +1,7 @@
-/// Dynamic DAX function that converts a filtered date range into a clear, presentation-style title.
+/// Function that converts a filtered date range into a clear, presentation-style title.
 /// Example: 10/1/2023–6/30/2024 -> "Revenue Qtr 4'23 – Qtr 2'24 (3 Qtrs)"
-/// or 1/1/2024–12/31/2024 -> "Revenue Last Year (2024)".
 /// Parameters: prefix (e.g. "Revenue"), date column (e.g. 'Calendar'[Date]).
-function 'PiotrBartela.TitleContext.Period' = ```
+function 'PiotrBartela.TitleContext.Period' =
 		(
 			Title : STRING,
 			DateCol : ANYREF
@@ -284,7 +283,268 @@ function 'PiotrBartela.TitleContext.Period' = ```
 			)
 		RETURN
 			_Result
-		```
 
 	annotation DAXLIB_PackageId = PiotrBartela.TitleContext
-	annotation DAXLIB_PackageVersion = 0.1.0
+	
+    annotation DAXLIB_PackageVersion = 0.2.0
+
+/// Description: Function that will display in one string current filters.
+/// Prerequisit: You have to create dummy column first eg. 'Dummy'[Dummy] (anyref can't be BLANK as for now)
+/// Tip: set TestMode parameter to 1 to adjust maximum length of a final string.
+/// Example: Pbr.TitleContext.Subtitle(70,0,"First filter name",'Table1'[Column1],"",'Dummy'[Dummy],"",'Dummy'[Dummy],"",'Dummy'[Dummy],"",'Dummy'[Dummy])
+function 'PiotrBartela.TitleContext.Filtered' =
+		(
+            MaxLength:int64,
+            TestMode:boolean,
+            Name1:string,
+            Col1:anyref,
+            Name2:string,
+            Col2:anyref,
+            Name3:string,
+            Col3:anyref,
+            Name4:string,
+            Col4:anyref,
+            Name5:string,
+            Col5:anyref
+		)  =>
+
+			VAR _testing_numbers = "111111111122222222223333333333444444444455555555556666666666777777777788888888889999999999000000000011111111112222222222333333333344444444445555555555666666666677777777778888888888999999999900000000001111111111222222222233333333334444444444555555555566666666667777777777888888888899999999990000000000111111111122222222223333333333444444444455555555556666666666777777777788888888889999999999000000000011111111112222222222333333333344444444445555555555666666666677777777778888888888999999999900000000001111111111222222222233333333334444444444555555555566666666667777777777888888888899999999990000000000111111111122222222223333333333444444444455555555556666666666777777777788888888889999999999000000000011111111112222222222333333333344444444445555555555666666666677777777778888888888999999999900000000001111111111222222222233333333334444444444555555555566666666667777777777888888888899999999990000000000111111111122222222223333333333444444444455555555556666666666777777777788888888889999999999000000000011111111112222222222333333333344444444445555555555666666666677777777778888888888999999999900000000001111111111222222222233333333334444444444555555555566666666667777777777888888888899999999990000000000111111111122222222223333333333444444444455555555556666666666777777777788888888889999999999000000000011111111112222222222333333333344444444445555555555666666666677777777778888888888999999999900000000001111111111222222222233333333334444444444555555555566666666667777777777888888888899999999990000000000"
+
+			VAR _test_text = LEFT(_testing_numbers,MaxLength)
+
+			VAR _no_filters = "All Sales, Globally"
+
+			VAR _1_is = ISFILTERED(Col1)
+			VAR _1 = CONCATENATEX(VALUES(Col1),Col1,", ")
+			VAR _1_num = COUNTROWS(VALUES(Col1))
+
+			VAR _1_len = LEN(_1)
+			VAR _1_first = MINX(
+				TOPN(1,VALUES(Col1),Col1),Col1)
+			VAR _1_second = MINX(
+				TOPN(2,VALUES(Col1),Col1),Col1)
+			VAR _1_third = MINX(
+				TOPN(3,VALUES(Col1),Col1),Col1)
+
+			VAR _1_text_v1 = IF(_1_is,"" & Name1 & ": " & _1 & " | ","")
+			VAR _1_text_v2 = IF(
+				_1_is,
+				SWITCH(TRUE(),
+					_1_num = 1,"" & Name1 & ": " & _1_first & " | ",
+					_1_num = 2,"" & Name1 & ": " & _1_first & ", "& _1_second & " | ",
+					_1_num = 3,"" & Name1 & ": " & _1_first & ", " & _1_second & ", " & _1_third & " | ",
+					"" &Name1 & ": " & _1_first & ", " & _1_second & ", " & _1_third & " (+" & _1_num - 3 & ")" & " | "),
+				"")
+			VAR _1_text_v3 = IF(
+				_1_is,
+				SWITCH(TRUE(),
+					_1_num = 1,"" & Name1 & ": " & _1_first & " | ",
+					_1_num = 2,"" & Name1 & ": " & _1_first & ", "& _1_second & " | ",
+					"" &Name1 & ": " & _1_first & ", " & _1_second & " (+" & _1_num - 2 & ")" & " | "),
+				"")
+			VAR _1_text_v4 = IF(
+				_1_is,
+				SWITCH(TRUE(),
+					_1_num = 1,"" & Name1 & ": " & _1_first & " | ",
+					"" &Name1 & ": " & _1_first & " (+" & _1_num - 1 & ")" & " | "),
+				"")
+			VAR _1_text_v5 = IF(
+				_1_is, 
+				"" & Name1 & " (" & _1_num & ")" & " | ",
+				"")
+
+
+			VAR _2_is = ISFILTERED(Col2)
+			VAR _2 = CONCATENATEX(VALUES(Col2),Col2,", ")
+			VAR _2_num = COUNTROWS(VALUES(Col2))
+
+			VAR _2_len = LEN(_2)
+			VAR _2_first = MINX(
+				TOPN(1,VALUES(Col2),Col2),Col2)
+			VAR _2_second = MINX(
+				TOPN(2,VALUES(Col2),Col2),Col2)
+			VAR _2_third = MINX(
+				TOPN(3,VALUES(Col2),Col2),Col2)
+
+			VAR _2_text_v1 = IF(_2_is,"" & Name2 & ": " & _2 & " | ","")
+			VAR _2_text_v2 = IF(
+				_2_is,
+				SWITCH(TRUE(),
+					_2_num = 1,"" & Name2 & ": " & _2_first & " | ",
+					_2_num = 2,"" & Name2 & ": " & _2_first & ", "& _2_second & " | ",
+					_2_num = 3,"" & Name2 & ": " & _2_first & ", " & _2_second & ", " & _2_third & " | ",
+					"" &Name2 & ": " & _2_first & ", " & _2_second & ", " & _2_third & " (+" & _2_num - 3 & ")" & " | "),
+				"")
+			VAR _2_text_v3 = IF(
+				_2_is,
+				SWITCH(TRUE(),
+					_2_num = 1,"" & Name2 & ": " & _2_first & " | ",
+					_2_num = 2,"" & Name2 & ": " & _2_first & ", "& _2_second & " | ",
+					"" &Name2 & ": " & _2_first & ", " & _2_second & " (+" & _2_num - 2 & ")" & " | "),
+				"")
+			VAR _2_text_v4 = IF(
+				_2_is,
+				SWITCH(TRUE(),
+					_2_num = 1,"" & Name2 & ": " & _2_first & " | ",
+					"" &Name2 & ": " & _2_first & " (+" & _2_num - 1 & ")" & " | "),
+				"")
+			VAR _2_text_v5 = IF(
+				_2_is, 
+				"" & Name2 & " (" & _2_num & ")" & " | ",
+				"")
+
+
+			VAR _3_is = ISFILTERED(Col3)
+			VAR _3 = CONCATENATEX(VALUES(Col3),Col3,", ")
+			VAR _3_num = COUNTROWS(VALUES(Col3))
+
+			VAR _3_len = LEN(_3)
+			VAR _3_first = MINX(
+				TOPN(1,VALUES(Col3),Col3),Col3)
+			VAR _3_second = MINX(
+				TOPN(2,VALUES(Col3),Col3),Col3)
+			VAR _3_third = MINX(
+				TOPN(3,VALUES(Col3),Col3),Col3)
+
+			VAR _3_text_v1 = IF(_3_is,"" & Name3 & ": " & _3 & " | ","")
+			VAR _3_text_v2 = IF(
+				_3_is,
+				SWITCH(TRUE(),
+					_3_num = 1,"" & Name3 & ": " & _3_first & " | ",
+					_3_num = 2,"" & Name3 & ": " & _3_first & ", "& _3_second & " | ",
+					_3_num = 3,"" & Name3 & ": " & _3_first & ", " & _3_second & ", " & _3_third & " | ",
+					"" &Name3 & ": " & _3_first & ", " & _3_second & ", " & _3_third & " (+" & _3_num - 3 & ")" & " | "),
+				"")
+			VAR _3_text_v3 = IF(
+				_3_is,
+				SWITCH(TRUE(),
+					_3_num = 1,"" & Name3 & ": " & _3_first & " | ",
+					_3_num = 2,"" & Name3 & ": " & _3_first & ", "& _3_second & " | ",
+					"" &Name3 & ": " & _3_first & ", " & _3_second & " (+" & _3_num - 2 & ")" & " | "),
+				"")
+			VAR _3_text_v4 = IF(
+				_3_is,
+				SWITCH(TRUE(),
+					_3_num = 1,"" & Name3 & ": " & _3_first & " | ",
+					"" &Name3 & ": " & _3_first & " (+" & _3_num - 1 & ")" & " | "),
+				"")
+			VAR _3_text_v5 = IF(
+				_3_is, 
+				"" & Name3 & " (" & _3_num & ")" & " | ",
+				"")
+
+			VAR _4_is = ISFILTERED(Col4)
+			VAR _4 = CONCATENATEX(VALUES(Col4),Col4,", ")
+			VAR _4_num = COUNTROWS(VALUES(Col4))
+
+			VAR _4_len = LEN(_4)
+			VAR _4_first = MINX(
+				TOPN(1,VALUES(Col4),Col4),Col4)
+			VAR _4_second = MINX(
+				TOPN(2,VALUES(Col4),Col4),Col4)
+			VAR _4_third = MINX(
+				TOPN(3,VALUES(Col4),Col4),Col4)
+
+			VAR _4_text_v1 = IF(_4_is,"" & Name4 & ": " & _4 & " | ","")
+			VAR _4_text_v2 = IF(
+				_4_is,
+				SWITCH(TRUE(),
+					_4_num = 1,"" & Name4 & ": " & _4_first & " | ",
+					_4_num = 2,"" & Name4 & ": " & _4_first & ", "& _4_second & " | ",
+					_4_num = 3,"" & Name4 & ": " & _4_first & ", " & _4_second & ", " & _4_third & " | ",
+					"" &Name4 & ": " & _4_first & ", " & _4_second & ", " & _4_third & " (+" & _4_num - 3 & ")" & " | "),
+				"")
+			VAR _4_text_v3 = IF(
+				_4_is,
+				SWITCH(TRUE(),
+					_4_num = 1,"" & Name4 & ": " & _4_first & " | ",
+					_4_num = 2,"" & Name4 & ": " & _4_first & ", "& _4_second & " | ",
+					"" &Name4 & ": " & _4_first & ", " & _4_second & " (+" & _4_num - 2 & ")" & " | "),
+				"")
+			VAR _4_text_v4 = IF(
+				_4_is,
+				SWITCH(TRUE(),
+					_4_num = 1,"" & Name4 & ": " & _4_first & " | ",
+					"" &Name4 & ": " & _4_first & " (+" & _4_num - 1 & ")" & " | "),
+				"")
+			VAR _4_text_v5 = IF(
+				_4_is, 
+				"" & Name4 & " (" & _4_num & ")" & " | ",
+				"")
+
+			VAR _5_is = ISFILTERED(Col5)
+			VAR _5 = CONCATENATEX(VALUES(Col5),Col5,", ")
+			VAR _5_num = COUNTROWS(VALUES(Col5))
+
+			VAR _5_len = LEN(_5)
+			VAR _5_first = MINX(
+				TOPN(1,VALUES(Col5),Col5),Col5)
+			VAR _5_second = MINX(
+				TOPN(2,VALUES(Col5),Col5),Col5)
+			VAR _5_third = MINX(
+				TOPN(3,VALUES(Col5),Col5),Col5)
+
+			VAR _5_text_v1 = IF(_5_is,"" & Name5 & ": " & _5 & " | ","")
+			VAR _5_text_v2 = IF(
+				_5_is,
+				SWITCH(TRUE(),
+					_5_num = 1,"" & Name5 & ": " & _5_first & " | ",
+					_5_num = 2,"" & Name5 & ": " & _5_first & ", "& _5_second & " | ",
+					_5_num = 3,"" & Name5 & ": " & _5_first & ", " & _5_second & ", " & _5_third & " | ",
+					"" &Name5 & ": " & _5_first & ", " & _5_second & ", " & _5_third & " (+" & _5_num - 3 & ")" & " | "),
+				"")
+			VAR _5_text_v3 = IF(
+				_5_is,
+				SWITCH(TRUE(),
+					_5_num = 1,"" & Name5 & ": " & _5_first & " | ",
+					_5_num = 2,"" & Name5 & ": " & _5_first & ", "& _5_second & " | ",
+					"" &Name5 & ": " & _5_first & ", " & _5_second & " (+" & _5_num - 2 & ")" & " | "),
+				"")
+			VAR _5_text_v4 = IF(
+				_5_is,
+				SWITCH(TRUE(),
+					_5_num = 1,"" & Name5 & ": " & _5_first & " | ",
+					"" &Name5 & ": " & _5_first & " (+" & _5_num - 1 & ")" & " | "),
+				"")
+			VAR _5_text_v5 = IF(
+				_5_is, 
+				"" & Name5 & " (" & _5_num & ")" & " | ",
+				"")
+
+			VAR _total_f_count = IF(_1_is,_1_num,0) + IF(_2_is,_2_num,0) + IF(_3_is,_3_num,0) + IF(_4_is,_4_num,0) + IF(_5_is,_5_num,0)
+
+			VAR _full_text_v1 = FORMAT(_1_text_v1 & _2_text_v1 & _3_text_v1 & _4_text_v1 & _5_text_v1,"")
+			VAR _full_text_v2 = FORMAT(_1_text_v2 & _2_text_v2 & _3_text_v2 & _4_text_v2 & _5_text_v2,"")
+			VAR _full_text_v3 = FORMAT(_1_text_v3 & _2_text_v3 & _3_text_v3 & _4_text_v3 & _5_text_v3,"")
+			VAR _full_text_v4 = FORMAT(_1_text_v4 & _2_text_v4 & _3_text_v4 & _4_text_v4 & _5_text_v4,"")
+			VAR _full_text_v5 = FORMAT("Filters: " & _1_text_v5 & _2_text_v5 & _3_text_v5 & _4_text_v5 & _5_text_v5,"")
+			VAR _full_text_v6 = FORMAT("Total Filters Applied: " & FORMAT(_total_f_count,"0") & " | ","")
+
+			VAR _v1_len = LEN(_full_text_v1)
+			VAR _v2_len = LEN(_full_text_v2)
+			VAR _v3_len = LEN(_full_text_v3)
+			VAR _v4_len = LEN(_full_text_v4)
+			VAR _v5_len = LEN(_full_text_v5)
+
+
+			VAR _full_text_adjusted = SWITCH(True(),
+				_v1_len <= MaxLength, FORMAT(_full_text_v1,""),
+				_v2_len <= MaxLength, FORMAT(_full_text_v2,""),
+				_v3_len <= MaxLength, FORMAT(_full_text_v3,""),
+				_v4_len <= MaxLength, FORMAT(_full_text_v4,""),
+				_v5_len <= MaxLength, FORMAT(_full_text_v5,""),
+				_full_text_v6)
+
+
+			VAR _full_text_trimed = "" & LEFT(_full_text_adjusted, LEN(_full_text_adjusted) - 2)
+
+			VAR _is_filter = _1_is || _2_is || _3_is || _4_is || _5_is
+
+			VAR _Result = IF(testmode,_test_text,FORMAT(IF(_is_filter, _full_text_trimed, _no_filters),""))
+
+			RETURN 
+			    _Result
+
+	annotation DAXLIB_PackageId = PiotrBartela.TitleContext
+	
+	annotation DAXLIB_PackageVersion = 0.2.0
