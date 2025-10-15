@@ -8,5 +8,6 @@
   "releaseNotes": "Initial beta release of DataGoblins.SampleData library. Provides 6 functions for generating realistic sample data: Orders (fact table with line-level variations), Inventory (warehouse snapshots), Customer/Product/Store (dimension tables with configurable data quality issues), and Dates (comprehensive calendar table). Functions support configurable parameters for volume, date ranges, data quality, and reproducible seeding. Note that Power BI may complain with syntax errors, but the functions should work in calculated tables, regardless.",
   "projectUrl": "https://github.com/data-goblin/DataGoblin.SampleData",
   "repositoryUrl": "https://github.com/data-goblin/DataGoblin.SampleData",
-  "icon": "/icon.png"
+  "icon": "/icon.png",
+  "readme": "/README.md"
 }
