@@ -312,7 +312,7 @@ function 'PiotrBartela.TitleContext.Filtered' =
 
 			VAR _test_text = LEFT(_testing_numbers,MaxLength)
 
-			VAR _no_filters = "All Sales, Globally"
+			VAR _no_filters = "All Sales, Globally" // adjust if needed
 
 			VAR _1_is = ISFILTERED(Col1)
 			VAR _1 = CONCATENATEX(VALUES(Col1),Col1,", ")
