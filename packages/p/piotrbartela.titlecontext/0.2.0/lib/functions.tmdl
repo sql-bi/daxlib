@@ -291,7 +291,7 @@ function 'PiotrBartela.TitleContext.Period' =
 /// Description: Function that will display in one string current filters.
 /// Prerequisit: You have to create dummy column first eg. 'Dummy'[Dummy] (anyref can't be BLANK as for now)
 /// Tip: set TestMode parameter to 1 to adjust maximum length of a final string.
-/// Example: Pbr.TitleContext.Subtitle(70,0,"First filter name",'Table1'[Column1],"",'Dummy'[Dummy],"",'Dummy'[Dummy],"",'Dummy'[Dummy],"",'Dummy'[Dummy])
+/// Example: PiotrBartela.TitleContext.Filtered(70,0,"First filter name",'Table1'[Column1],"",'Dummy'[Dummy],"",'Dummy'[Dummy],"",'Dummy'[Dummy],"",'Dummy'[Dummy])
 function 'PiotrBartela.TitleContext.Filtered' =
 		(
             MaxLength:int64,
