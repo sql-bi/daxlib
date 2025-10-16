@@ -108,7 +108,7 @@ Subtitle = PiotrBartela.TitleContext.Filtered(
 ## Author
 
 Piotr Bartela
-[Linekdin](https://www.linkedin.com/in/bartela-piotr/)
+[LinkedIn](https://www.linkedin.com/in/bartela-piotr/)
 
 ---
 
