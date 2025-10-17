@@ -1,0 +1,32 @@
+/// MyFunc1 description
+function 'Contoso.Sample.MyFunc1' = () => 1
+
+    annotation DAXLIB_PackageId = Contoso.Sample
+
+    annotation DAXLIB_PackageVersion = 0.1.0
+
+/// MyFunc2 description
+function 'Contoso.Sample.MyFunc2' =
+        (
+            // Parameter description
+            param1: DOUBLE
+        ) =>
+            param1 * 2
+
+    annotation DAXLIB_PackageId = Contoso.Sample
+
+    annotation DAXLIB_PackageVersion = 0.1.0
+
+/// MyFunc3 description
+function 'Contoso.Sample.MyFunc3' =
+        (
+            // Parameter description
+            param1: INT64,
+            // Parameter description
+            param2: INT64
+        ) =>
+            param1 + param2
+
+    annotation DAXLIB_PackageId = Contoso.Sample
+
+    annotation DAXLIB_PackageVersion = 0.1.0

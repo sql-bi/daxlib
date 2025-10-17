@@ -1,0 +1,11 @@
+{
+  "$schema": "https://raw.githubusercontent.com/daxlib/daxlib/refs/heads/main/schemas/manifest/1.0.0/manifest.1.0.0.schema.json",
+  "id": "Contoso.Sample",
+  "version": "0.1.0",
+  "authors": "Contoso Ltd",
+  "description": "A sample DAX Lib package for demonstration purposes only.",
+  "tags": "SAMPLE,TEMPLATE,DEMO",
+  "projectUrl": "https://contoso.com/sample-library",
+  "repositoryUrl": "https://github.com/contoso/sample-library",
+  "readme": "/README.md"
+}
