@@ -4,7 +4,7 @@
 ///          containing the wrapped text joined by LF (UNICHAR(10)).
 
 
-function WordWrap =
+function 'Gld.TextUtils.WordWrap' =
 			(texttosplice: string, Chunk: int64) =>
 			        // 1) Clean the text: replace CR/LF with spaces, then trim/collapse spaces
 			        VAR CleanText =
