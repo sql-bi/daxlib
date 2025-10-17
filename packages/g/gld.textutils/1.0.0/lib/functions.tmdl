@@ -136,5 +136,5 @@ function 'Gld.TextUtils.WordWrap' =
 			                ASC
 			            )
 			        }
-	annotation DAXLIB_PackageId = Gld.WordWrap
+	annotation DAXLIB_PackageId = Gld.TextUtils
 	annotation DAXLIB_PackageVersion = 1.0.0
