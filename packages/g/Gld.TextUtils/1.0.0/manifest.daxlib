@@ -1,6 +1,6 @@
 {
   "$schema": "https://raw.githubusercontent.com/sql-bi/daxlib/refs/heads/main/schemas/manifest/1.0.0/manifest.1.0.0.schema.json",
-  "id": "Gld.WordWrap",
+  "id": "Gld.TextUtils",
   "version": "1.0.0",
   "authors": "Adastra,Georgios Eleftherios Ntanalakis",
   "description": "Function to wrap text in a specified width",
