@@ -38,7 +38,7 @@ function 'DaxPatterns.AbcClassification.ComputeInAbcClass' = ```
         ```
     annotation DAXLIB_PackageId = DaxPatterns.AbcClassification
 
-    annotation DAXLIB_PackageVersion = 0.1.2
+    annotation DAXLIB_PackageVersion = 0.1.3
 
 /// Return the items filtered by ABC classes
 /// Implement Dynamic ABC Classification pattern from DAX Patterns
