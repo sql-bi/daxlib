@@ -2,8 +2,6 @@
 /// Purpose: Wrap input text into lines whose length is at most `Chunk` characters,
 ///          without breaking words. Returns a single-column, single-row table
 ///          containing the wrapped text joined by LF (UNICHAR(10)).
-
-
 function 'Gld.TextUtils.WordWrap' =
 			(texttosplice: string, Chunk: int64) =>
 			        // 1) Clean the text: replace CR/LF with spaces, then trim/collapse spaces
@@ -138,5 +136,5 @@ function 'Gld.TextUtils.WordWrap' =
 			                ASC
 			            )
 			        }
-  annotation DAXLIB_PackageId = Gld.WordWrap
-  annotation DAXLIB_PackageVersion = 1.0.0
+	annotation DAXLIB_PackageId = Gld.WordWrap
+	annotation DAXLIB_PackageVersion = 1.0.0
