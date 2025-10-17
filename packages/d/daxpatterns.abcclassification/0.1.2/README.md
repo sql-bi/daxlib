@@ -4,9 +4,7 @@ Functions to implement the [ABC Classification](https://www.daxpatterns.com/abc-
 
 ## What it does
 
-`ComputeInAbcClass` evaluates an expression by filtering the *entity* (e.g., Product, Customer) belongs to the ABC classes active in the filter context from  a disconnected “ABC Classes” table, **respecting all active report filters**. Use it to build dynamic ABC analyses that slice by time, region, or any other dimension. ([daxpatterns.com][1])
-
----
+`ComputeInAbcClass` evaluates an expression by filtering the *entity* (e.g., Product, Customer) belongs to the ABC classes active in the filter context from  a disconnected “ABC Classes” table, **respecting all active report filters**. Use it to build dynamic ABC analyses that slice by time, region, or any other dimension. ([ABC classification](https://www.daxpatterns.com/abc-classification/))
 
 ## Function
 
@@ -24,9 +22,7 @@ ComputeInAbcClass (
 
 **Return:** `TRUE` if the entity’s cumulative share (by `<valueExpr>`) falls within the class boundaries on the current row of `<abcClassTable>`. Otherwise `FALSE`. Use it inside measures to filter or label entities.
 
-**Assumptions:** Dynamic ABC as in the DAX Patterns article with a parameter table of class boundaries. The measure supplied must aggregate with `SUM`. ([daxpatterns.com][1])
-
----
+**Assumptions:** Dynamic ABC as in the DAX Patterns article with a parameter table of class boundaries. The measure supplied must aggregate with `SUM`. ([ABC classification](https://www.daxpatterns.com/abc-classification/))
 
 ## Model requirements
 
@@ -36,6 +32,7 @@ ComputeInAbcClass (
    Sales Amount = 
    SUMX ( Sales, Sales[Quantity] * Sales[Net Price] )
    ```
+
 2. **Entity table:** The table that lists the items to classify (e.g., `Product`).
 3. **Classes table (disconnected):** No relationships. Contains at least:
 
@@ -58,9 +55,7 @@ DATATABLE (
 })
 ```
 
-This matches the pattern described in DAX Patterns and its dynamic variant (classification driven by a disconnected parameter table). ([daxpatterns.com][1])
-
----
+This matches the pattern described in DAX Patterns and its dynamic variant (classification driven by a disconnected parameter table). ([ABC classification](https://www.daxpatterns.com/abc-classification/))
 
 ## Basic usage
 
@@ -78,33 +73,23 @@ ComputeInAbcClass (
 
 ```
 
-These produce a **dynamic** ABC where class membership updates with filters (e.g., year, region). ([daxpatterns.com][1])
-
----
+These produce a **dynamic** ABC where class membership updates with filters (e.g., year, region). ([ABC classification](https://www.daxpatterns.com/abc-classification/))
 
 ## Tips, constraints, and performance
 
-* **Additivity:** `<valueExpr>` must be SUM-based for correct cumulative ranking in the dynamic pattern. Non-additive measures break the logic. ([daxpatterns.com][1])
+* **Additivity:** `<valueExpr>` must be SUM-based for correct cumulative ranking in the dynamic pattern. Non-additive measures break the logic. ([ABC classification](https://www.daxpatterns.com/abc-classification/))
 * **Boundaries:** Treat `Lower Boundary` as inclusive and `Upper Boundary` as exclusive to avoid overlaps at exact cut points (e.g., 0.70 belongs to B if A ends at 0.70).
-* **Disconnected classes:** Do **not** relate `ABC Classes` to other tables. It is a parameter table used by the measure. ([daxpatterns.com][2])
+* **Disconnected classes:** Do **not** relate `ABC Classes` to other tables. It is a parameter table used by the measure. ([Parameter table](https://www.daxpatterns.com/parameter-table/))
 * **Granularity:** Pass the **entity key** that defines classification granularity.
-* **Scaling:** With very high entity cardinality, consider pre-aggregation by entity or snapshot ABC when dynamics are not needed. ([daxpatterns.com][1])
-
----
+* **Scaling:** With very high entity cardinality, consider pre-aggregation by entity or snapshot ABC when dynamics are not needed. ([ABC classification](https://www.daxpatterns.com/abc-classification/))
 
 ## Related reading
 
-* DAX Patterns — ABC classification (static, snapshot, dynamic). ([daxpatterns.com][1])
-* DAX Patterns — Dynamic ABC Classification (concepts and step-by-step). ([daxpatterns.com][1])
-* Parameter Table pattern. ([daxpatterns.com][2])
-* DAX Lib package list (package reference). ([daxlib.org][3])
-
----
+* [DAX Patterns — ABC classification](https://www.daxpatterns.com/abc-classification/) (static, snapshot, dynamic).
+* [DAX Patterns — Dynamic ABC Classification](https://www.daxpatterns.com/abc-classification/) (concepts and step-by-step).
+* [Parameter Table pattern](https://www.daxpatterns.com/parameter-table/).
+* [DAX Lib package list](https://daxlib.org/packages/) (package reference).
 
 ## License
 
 MIT License.
-
-[1]: https://www.daxpatterns.com/abc-classification/ "ABC classification"
-[2]: https://www.daxpatterns.com/parameter-table/ "Parameter table"
-[3]: https://daxlib.org/packages/ "Packages - Extend Power BI with DAX Lib"
